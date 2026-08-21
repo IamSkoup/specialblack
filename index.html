@@ -17,7 +17,11 @@
   --text-faint: #5a5955;
   --accent: #c9a15a;
   --accent-soft: rgba(201, 161, 90, 0.12);
+  --accent-dim: rgba(201, 161, 90, 0.35);
   --radius: 3px;
+  --radius-lg: 8px;
+  --shadow-card: 0 20px 44px -22px rgba(0,0,0,0.6);
+  --ease: cubic-bezier(.22,.85,.34,1);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -30,7 +34,10 @@ html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 }
 
 body{
-  background:var(--bg);
+  background:
+    radial-gradient(1100px 560px at 84% -6%, rgba(201,161,90,0.07), transparent 60%),
+    radial-gradient(900px 500px at -6% 18%, rgba(255,255,255,0.025), transparent 55%),
+    var(--bg);
   color:var(--text);
   font-family:'Inter', sans-serif;
   font-size:16px;
@@ -42,6 +49,29 @@ body{
   word-break:break-word;
 }
 
+/* ---------- Scroll reveal ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none;}
+}
+
+.pricing-grid .reveal:nth-child(2){transition-delay:.08s;}
+.pricing-grid .reveal:nth-child(3){transition-delay:.16s;}
+.why-grid .reveal:nth-child(2){transition-delay:.06s;}
+.why-grid .reveal:nth-child(3){transition-delay:.12s;}
+.why-grid .reveal:nth-child(4){transition-delay:.18s;}
+.process-list .reveal:nth-child(2){transition-delay:.06s;}
+.process-list .reveal:nth-child(3){transition-delay:.12s;}
+.process-list .reveal:nth-child(4){transition-delay:.18s;}
+
 img,svg,video,canvas{max-width:100%;}
 
 .mono{
@@ -51,8 +81,8 @@ img,svg,video,canvas{max-width:100%;}
 h1,h2,h3{
   font-family:'Unbounded', sans-serif;
   font-weight:600;
-  letter-spacing:-0.01em;
-  line-height:1.15;
+  letter-spacing:-0.015em;
+  line-height:1.12;
 }
 
 a{color:inherit; text-decoration:none;}
@@ -162,7 +192,7 @@ img,svg{display:block;}
   padding:14px 26px;
   border-radius:var(--radius);
   cursor:pointer;
-  transition:all .25s ease;
+  transition:transform .25s var(--ease), background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;
   border:1px solid transparent;
   white-space:normal;
   max-width:100%;
@@ -174,6 +204,8 @@ img,svg{display:block;}
 }
 .btn-primary:hover{
   background:var(--accent);
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px -12px rgba(201,161,90,0.45);
 }
 
 .btn-secondary{
@@ -183,7 +215,8 @@ img,svg{display:block;}
 }
 .btn-secondary:hover{
   border-color:var(--text-dim);
-  background:rgba(255,255,255,0.02);
+  background:rgba(255,255,255,0.03);
+  transform:translateY(-2px);
 }
 
 .btn-outline-accent{
@@ -194,6 +227,7 @@ img,svg{display:block;}
 .btn-outline-accent:hover{
   background:var(--accent-soft);
   border-color:var(--accent);
+  transform:translateY(-2px);
 }
 
 .btn-block{width:100%;}
@@ -232,16 +266,40 @@ img,svg{display:block;}
 }
 
 .hero h1{
-  font-size:52px;
-  max-width:620px;
-  margin-bottom:22px;
+  font-size:clamp(30px, 4.6vw + 12px, 56px);
+  max-width:640px;
+  margin-bottom:24px;
 }
 
 .hero-desc{
   color:var(--text-dim);
-  font-size:16.5px;
+  font-size:clamp(15px, 1vw + 12px, 17px);
   max-width:480px;
+  margin-bottom:34px;
+}
+
+.hero-facts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 22px;
   margin-bottom:38px;
+}
+
+.hero-facts li{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:var(--text-dim);
+}
+
+.hero-facts li::before{
+  content:'';
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--accent);
+  flex-shrink:0;
 }
 
 .hero-actions{
@@ -255,11 +313,26 @@ img,svg{display:block;}
   position:relative;
 }
 
+.hero-visual::before{
+  content:'';
+  position:absolute;
+  top:-14%; right:-16%;
+  width:70%;
+  height:70%;
+  background:radial-gradient(circle, rgba(201,161,90,0.16), transparent 70%);
+  filter:blur(18px);
+  pointer-events:none;
+  z-index:0;
+}
+
 .window-frame{
+  position:relative;
+  z-index:1;
   border:1px solid var(--line);
-  border-radius:6px;
+  border-radius:8px;
   overflow:hidden;
   background:var(--bg-raised);
+  box-shadow:var(--shadow-card);
 }
 
 .window-bar{
@@ -341,15 +414,16 @@ img,svg{display:block;}
 
 @media (max-width:920px){
   .hero-grid{grid-template-columns:1fr;}
-  .hero h1{font-size:38px; max-width:100%;}
+  .hero h1{max-width:100%;}
   .hero-visual{order:-1; max-width:420px; width:100%;}
   .hero{padding:150px 0 70px;}
 }
 
 @media (max-width:480px){
   .hero{padding:130px 0 56px;}
-  .hero h1{font-size:30px;}
-  .hero-desc{font-size:15px; max-width:100%;}
+  .hero-desc{max-width:100%;}
+  .hero-facts{gap:8px 16px; margin-bottom:30px;}
+  .hero-facts li{font-size:12.5px;}
   .hero-actions{flex-direction:column; align-items:stretch;}
   .hero-actions .btn{width:100%;}
   .hero-visual{max-width:100%;}
@@ -374,7 +448,7 @@ section{
 }
 
 .section-head h2{
-  font-size:34px;
+  font-size:clamp(23px, 2.2vw + 16px, 34px);
   margin-bottom:14px;
 }
 
@@ -385,12 +459,10 @@ section{
 
 @media (max-width:768px){
   .section-head{margin-bottom:44px;}
-  .section-head h2{font-size:27px;}
 }
 
 @media (max-width:480px){
   section{padding:56px 0;}
-  .section-head h2{font-size:23px;}
   .section-head p{font-size:14.5px;}
 }
 
@@ -399,33 +471,46 @@ section{
 .pricing-grid{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
-  gap:1px;
-  background:var(--line);
-  border:1px solid var(--line);
+  gap:16px;
 }
 
 .plan{
-  background:var(--bg);
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
   padding:40px 32px 32px;
   display:flex;
   flex-direction:column;
   position:relative;
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+
+.plan:hover{
+  transform:translateY(-5px);
+  border-color:var(--text-faint);
+  box-shadow:var(--shadow-card);
 }
 
 .plan.featured{
-  background:var(--bg-raised);
+  background:linear-gradient(180deg, rgba(201,161,90,0.06), var(--bg-raised) 40%);
+  border-color:var(--accent-dim);
+}
+
+.plan.featured:hover{
+  border-color:var(--accent);
 }
 
 .plan-badge{
   position:absolute;
-  top:40px; right:32px;
+  top:-1px; right:24px;
+  transform:translateY(-50%);
   font-family:'JetBrains Mono', monospace;
   font-size:10.5px;
   letter-spacing:0.06em;
-  color:var(--accent);
-  border:1px solid rgba(201,161,90,0.4);
-  padding:4px 8px;
-  border-radius:2px;
+  color:var(--bg);
+  background:var(--accent);
+  padding:5px 10px;
+  border-radius:3px;
 }
 
 .plan-name{
@@ -439,7 +524,7 @@ section{
 
 .plan-price{
   font-family:'Unbounded', sans-serif;
-  font-size:38px;
+  font-size:clamp(30px, 2vw + 22px, 40px);
   font-weight:600;
   margin-bottom:16px;
 }
@@ -469,8 +554,12 @@ section{
 .plan-features li:first-child{border-top:none;}
 
 .plan-features li::before{
-  content:'—';
-  color:var(--text-faint);
+  content:'';
+  width:5px;height:5px;
+  margin-top:8px;
+  border-radius:50%;
+  background:var(--accent);
+  opacity:0.7;
   flex-shrink:0;
 }
 
@@ -489,16 +578,22 @@ section{
 .why-grid{
   display:grid;
   grid-template-columns:repeat(4, 1fr);
-  gap:0;
-  border-top:1px solid var(--line-soft);
+  gap:1px;
+  background:var(--line-soft);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
 }
 
 .why-item{
-  padding:32px 28px 32px 0;
-  border-right:1px solid var(--line-soft);
+  padding:32px 24px;
+  background:var(--bg);
+  transition:background-color .3s var(--ease);
 }
 
-.why-item:last-child{border-right:none;}
+.why-item:hover{
+  background:var(--bg-raised);
+}
 
 .why-num{
   font-family:'JetBrains Mono', monospace;
@@ -521,11 +616,11 @@ section{
 
 @media (max-width:900px){
   .why-grid{grid-template-columns:1fr 1fr;}
-  .why-item{border-bottom:1px solid var(--line-soft); padding:28px 20px 28px 0;}
+  .why-item{padding:26px 20px;}
 }
 @media (max-width:560px){
   .why-grid{grid-template-columns:1fr;}
-  .why-item{border-right:none; padding:24px 0;}
+  .why-item{padding:24px 20px;}
 }
 
 /* ---------- Process ---------- */
@@ -537,13 +632,28 @@ section{
 
 .process-item{
   padding-right:28px;
+  padding-left:22px;
   position:relative;
+  transition:transform .3s var(--ease);
+}
+
+.process-item:hover{
+  transform:translateY(-3px);
+}
+
+.process-item::before{
+  content:'';
+  position:absolute;
+  top:2px; left:0;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--accent);
 }
 
 .process-item:not(:last-child)::after{
   content:'';
   position:absolute;
-  top:11px; right:0;
+  top:4.5px; right:0;
   width:20px;
   height:1px;
   background:var(--line);
@@ -581,14 +691,28 @@ section{
 
 .cta-section{
   text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.cta-section::before{
+  content:'';
+  position:absolute;
+  top:50%; left:50%;
+  width:640px; height:320px;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(201,161,90,0.1), transparent 70%);
+  filter:blur(20px);
+  pointer-events:none;
 }
 
 .cta-section .container{
   max-width:640px;
+  position:relative;
 }
 
 .cta-section h2{
-  font-size:34px;
+  font-size:clamp(24px, 2.6vw + 16px, 36px);
   margin-bottom:16px;
 }
 
@@ -604,7 +728,6 @@ section{
 }
 
 @media (max-width:480px){
-  .cta-section h2{font-size:24px;}
   .cta-section p{font-size:14.5px;}
   .cta-section .btn{width:100%;}
 }
@@ -620,7 +743,7 @@ section{
 }
 
 .contact-wrap h2{
-  font-size:30px;
+  font-size:clamp(22px, 2vw + 14px, 30px);
   margin-bottom:8px;
 }
 
@@ -640,7 +763,6 @@ section{
 
 @media (max-width:480px){
   .contact-wrap{align-items:stretch;}
-  .contact-wrap h2{font-size:24px;}
   .contact-wrap .btn{width:100%;}
 }
 
@@ -689,6 +811,11 @@ footer{
         <div class="eyebrow">веб-студия</div>
         <h1>Создаём сайты, которые выглядят профессионально и работают на ваш бизнес.</h1>
         <p class="hero-desc">Разрабатываем современные сайты для бизнеса, проектов и личных брендов — от простых решений до сложных веб-проектов.</p>
+        <ul class="hero-facts">
+          <li>Понятные цены</li>
+          <li>Свой дизайн под проект</li>
+          <li>Срок от нескольких дней</li>
+        </ul>
         <div class="hero-actions">
           <a href="#pricing" class="btn btn-primary">Выбрать тариф</a>
           <a href="#contacts" class="btn btn-secondary">Связаться с нами</a>
@@ -724,7 +851,7 @@ footer{
 
       <div class="pricing-grid">
 
-        <div class="plan">
+        <div class="plan reveal">
           <div class="plan-name mono">Start</div>
           <div class="plan-price">5 000 ₽</div>
           <p class="plan-desc">Для небольших проектов, которым нужен аккуратный и понятный сайт без лишней сложности.</p>
@@ -735,12 +862,12 @@ footer{
             <li>Основные информационные блоки</li>
             <li>Кнопки связи</li>
             <li>Базовые анимации</li>
-            <li>Публикация сайта</li>
+            <li>Отправка файла(ов)</li>
           </ul>
           <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Start" data-price="5 000 ₽">Заказать за 5 000 ₽</a>
         </div>
 
-        <div class="plan featured">
+        <div class="plan featured reveal">
           <span class="plan-badge mono">ПОПУЛЯРНЫЙ</span>
           <div class="plan-name mono">Business</div>
           <div class="plan-price">10 000 ₽</div>
@@ -753,12 +880,12 @@ footer{
             <li>Формы обратной связи</li>
             <li>Анимации</li>
             <li>Дополнительные функциональные блоки</li>
-            <li>Публикация сайта</li>
+            <li>Отправка файла(ов)</li>
           </ul>
           <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Business" data-price="10 000 ₽">Заказать за 10 000 ₽</a>
         </div>
 
-        <div class="plan">
+        <div class="plan reveal">
           <div class="plan-name mono">Pro</div>
           <div class="plan-price">20 000 ₽</div>
           <p class="plan-desc">Полноценный веб-проект с индивидуальной структурой и расширенным функционалом.</p>
@@ -771,7 +898,7 @@ footer{
             <li>Сложные анимации</li>
             <li>Интеграции при необходимости</li>
             <li>Адаптация под все устройства</li>
-            <li>Публикация и настройка сайта</li>
+            <li>Отправка файла(ов)</li>
           </ul>
           <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Pro" data-price="20 000 ₽" data-discuss="1">Обсудить проект за 20 000 ₽</a>
         </div>
@@ -786,22 +913,22 @@ footer{
         <h2>Почему SpecialBlack</h2>
       </div>
       <div class="why-grid">
-        <div class="why-item">
+        <div class="why-item reveal">
           <span class="why-num mono">01</span>
           <h3>Индивидуальный дизайн</h3>
           <p>Не используем один и тот же шаблон для каждого клиента.</p>
         </div>
-        <div class="why-item">
+        <div class="why-item reveal">
           <span class="why-num mono">02</span>
           <h3>Адаптация под устройства</h3>
           <p>Сайт должен нормально выглядеть на компьютерах, планшетах и смартфонах.</p>
         </div>
-        <div class="why-item">
+        <div class="why-item reveal">
           <span class="why-num mono">03</span>
           <h3>Современный подход</h3>
           <p>Используем современные технологии и актуальные подходы к веб-дизайну.</p>
         </div>
-        <div class="why-item">
+        <div class="why-item reveal">
           <span class="why-num mono">04</span>
           <h3>Понятная стоимость</h3>
           <p>Клиент заранее видит стоимость выбранного тарифа.</p>
@@ -816,22 +943,22 @@ footer{
         <h2>Как проходит работа</h2>
       </div>
       <div class="process-list">
-        <div class="process-item">
+        <div class="process-item reveal">
           <div class="process-num mono">01</div>
           <h3>Обсуждаем задачу</h3>
           <p>Вы рассказываете, какой сайт вам нужен.</p>
         </div>
-        <div class="process-item">
+        <div class="process-item reveal">
           <div class="process-num mono">02</div>
           <h3>Создаём дизайн</h3>
           <p>Продумываем структуру и внешний вид сайта.</p>
         </div>
-        <div class="process-item">
+        <div class="process-item reveal">
           <div class="process-num mono">03</div>
           <h3>Разрабатываем</h3>
           <p>Собираем сайт и добавляем необходимый функционал.</p>
         </div>
-        <div class="process-item">
+        <div class="process-item reveal">
           <div class="process-num mono">04</div>
           <h3>Передаём готовый проект</h3>
           <p>Публикуем сайт и передаём его клиенту.</p>
@@ -888,6 +1015,21 @@ footer{
       window.open(url, '_blank', 'noopener');
     });
   });
+
+  if('IntersectionObserver' in window){
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
 </script>
 
 </body>
