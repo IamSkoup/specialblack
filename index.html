@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpecialBlack — веб-студия</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg: #0a0a0a;
+  --bg-raised: #0e0e0e;
+  --line: #1e1e1e;
+  --line-soft: #161616;
+  --text: #f1f0ec;
+  --text-dim: #8d8c88;
+  --text-faint: #5a5955;
+  --accent: #c9a15a;
+  --accent-soft: rgba(201, 161, 90, 0.12);
+  --radius: 3px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter', sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+.mono{
+  font-family:'JetBrains Mono', monospace;
+}
+
+h1,h2,h3{
+  font-family:'Unbounded', sans-serif;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  line-height:1.15;
+}
+
+a{color:inherit; text-decoration:none;}
+
+img,svg{display:block;}
+
+::selection{background:var(--accent-soft); color:var(--accent);}
+
+:focus-visible{
+  outline:1px solid var(--accent);
+  outline-offset:3px;
+}
+
+.container{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 32px;
+}
+
+@media (max-width:768px){
+  .container{padding:0 20px;}
+}
+
+/* ---------- Header ---------- */
+
+.site-header{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  background:rgba(10,10,10,0.82);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+
+.site-header .container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:72px;
+}
+
+.logo{
+  font-family:'Unbounded', sans-serif;
+  font-weight:600;
+  font-size:17px;
+  letter-spacing:-0.01em;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.logo .dot{
+  width:6px;height:6px;
+  background:var(--accent);
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.nav-links{
+  display:flex;
+  gap:36px;
+  font-size:14px;
+  color:var(--text-dim);
+}
+
+.nav-links a{transition:color .25s ease;}
+.nav-links a:hover{color:var(--text);}
+
+.header-cta{
+  font-size:14px;
+  color:var(--text);
+  border:1px solid var(--line);
+  padding:9px 18px;
+  border-radius:var(--radius);
+  transition:border-color .25s ease, color .25s ease;
+  white-space:nowrap;
+}
+.header-cta:hover{border-color:var(--accent); color:var(--accent);}
+
+.nav-mobile-toggle{display:none;}
+
+@media (max-width:860px){
+  .nav-links{display:none;}
+}
+
+/* ---------- Buttons ---------- */
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-family:'Inter', sans-serif;
+  font-weight:600;
+  font-size:14.5px;
+  padding:14px 26px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:all .25s ease;
+  border:1px solid transparent;
+  white-space:nowrap;
+}
+
+.btn-primary{
+  background:var(--text);
+  color:var(--bg);
+}
+.btn-primary:hover{
+  background:var(--accent);
+}
+
+.btn-secondary{
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--line);
+}
+.btn-secondary:hover{
+  border-color:var(--text-dim);
+  background:rgba(255,255,255,0.02);
+}
+
+.btn-outline-accent{
+  background:transparent;
+  color:var(--accent);
+  border:1px solid rgba(201,161,90,0.4);
+}
+.btn-outline-accent:hover{
+  background:var(--accent-soft);
+  border-color:var(--accent);
+}
+
+.btn-block{width:100%;}
+
+/* ---------- Hero ---------- */
+
+.hero{
+  padding:180px 0 100px;
+  position:relative;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:64px;
+  align-items:center;
+}
+
+.eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+}
+
+.eyebrow::before{
+  content:'';
+  width:20px;
+  height:1px;
+  background:var(--accent);
+}
+
+.hero h1{
+  font-size:52px;
+  max-width:620px;
+  margin-bottom:22px;
+}
+
+.hero-desc{
+  color:var(--text-dim);
+  font-size:16.5px;
+  max-width:480px;
+  margin-bottom:38px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+/* signature graphic: a browser window that draws itself */
+.hero-visual{
+  position:relative;
+}
+
+.window-frame{
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden;
+  background:var(--bg-raised);
+}
+
+.window-bar{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:13px 16px;
+  border-bottom:1px solid var(--line);
+}
+
+.window-bar span{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--line);
+}
+
+.window-bar .url{
+  margin-left:12px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11.5px;
+  color:var(--text-faint);
+}
+
+.window-body{
+  padding:26px;
+}
+
+.draw-line{
+  height:1px;
+  background:var(--line);
+  position:relative;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+
+.draw-line::after{
+  content:'';
+  position:absolute;
+  top:0; left:0; bottom:0;
+  width:0%;
+  background:var(--accent);
+  animation:drawline 1.4s ease forwards;
+}
+
+.draw-line.w1{width:78%;}
+.draw-line.w2{width:52%;}
+.draw-line.w3{width:64%;}
+
+.draw-line.w1::after{animation-delay:.15s;}
+.draw-line.w2::after{animation-delay:.35s;}
+.draw-line.w3::after{animation-delay:.55s;}
+
+@keyframes drawline{
+  to{width:100%;}
+}
+
+.block-row{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+
+.block-chip{
+  flex:1;
+  height:48px;
+  border:1px solid var(--line);
+  border-radius:3px;
+  opacity:0;
+  animation:fadein .6s ease forwards;
+}
+.block-chip:nth-child(1){animation-delay:.75s;}
+.block-chip:nth-child(2){animation-delay:.85s;background:var(--accent-soft); border-color:rgba(201,161,90,0.35);}
+.block-chip:nth-child(3){animation-delay:.95s;}
+
+@keyframes fadein{
+  from{opacity:0; transform:translateY(6px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+@media (max-width:920px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:38px; max-width:100%;}
+  .hero-visual{order:-1; max-width:420px;}
+  .hero{padding:150px 0 70px;}
+}
+
+/* ---------- Section shared ---------- */
+
+section{
+  padding:120px 0;
+  border-top:1px solid var(--line-soft);
+}
+
+@media (max-width:768px){
+  section{padding:72px 0;}
+}
+
+.section-head{
+  max-width:600px;
+  margin-bottom:64px;
+}
+
+.section-head h2{
+  font-size:34px;
+  margin-bottom:14px;
+}
+
+.section-head p{
+  color:var(--text-dim);
+  font-size:16px;
+}
+
+@media (max-width:768px){
+  .section-head{margin-bottom:44px;}
+  .section-head h2{font-size:27px;}
+}
+
+/* ---------- Pricing ---------- */
+
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+}
+
+.plan{
+  background:var(--bg);
+  padding:40px 32px 32px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+
+.plan.featured{
+  background:var(--bg-raised);
+}
+
+.plan-badge{
+  position:absolute;
+  top:40px; right:32px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  color:var(--accent);
+  border:1px solid rgba(201,161,90,0.4);
+  padding:4px 8px;
+  border-radius:2px;
+}
+
+.plan-name{
+  font-family:'JetBrains Mono', monospace;
+  font-size:13px;
+  color:var(--text-dim);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+.plan-price{
+  font-family:'Unbounded', sans-serif;
+  font-size:38px;
+  font-weight:600;
+  margin-bottom:16px;
+}
+
+.plan-desc{
+  color:var(--text-dim);
+  font-size:14.5px;
+  margin-bottom:28px;
+  min-height:66px;
+}
+
+.plan-features{
+  list-style:none;
+  margin-bottom:32px;
+  flex-grow:1;
+}
+
+.plan-features li{
+  font-size:14.5px;
+  color:var(--text);
+  padding:10px 0;
+  border-top:1px solid var(--line-soft);
+  display:flex;
+  gap:10px;
+}
+
+.plan-features li:first-child{border-top:none;}
+
+.plan-features li::before{
+  content:'—';
+  color:var(--text-faint);
+  flex-shrink:0;
+}
+
+@media (max-width:900px){
+  .pricing-grid{grid-template-columns:1fr;}
+}
+
+/* ---------- Why us ---------- */
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:0;
+  border-top:1px solid var(--line-soft);
+}
+
+.why-item{
+  padding:32px 28px 32px 0;
+  border-right:1px solid var(--line-soft);
+}
+
+.why-item:last-child{border-right:none;}
+
+.why-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:12px;
+  color:var(--accent);
+  margin-bottom:20px;
+  display:block;
+}
+
+.why-item h3{
+  font-size:17px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.why-item p{
+  color:var(--text-dim);
+  font-size:14px;
+}
+
+@media (max-width:900px){
+  .why-grid{grid-template-columns:1fr 1fr;}
+  .why-item{border-bottom:1px solid var(--line-soft); padding:28px 20px 28px 0;}
+}
+@media (max-width:560px){
+  .why-grid{grid-template-columns:1fr;}
+  .why-item{border-right:none;}
+}
+
+/* ---------- Process ---------- */
+
+.process-list{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.process-item{
+  padding-right:28px;
+  position:relative;
+}
+
+.process-item:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  top:11px; right:0;
+  width:20px;
+  height:1px;
+  background:var(--line);
+}
+
+.process-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:13px;
+  color:var(--text-faint);
+  margin-bottom:24px;
+}
+
+.process-item h3{
+  font-size:16.5px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.process-item p{
+  color:var(--text-dim);
+  font-size:14px;
+}
+
+@media (max-width:900px){
+  .process-list{grid-template-columns:1fr 1fr; row-gap:40px;}
+  .process-item:nth-child(2)::after{display:none;}
+  .process-item:not(:last-child)::after{display:none;}
+}
+@media (max-width:560px){
+  .process-list{grid-template-columns:1fr; row-gap:36px;}
+}
+
+/* ---------- CTA ---------- */
+
+.cta-section{
+  text-align:center;
+}
+
+.cta-section .container{
+  max-width:640px;
+}
+
+.cta-section h2{
+  font-size:34px;
+  margin-bottom:16px;
+}
+
+.cta-section p{
+  color:var(--text-dim);
+  font-size:16px;
+  margin-bottom:36px;
+}
+
+.cta-section .btn{
+  padding:16px 34px;
+  font-size:15px;
+}
+
+/* ---------- Contacts ---------- */
+
+.contact-wrap{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:36px;
+}
+
+.contact-wrap h2{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.contact-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:12px;
+  color:var(--text-faint);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  margin-bottom:6px;
+}
+
+.contact-value{
+  font-size:18px;
+  color:var(--text-dim);
+}
+
+/* ---------- Footer ---------- */
+
+footer{
+  border-top:1px solid var(--line-soft);
+  padding:32px 0;
+}
+
+.footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+  color:var(--text-faint);
+  flex-wrap:wrap;
+  gap:10px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="logo"><span class="dot"></span>SpecialBlack</div>
+    <nav class="nav-links">
+      <a href="#pricing">Тарифы</a>
+      <a href="#why">Почему мы</a>
+      <a href="#process">Процесс</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="#contacts" class="header-cta">Связаться</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">веб-студия</div>
+        <h1>Создаём сайты, которые выглядят профессионально и работают на ваш бизнес.</h1>
+        <p class="hero-desc">Разрабатываем современные сайты для бизнеса, проектов и личных брендов — от простых решений до сложных веб-проектов.</p>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn btn-primary">Выбрать тариф</a>
+          <a href="#contacts" class="btn btn-secondary">Связаться с нами</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="window-frame">
+          <div class="window-bar">
+            <span></span><span></span><span></span>
+            <span class="url mono">specialblack.studio</span>
+          </div>
+          <div class="window-body">
+            <div class="draw-line w1"></div>
+            <div class="draw-line w2"></div>
+            <div class="draw-line w3"></div>
+            <div class="block-row">
+              <div class="block-chip"></div>
+              <div class="block-chip"></div>
+              <div class="block-chip"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2>Выберите подходящий формат</h2>
+        <p>Три варианта разработки — от простого сайта до полноценного веб-проекта.</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <div class="plan">
+          <div class="plan-name mono">Start</div>
+          <div class="plan-price">5 000 ₽</div>
+          <p class="plan-desc">Для небольших проектов, которым нужен аккуратный и понятный сайт без лишней сложности.</p>
+          <ul class="plan-features">
+            <li>Одностраничный сайт</li>
+            <li>Современный дизайн</li>
+            <li>Адаптация под телефон и компьютер</li>
+            <li>Основные информационные блоки</li>
+            <li>Кнопки связи</li>
+            <li>Базовые анимации</li>
+            <li>Публикация сайта</li>
+          </ul>
+          <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Start" data-price="5 000 ₽">Заказать за 5 000 ₽</a>
+        </div>
+
+        <div class="plan featured">
+          <span class="plan-badge mono">ПОПУЛЯРНЫЙ</span>
+          <div class="plan-name mono">Business</div>
+          <div class="plan-price">10 000 ₽</div>
+          <p class="plan-desc">Расширенный сайт для бизнеса, услуг, магазина или проекта с большим количеством информации.</p>
+          <ul class="plan-features">
+            <li>Несколько страниц</li>
+            <li>Индивидуальный дизайн</li>
+            <li>Адаптивная верстка</li>
+            <li>Интерактивные элементы</li>
+            <li>Формы обратной связи</li>
+            <li>Анимации</li>
+            <li>Дополнительные функциональные блоки</li>
+            <li>Публикация сайта</li>
+          </ul>
+          <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Business" data-price="10 000 ₽">Заказать за 10 000 ₽</a>
+        </div>
+
+        <div class="plan">
+          <div class="plan-name mono">Pro</div>
+          <div class="plan-price">20 000 ₽</div>
+          <p class="plan-desc">Полноценный веб-проект с индивидуальной структурой и расширенным функционалом.</p>
+          <ul class="plan-features">
+            <li>Сложная структура сайта</li>
+            <li>Полностью индивидуальный дизайн</li>
+            <li>Большое количество страниц</li>
+            <li>Интерактивные элементы</li>
+            <li>Расширенные формы и функциональность</li>
+            <li>Сложные анимации</li>
+            <li>Интеграции при необходимости</li>
+            <li>Адаптация под все устройства</li>
+            <li>Публикация и настройка сайта</li>
+          </ul>
+          <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Pro" data-price="20 000 ₽" data-discuss="1">Обсудить проект за 20 000 ₽</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="container">
+      <div class="section-head">
+        <h2>Почему SpecialBlack</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <span class="why-num mono">01</span>
+          <h3>Индивидуальный дизайн</h3>
+          <p>Не используем один и тот же шаблон для каждого клиента.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-num mono">02</span>
+          <h3>Адаптация под устройства</h3>
+          <p>Сайт должен нормально выглядеть на компьютерах, планшетах и смартфонах.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-num mono">03</span>
+          <h3>Современный подход</h3>
+          <p>Используем современные технологии и актуальные подходы к веб-дизайну.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-num mono">04</span>
+          <h3>Понятная стоимость</h3>
+          <p>Клиент заранее видит стоимость выбранного тарифа.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="container">
+      <div class="section-head">
+        <h2>Как проходит работа</h2>
+      </div>
+      <div class="process-list">
+        <div class="process-item">
+          <div class="process-num mono">01</div>
+          <h3>Обсуждаем задачу</h3>
+          <p>Вы рассказываете, какой сайт вам нужен.</p>
+        </div>
+        <div class="process-item">
+          <div class="process-num mono">02</div>
+          <h3>Создаём дизайн</h3>
+          <p>Продумываем структуру и внешний вид сайта.</p>
+        </div>
+        <div class="process-item">
+          <div class="process-num mono">03</div>
+          <h3>Разрабатываем</h3>
+          <p>Собираем сайт и добавляем необходимый функционал.</p>
+        </div>
+        <div class="process-item">
+          <div class="process-num mono">04</div>
+          <h3>Передаём готовый проект</h3>
+          <p>Публикуем сайт и передаём его клиенту.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Есть идея для сайта?</h2>
+      <p>Расскажите нам о своём проекте — обсудим задачу и подберём подходящий вариант.</p>
+      <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-primary">Написать в Telegram</a>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <div class="container">
+      <div class="contact-wrap">
+        <div>
+          <h2>Контакты</h2>
+          <div class="contact-label mono">Telegram</div>
+          <div class="contact-value">@jet18tsi</div>
+        </div>
+        <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-outline-accent">Написать в Telegram</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <span>© 2026 SpecialBlack</span>
+    <span class="mono">t.me/jet18tsi</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      const plan = this.dataset.plan;
+      const price = this.dataset.price;
+      let text;
+      if(plan === 'Start'){
+        text = 'Здравствуйте! Хочу заказать сайт по тарифу Start за 5 000 ₽.';
+      } else if(plan === 'Business'){
+        text = 'Здравствуйте! Хочу заказать сайт по тарифу Business за 10 000 ₽.';
+      } else {
+        text = 'Здравствуйте! Хочу обсудить сайт по тарифу Pro за 20 000 ₽.';
+      }
+      const url = 'https://t.me/jet18tsi?text=' + encodeURIComponent(text);
+      window.open(url, '_blank', 'noopener');
+    });
+  });
+</script>
+
+</body>
+</html>
