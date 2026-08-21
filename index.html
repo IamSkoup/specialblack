@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" type="image/jpg" href="icon.jpg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SpecialBlack — веб-студия</title>
@@ -66,6 +65,8 @@ body{
 
 .pricing-grid .reveal:nth-child(2){transition-delay:.08s;}
 .pricing-grid .reveal:nth-child(3){transition-delay:.16s;}
+.works-grid .reveal:nth-child(2){transition-delay:.08s;}
+.works-grid .reveal:nth-child(3){transition-delay:.16s;}
 .why-grid .reveal:nth-child(2){transition-delay:.06s;}
 .why-grid .reveal:nth-child(3){transition-delay:.12s;}
 .why-grid .reveal:nth-child(4){transition-delay:.18s;}
@@ -574,6 +575,87 @@ section{
   .plan-price{font-size:32px;}
 }
 
+/* ---------- Works ---------- */
+
+.works-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:16px;
+}
+
+.work-card{
+  display:flex;
+  flex-direction:column;
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:28px 26px;
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background-color .35s var(--ease);
+}
+
+.work-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--accent-dim);
+  box-shadow:var(--shadow-card);
+  background:linear-gradient(180deg, rgba(201,161,90,0.05), var(--bg-raised) 45%);
+}
+
+.work-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:22px;
+}
+
+.work-tag{
+  font-size:11.5px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:var(--accent-soft);
+  border:1px solid rgba(201,161,90,0.3);
+  padding:5px 10px;
+  border-radius:3px;
+}
+
+.work-arrow{
+  font-size:16px;
+  color:var(--text-faint);
+  transition:transform .3s var(--ease), color .3s var(--ease);
+}
+
+.work-card:hover .work-arrow{
+  color:var(--accent);
+  transform:translate(2px,-2px);
+}
+
+.work-card h3{
+  font-size:19px;
+  margin-bottom:10px;
+}
+
+.work-card p{
+  color:var(--text-dim);
+  font-size:14.5px;
+  margin-bottom:22px;
+  flex-grow:1;
+}
+
+.work-link{
+  font-size:12px;
+  color:var(--text-faint);
+  padding-top:16px;
+  border-top:1px solid var(--line-soft);
+}
+
+@media (max-width:900px){
+  .works-grid{grid-template-columns:1fr;}
+}
+
+@media (max-width:480px){
+  .work-card{padding:24px 20px;}
+}
+
 /* ---------- Why us ---------- */
 
 .why-grid{
@@ -796,6 +878,7 @@ footer{
     <div class="logo"><span class="dot"></span>SpecialBlack</div>
     <nav class="nav-links">
       <a href="#pricing">Тарифы</a>
+      <a href="#works">Работы</a>
       <a href="#why">Почему мы</a>
       <a href="#process">Процесс</a>
       <a href="#contacts">Контакты</a>
@@ -820,6 +903,7 @@ footer{
         <div class="hero-actions">
           <a href="#pricing" class="btn btn-primary">Выбрать тариф</a>
           <a href="#contacts" class="btn btn-secondary">Связаться с нами</a>
+          <a href="#works" class="btn btn-outline-accent">Примеры наших работ</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -908,6 +992,49 @@ footer{
     </div>
   </section>
 
+  <section id="works">
+    <div class="container">
+      <div class="section-head">
+        <h2>Примеры наших работ</h2>
+        <p>Посмотрите сайты, созданные нашей студией для разных сфер бизнеса.</p>
+      </div>
+
+      <div class="works-grid">
+
+        <a href="https://iamskoup.github.io/cafemyata/" target="_blank" rel="noopener" class="work-card reveal">
+          <div class="work-card-top">
+            <span class="work-tag mono">Кафе</span>
+            <span class="work-arrow" aria-hidden="true">↗</span>
+          </div>
+          <h3>Кафе «Мята»</h3>
+          <p>Уютный сайт-визитка для заведения общественного питания.</p>
+          <span class="work-link mono">iamskoup.github.io/cafemyata</span>
+        </a>
+
+        <a href="https://iamskoup.github.io/novahome/" target="_blank" rel="noopener" class="work-card reveal">
+          <div class="work-card-top">
+            <span class="work-tag mono">Недвижимость</span>
+            <span class="work-arrow" aria-hidden="true">↗</span>
+          </div>
+          <h3>Nova Home</h3>
+          <p>Сайт агентства недвижимости с акцентом на доверие и подачу объектов.</p>
+          <span class="work-link mono">iamskoup.github.io/novahome</span>
+        </a>
+
+        <a href="https://iamskoup.github.io/nexus/" target="_blank" rel="noopener" class="work-card reveal">
+          <div class="work-card-top">
+            <span class="work-tag mono">Техника</span>
+            <span class="work-arrow" aria-hidden="true">↗</span>
+          </div>
+          <h3>NEXUS</h3>
+          <p>Каталог-сайт магазина техники с современной структурой и подачей товара.</p>
+          <span class="work-link mono">iamskoup.github.io/nexus</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
   <section id="why">
     <div class="container">
       <div class="section-head">
@@ -962,7 +1089,7 @@ footer{
         <div class="process-item reveal">
           <div class="process-num mono">04</div>
           <h3>Передаём готовый проект</h3>
-          <p>Передаём файлы клиенту.</p>
+          <p>Публикуем сайт и передаём его клиенту.</p>
         </div>
       </div>
     </div>
