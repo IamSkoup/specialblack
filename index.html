@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" type="image/jpg" href="icon.jpg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SpecialBlack — веб-студия</title>
@@ -71,6 +70,8 @@ body{
 .why-grid .reveal:nth-child(2){transition-delay:.06s;}
 .why-grid .reveal:nth-child(3){transition-delay:.12s;}
 .why-grid .reveal:nth-child(4){transition-delay:.18s;}
+.why-grid .reveal:nth-child(5){transition-delay:.24s;}
+.why-grid .reveal:nth-child(6){transition-delay:.3s;}
 .process-list .reveal:nth-child(2){transition-delay:.06s;}
 .process-list .reveal:nth-child(3){transition-delay:.12s;}
 .process-list .reveal:nth-child(4){transition-delay:.18s;}
@@ -601,14 +602,62 @@ section{
   background:linear-gradient(180deg, rgba(201,161,90,0.05), var(--bg-raised) 45%);
 }
 
-.work-card-top{
+.work-preview{
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--bg);
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.work-preview-bar{
   display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:22px;
+  gap:5px;
+  padding:9px 12px;
+  border-bottom:1px solid var(--line);
+}
+
+.work-preview-bar span{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--line);
+}
+
+.work-preview-body{
+  padding:16px;
+}
+
+.work-preview-line{
+  height:6px;
+  border-radius:2px;
+  background:var(--line);
+  margin-bottom:8px;
+}
+
+.work-preview-line.w1{width:72%;}
+.work-preview-line.w2{width:44%; margin-bottom:0;}
+
+.work-preview-blocks{
+  display:flex;
+  gap:6px;
+  margin-top:14px;
+}
+
+.work-preview-blocks span{
+  flex:1;
+  height:28px;
+  border-radius:3px;
+  background:var(--line-soft);
+}
+
+.works-grid .work-card:nth-child(1) .work-preview-blocks span:nth-child(1),
+.works-grid .work-card:nth-child(2) .work-preview-blocks span:nth-child(2),
+.works-grid .work-card:nth-child(3) .work-preview-blocks span:nth-child(3){
+  background:var(--accent-soft);
 }
 
 .work-tag{
+  align-self:flex-start;
   font-size:11.5px;
   letter-spacing:0.05em;
   text-transform:uppercase;
@@ -617,17 +666,7 @@ section{
   border:1px solid rgba(201,161,90,0.3);
   padding:5px 10px;
   border-radius:3px;
-}
-
-.work-arrow{
-  font-size:16px;
-  color:var(--text-faint);
-  transition:transform .3s var(--ease), color .3s var(--ease);
-}
-
-.work-card:hover .work-arrow{
-  color:var(--accent);
-  transform:translate(2px,-2px);
+  margin-bottom:16px;
 }
 
 .work-card h3{
@@ -642,11 +681,29 @@ section{
   flex-grow:1;
 }
 
-.work-link{
-  font-size:12px;
-  color:var(--text-faint);
-  padding-top:16px;
+.work-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--accent);
+  padding-top:18px;
   border-top:1px solid var(--line-soft);
+  transition:gap .25s var(--ease), color .25s ease;
+}
+
+.work-btn:hover{
+  gap:10px;
+  color:var(--text);
+}
+
+.work-btn .arrow{
+  transition:transform .3s var(--ease);
+}
+
+.work-btn:hover .arrow{
+  transform:translate(2px,-2px);
 }
 
 @media (max-width:900px){
@@ -655,13 +712,14 @@ section{
 
 @media (max-width:480px){
   .work-card{padding:24px 20px;}
+  .work-preview-body{padding:14px;}
 }
 
 /* ---------- Why us ---------- */
 
 .why-grid{
   display:grid;
-  grid-template-columns:repeat(4, 1fr);
+  grid-template-columns:repeat(3, 1fr);
   gap:1px;
   background:var(--line-soft);
   border:1px solid var(--line-soft);
@@ -769,6 +827,35 @@ section{
 @media (max-width:560px){
   .process-list{grid-template-columns:1fr; row-gap:36px;}
   .process-item{padding-right:0;}
+}
+
+/* ---------- Reviews ---------- */
+
+.review-placeholder{
+  border:1px dashed var(--line);
+  border-radius:var(--radius-lg);
+  padding:64px 32px;
+  text-align:center;
+  background:var(--bg-raised);
+}
+
+.review-mark{
+  display:block;
+  font-size:38px;
+  line-height:1;
+  color:var(--accent-dim);
+  margin-bottom:16px;
+}
+
+.review-placeholder p{
+  color:var(--text-dim);
+  font-size:15px;
+  max-width:380px;
+  margin:0 auto;
+}
+
+@media (max-width:480px){
+  .review-placeholder{padding:44px 24px;}
 }
 
 /* ---------- CTA ---------- */
@@ -881,6 +968,7 @@ footer{
       <a href="#pricing">Тарифы</a>
       <a href="#works">Работы</a>
       <a href="#why">Почему мы</a>
+      <a href="#reviews">Отзывы</a>
       <a href="#process">Процесс</a>
       <a href="#contacts">Контакты</a>
     </nav>
@@ -895,23 +983,22 @@ footer{
       <div>
         <div class="eyebrow">веб-студия</div>
         <h1>Создаём сайты, которые выглядят профессионально и работают на ваш бизнес.</h1>
-        <p class="hero-desc">Разрабатываем современные сайты для бизнеса, проектов и личных брендов — от простых решений до сложных веб-проектов.</p>
+        <p class="hero-desc">Разрабатываем сайты под заказ — от простого лендинга до многостраничного проекта. Стоимость начинается от 5 000 ₽, реальные примеры работ можно посмотреть ниже.</p>
         <ul class="hero-facts">
-          <li>Понятные цены</li>
-          <li>Свой дизайн под проект</li>
-          <li>Срок от нескольких дней</li>
+          <li>От 5 000 ₽</li>
+          <li>Сайты под заказ</li>
+          <li>Готовые примеры работ</li>
         </ul>
         <div class="hero-actions">
           <a href="#pricing" class="btn btn-primary">Выбрать тариф</a>
-          <a href="#contacts" class="btn btn-secondary">Связаться с нами</a>
-          <a href="#works" class="btn btn-outline-accent">Примеры наших работ</a>
+          <a href="#works" class="btn btn-outline-accent">Посмотреть наши работы</a>
         </div>
       </div>
       <div class="hero-visual">
         <div class="window-frame">
           <div class="window-bar">
             <span></span><span></span><span></span>
-            <span class="url mono">specialblack.studio</span>
+            <span class="url mono">клиент-сайт.ru</span>
           </div>
           <div class="window-body">
             <div class="draw-line w1"></div>
@@ -1002,35 +1089,56 @@ footer{
 
       <div class="works-grid">
 
-        <a href="https://iamskoup.github.io/cafemyata/" target="_blank" rel="noopener" class="work-card reveal">
-          <div class="work-card-top">
-            <span class="work-tag mono">Кафе</span>
-            <span class="work-arrow" aria-hidden="true">↗</span>
+        <div class="work-card reveal">
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
           </div>
+          <span class="work-tag mono">Кафе</span>
           <h3>Кафе «Мята»</h3>
           <p>Уютный сайт-визитка для заведения общественного питания.</p>
-          <span class="work-link mono">iamskoup.github.io/cafemyata</span>
-        </a>
+          <a href="https://iamskoup.github.io/cafemyata/" target="_blank" rel="noopener" class="work-btn">
+            Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
 
-        <a href="https://iamskoup.github.io/novahome/" target="_blank" rel="noopener" class="work-card reveal">
-          <div class="work-card-top">
-            <span class="work-tag mono">Недвижимость</span>
-            <span class="work-arrow" aria-hidden="true">↗</span>
+        <div class="work-card reveal">
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
           </div>
+          <span class="work-tag mono">Недвижимость</span>
           <h3>Nova Home</h3>
           <p>Сайт агентства недвижимости с акцентом на доверие и подачу объектов.</p>
-          <span class="work-link mono">iamskoup.github.io/novahome</span>
-        </a>
+          <a href="https://iamskoup.github.io/novahome/" target="_blank" rel="noopener" class="work-btn">
+            Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
 
-        <a href="https://iamskoup.github.io/nexus/" target="_blank" rel="noopener" class="work-card reveal">
-          <div class="work-card-top">
-            <span class="work-tag mono">Техника</span>
-            <span class="work-arrow" aria-hidden="true">↗</span>
+        <div class="work-card reveal">
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
           </div>
+          <span class="work-tag mono">Техника</span>
           <h3>NEXUS</h3>
           <p>Каталог-сайт магазина техники с современной структурой и подачей товара.</p>
-          <span class="work-link mono">iamskoup.github.io/nexus</span>
-        </a>
+          <a href="https://iamskoup.github.io/nexus/" target="_blank" rel="noopener" class="work-btn">
+            Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
 
       </div>
     </div>
@@ -1044,24 +1152,47 @@ footer{
       <div class="why-grid">
         <div class="why-item reveal">
           <span class="why-num mono">01</span>
-          <h3>Индивидуальный дизайн</h3>
-          <p>Не используем один и тот же шаблон для каждого клиента.</p>
+          <h3>Современный дизайн</h3>
+          <p>Индивидуальный стиль без шаблонных решений.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">02</span>
-          <h3>Адаптация под устройства</h3>
-          <p>Сайт должен нормально выглядеть на компьютерах, планшетах и смартфонах.</p>
+          <h3>Адаптация под смартфоны</h3>
+          <p>Сайт корректно выглядит на любом устройстве.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">03</span>
-          <h3>Современный подход</h3>
-          <p>Используем современные технологии и актуальные подходы к веб-дизайну.</p>
+          <h3>Сайт под задачи бизнеса</h3>
+          <p>Структура и функционал под конкретную цель.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">04</span>
-          <h3>Понятная стоимость</h3>
-          <p>Клиент заранее видит стоимость выбранного тарифа.</p>
+          <h3>Быстрая разработка</h3>
+          <p>Готовый сайт — за несколько дней.</p>
         </div>
+        <div class="why-item reveal">
+          <span class="why-num mono">05</span>
+          <h3>Дальнейшее редактирование</h3>
+          <p>Сайт можно дорабатывать и после сдачи проекта.</p>
+        </div>
+        <div class="why-item reveal">
+          <span class="why-num mono">06</span>
+          <h3>Понятная стоимость</h3>
+          <p>Цена известна заранее, без скрытых доплат.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="container">
+      <div class="section-head">
+        <h2>Отзывы клиентов</h2>
+        <p>Собираем отзывы по мере завершения проектов.</p>
+      </div>
+      <div class="review-placeholder reveal">
+        <span class="review-mark mono" aria-hidden="true">"</span>
+        <p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p>
       </div>
     </div>
   </section>
@@ -1098,9 +1229,9 @@ footer{
 
   <section class="cta-section">
     <div class="container">
-      <h2>Есть идея для сайта?</h2>
-      <p>Расскажите нам о своём проекте — обсудим задачу и подберём подходящий вариант.</p>
-      <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-primary">Написать в Telegram</a>
+      <h2>Готовы запустить свой сайт?</h2>
+      <p>Расскажите о проекте — обсудим задачу и подберём подходящий вариант.</p>
+      <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-primary">Обсудить проект</a>
     </div>
   </section>
 
