@@ -66,8 +66,10 @@ body{
 
 .pricing-grid .reveal:nth-child(2){transition-delay:.08s;}
 .pricing-grid .reveal:nth-child(3){transition-delay:.16s;}
+.pricing-grid .reveal:nth-child(4){transition-delay:.24s;}
 .works-grid .reveal:nth-child(2){transition-delay:.08s;}
 .works-grid .reveal:nth-child(3){transition-delay:.16s;}
+.works-grid .reveal:nth-child(4){transition-delay:.24s;}
 .why-grid .reveal:nth-child(2){transition-delay:.06s;}
 .why-grid .reveal:nth-child(3){transition-delay:.12s;}
 .why-grid .reveal:nth-child(4){transition-delay:.18s;}
@@ -475,8 +477,12 @@ section{
 
 .pricing-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns:repeat(4, 1fr);
   gap:16px;
+}
+
+@media (max-width:1100px){
+  .pricing-grid{grid-template-columns:repeat(2, 1fr);}
 }
 
 .plan{
@@ -558,6 +564,25 @@ section{
 
 .plan-features li:first-child{border-top:none;}
 
+.plan-example{
+  font-size:12.5px;
+  color:var(--text-dim);
+  letter-spacing:0.02em;
+  margin:-14px 0 18px;
+}
+
+.plan-example a{
+  color:var(--accent);
+  text-decoration:none;
+  border-bottom:1px solid var(--accent-dim);
+  transition:color .25s ease, border-color .25s ease;
+}
+
+.plan-example a:hover{
+  color:var(--text);
+  border-color:var(--text-faint);
+}
+
 .plan-features li::before{
   content:'';
   width:5px;height:5px;
@@ -568,7 +593,7 @@ section{
   flex-shrink:0;
 }
 
-@media (max-width:900px){
+@media (max-width:620px){
   .pricing-grid{grid-template-columns:1fr;}
 }
 
@@ -578,12 +603,21 @@ section{
   .plan-price{font-size:32px;}
 }
 
+@media (max-width:380px){
+  .plan{padding:28px 18px 22px;}
+  .plan-desc{min-height:0;}
+}
+
 /* ---------- Works ---------- */
 
 .works-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns:repeat(4, 1fr);
   gap:16px;
+}
+
+@media (max-width:1100px){
+  .works-grid{grid-template-columns:repeat(2, 1fr);}
 }
 
 .work-card{
@@ -707,7 +741,7 @@ section{
   transform:translate(2px,-2px);
 }
 
-@media (max-width:900px){
+@media (max-width:620px){
   .works-grid{grid-template-columns:1fr;}
 }
 
@@ -1020,7 +1054,7 @@ footer{
     <div class="container">
       <div class="section-head">
         <h2>Выберите подходящий формат</h2>
-        <p>Три варианта разработки — от простого сайта до полноценного веб-проекта.</p>
+        <p>Четыре варианта разработки — от простого сайта до сложного веб-сервиса с системами и базой данных.</p>
       </div>
 
       <div class="pricing-grid">
@@ -1075,6 +1109,26 @@ footer{
             <li>Отправка файла(ов)</li>
           </ul>
           <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Pro" data-price="20 000 ₽" data-discuss="1">Обсудить проект за 20 000 ₽</a>
+        </div>
+
+        <div class="plan reveal">
+          <span class="plan-badge mono">МАКСИМУМ</span>
+          <div class="plan-name mono">Ultra</div>
+          <div class="plan-price">40 000 ₽</div>
+          <p class="plan-desc">Сайт с большим количеством систем и базой данных — для больших веб-проектов и веб-приложений.</p>
+          <ul class="plan-features">
+            <li>Сложные интерактивные системы</li>
+            <li>Регистрация и авторизация пользователей</li>
+            <li>База данных</li>
+            <li>Личные кабинеты</li>
+            <li>Хранение и обработка пользовательских данных</li>
+            <li>Различные роли и права доступа</li>
+            <li>Внутренние сервисы и взаимосвязанные разделы</li>
+            <li>Индивидуальная логика проекта</li>
+            <li>Сложная структура сайта / веб-приложения</li>
+          </ul>
+          <p class="plan-example mono">Пример: <a href="https://iamskoup1.github.io/kapani/" target="_blank" rel="noopener">Капанёвский сайт ↗</a></p>
+          <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Ultra" data-price="40 000 ₽" data-discuss="1">Обсудить проект за 40 000 ₽</a>
         </div>
 
       </div>
@@ -1137,6 +1191,23 @@ footer{
           <h3>NEXUS</h3>
           <p>Каталог-сайт магазина техники с современной структурой и подачей товара.</p>
           <a href="https://iamskoup.github.io/nexus/" target="_blank" rel="noopener" class="work-btn">
+            Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="work-card reveal">
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <span class="work-tag mono">Веб-сервис</span>
+          <h3>Капанёвский сайт</h3>
+          <p>Большой интерактивный веб-проект с множеством взаимосвязанных систем: аккаунты, база данных, экономика, бизнесы, маркет, банк, профили и чаты.</p>
+          <a href="https://iamskoup1.github.io/kapani/" target="_blank" rel="noopener" class="work-btn">
             Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
           </a>
         </div>
@@ -1269,8 +1340,10 @@ footer{
         text = 'Здравствуйте! Хочу заказать сайт по тарифу Start за 5 000 ₽.';
       } else if(plan === 'Business'){
         text = 'Здравствуйте! Хочу заказать сайт по тарифу Business за 10 000 ₽.';
-      } else {
+      } else if(plan === 'Pro'){
         text = 'Здравствуйте! Хочу обсудить сайт по тарифу Pro за 20 000 ₽.';
+      } else {
+        text = 'Здравствуйте! Хочу обсудить сайт по тарифу Ultra за 40 000 ₽.';
       }
       const url = 'https://t.me/jet18tsi?text=' + encodeURIComponent(text);
       window.open(url, '_blank', 'noopener');
