@@ -1,0 +1,106 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "admins": {
+      ".read": "auth != null",
+      "$uid": { ".write": false }
+    },
+
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+        ".validate": "newData.hasChildren(['nickname','email','createdAt'])",
+        "nickname": { ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 24" },
+        "email": { ".validate": "newData.isString()" },
+        "avatarUrl": { ".validate": "newData.val() === null || newData.isString()" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "ordersCount": { ".validate": "newData.isNumber()" },
+        "completedCount": { ".validate": "root.child('admins').child(auth.uid).val() === true && newData.isNumber()" },
+        "reviewsCount": { ".validate": "newData.isNumber()" }
+      }
+    },
+
+    "orders": {
+      ".read": "auth != null",
+      ".indexOn": ["userId", "status"],
+      "$orderId": {
+        ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && ((!data.exists() && newData.child('userId').val() === auth.uid) || (data.exists() && data.child('userId').val() === auth.uid) || root.child('admins').child(auth.uid).val() === true)",
+        ".validate": "newData.hasChildren(['orderId','userId','userEmail','createdAt','selectedTariff','basePrice','logo','logoPrice','totalPrice','status','prepaymentAmount','remainingAmount','paymentStatus'])",
+
+        "orderId": { ".validate": "newData.val() === $orderId" },
+        "userId": { ".validate": "root.child('admins').child(auth.uid).val() === true || (!data.exists() ? newData.val() === auth.uid : newData.val() === data.val())" },
+        "userNickname": { ".validate": "newData.isString()" },
+        "userEmail": { ".validate": "newData.isString()" },
+        "createdAt": { ".validate": "!data.exists() ? newData.val() <= now : newData.val() === data.val()" },
+
+        "selectedTariff": { ".validate": "newData.val() === 'Start' || newData.val() === 'Business' || newData.val() === 'Pro' || newData.val() === 'Ultra'" },
+        "basePrice": { ".validate": "root.child('admins').child(auth.uid).val() === true || (newData.parent().child('selectedTariff').val() === 'Start' && newData.val() === 5000) || (newData.parent().child('selectedTariff').val() === 'Business' && newData.val() === 10000) || (newData.parent().child('selectedTariff').val() === 'Pro' && newData.val() === 20000) || (newData.parent().child('selectedTariff').val() === 'Ultra' && newData.val() === 40000)" },
+
+        "logo": { ".validate": "newData.isBoolean()" },
+        "logoPrice": { ".validate": "(newData.parent().child('logo').val() === true && newData.val() === 200) || (newData.parent().child('logo').val() === false && newData.val() === 0)" },
+
+        "totalPrice": { ".validate": "newData.isNumber() && (root.child('admins').child(auth.uid).val() === true || newData.val() === newData.parent().child('basePrice').val() + newData.parent().child('logoPrice').val() - newData.parent().child('discountAmount').val())" },
+        "discountAmount": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "promoCode": { ".validate": "newData.val() === null || newData.isString()" },
+
+        "prepaymentPercent": { ".validate": "newData.val() === 50" },
+        "prepaymentAmount": { ".validate": "newData.isNumber() && (root.child('admins').child(auth.uid).val() === true || (2*newData.val() - newData.parent().child('totalPrice').val() >= 0 && 2*newData.val() - newData.parent().child('totalPrice').val() <= 1))" },
+        "remainingAmount": { ".validate": "newData.isNumber() && newData.val() + newData.parent().child('prepaymentAmount').val() === newData.parent().child('totalPrice').val()" },
+
+        "paymentStatus": { ".validate": "(newData.val() === 'awaiting_prepayment' || newData.val() === 'prepayment_received' || newData.val() === 'fully_paid') && (root.child('admins').child(auth.uid).val() === true || !data.exists() || newData.val() === data.val())" },
+
+        "questionnaire": { ".validate": "newData.hasChildren(['projectName','description','telegram'])" },
+
+        "status": { ".validate": "(newData.val() === 'pending' || newData.val() === 'confirmed' || newData.val() === 'in_progress' || newData.val() === 'completed' || newData.val() === 'cancelled' || newData.val() === 'rejected') && (root.child('admins').child(auth.uid).val() === true || (!data.exists() && newData.val() === 'pending') || (data.exists() && newData.val() === 'cancelled' && (data.val() === 'pending' || data.val() === 'confirmed')) || (data.exists() && newData.val() === data.val()))" },
+
+        "telegramContact": { ".validate": "newData.isString()" },
+        "adminComment": { ".validate": "root.child('admins').child(auth.uid).val() === true || newData.val() === '' || newData.val() === data.val()" },
+        "clientComment": { ".validate": "root.child('admins').child(auth.uid).val() === true || newData.val() === '' || newData.val() === data.val()" },
+        "completedAt": { ".validate": "root.child('admins').child(auth.uid).val() === true || newData.val() === null || newData.val() === data.val()" },
+        "cancelledAt": { ".validate": "newData.val() === null || newData.isNumber()" },
+        "displayId": { ".validate": "newData.isString()" },
+
+        "$other": { ".validate": false }
+      }
+    },
+
+    "reviews": {
+      ".read": true,
+      ".indexOn": ["orderId", "userId"],
+      "$reviewId": {
+        ".write": "auth != null && ((!data.exists() && newData.child('userId').val() === auth.uid && newData.child('reviewId').val() === $reviewId && root.child('orders').child(newData.child('orderId').val()).child('userId').val() === auth.uid && root.child('orders').child(newData.child('orderId').val()).child('status').val() === 'completed' && !root.child('reviewsByOrder').child(newData.child('orderId').val()).exists()) || root.child('admins').child(auth.uid).val() === true)",
+        ".validate": "newData.hasChildren(['reviewId','userId','userNickname','orderId','rating','text','createdAt'])",
+        "rating": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 5" },
+        "text": { ".validate": "newData.isString() && newData.val().length >= 5 && newData.val().length <= 600" },
+        "published": { ".validate": "newData.val() === true || newData.val() === false" }
+      }
+    },
+
+    "reviewsByOrder": {
+      ".read": "auth != null",
+      "$orderId": {
+        ".write": "auth != null && ((!data.exists() && root.child('orders').child($orderId).child('userId').val() === auth.uid) || root.child('admins').child(auth.uid).val() === true)",
+        ".validate": "newData.isString()"
+      }
+    },
+
+    "notifications": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)"
+      }
+    },
+
+    "promoCodes": {
+      ".read": "auth != null",
+      "$code": {
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+        ".validate": "newData.hasChildren(['code','discountType','discountValue'])"
+      }
+    }
+  }
+}

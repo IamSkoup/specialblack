@@ -185,6 +185,360 @@ img,svg{display:block;}
   .header-cta{font-size:13px; padding:8px 14px;}
 }
 
+/* ================= SpecialBlack: аккаунты / заказы / отзывы ================= */
+
+.header-auth{display:flex; align-items:center; gap:10px;}
+
+.icon-btn{
+  position:relative;
+  width:38px; height:38px;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:transparent;
+  color:var(--text-dim);
+  cursor:pointer;
+  transition:border-color .25s ease, color .25s ease;
+  flex-shrink:0;
+}
+.icon-btn:hover{border-color:var(--accent); color:var(--accent);}
+.icon-btn svg{width:17px; height:17px;}
+
+.notif-dot{
+  position:absolute; top:5px; right:5px;
+  width:7px; height:7px; border-radius:50%;
+  background:var(--accent);
+  border:1px solid var(--bg);
+  display:none;
+}
+.notif-dot.show{display:block;}
+
+.avatar-btn{
+  width:38px; height:38px; border-radius:50%;
+  overflow:hidden; border:1px solid var(--line);
+  cursor:pointer; flex-shrink:0;
+  background:var(--accent-soft);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Unbounded', sans-serif; font-size:13px; color:var(--accent);
+  transition:border-color .25s ease;
+}
+.avatar-btn:hover{border-color:var(--accent);}
+.avatar-btn img{width:100%; height:100%; object-fit:cover; display:block;}
+
+.dropdown{
+  position:absolute; top:calc(100% + 10px); right:0;
+  width:340px; max-width:calc(100vw - 32px);
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  z-index:200;
+  opacity:0; visibility:hidden; transform:translateY(-6px);
+  transition:opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+  max-height:70vh; overflow-y:auto;
+}
+.dropdown.open{opacity:1; visibility:visible; transform:translateY(0);}
+.dropdown-head{
+  padding:14px 18px; border-bottom:1px solid var(--line-soft);
+  font-size:13px; color:var(--text-dim); font-family:'JetBrains Mono', monospace;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.dropdown-head a{font-size:12px; color:var(--accent);}
+.notif-item{
+  padding:13px 18px; border-bottom:1px solid var(--line-soft);
+  font-size:13.5px; color:var(--text); line-height:1.5;
+  cursor:default;
+}
+.notif-item.unread{background:rgba(201,161,90,0.05);}
+.notif-item .notif-time{display:block; margin-top:4px; font-size:11.5px; color:var(--text-faint);}
+.notif-empty{padding:28px 18px; text-align:center; color:var(--text-faint); font-size:13.5px;}
+
+.header-wrap{position:relative;}
+
+.sb-overlay{
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(6,6,6,0.72);
+  backdrop-filter:blur(4px);
+  display:none;
+  align-items:flex-start; justify-content:center;
+  padding:90px 16px 40px;
+  overflow-y:auto;
+}
+.sb-overlay.open{display:flex;}
+.sb-modal{
+  width:100%; max-width:520px;
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  padding:32px;
+  position:relative;
+  animation:sbpop .3s var(--ease);
+}
+.sb-modal.sb-wide{max-width:760px;}
+@keyframes sbpop{from{opacity:0; transform:translateY(10px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);}}
+.sb-close{
+  position:absolute; top:18px; right:18px;
+  width:32px; height:32px; border-radius:50%;
+  border:1px solid var(--line); background:transparent; color:var(--text-dim);
+  cursor:pointer; font-size:16px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .2s ease, color .2s ease;
+}
+.sb-close:hover{border-color:var(--accent); color:var(--accent);}
+.sb-modal h3{font-size:20px; margin-bottom:6px; padding-right:30px;}
+.sb-modal .sb-sub{color:var(--text-dim); font-size:13.5px; margin-bottom:24px;}
+
+@media (max-width:600px){
+  .sb-overlay{padding:74px 10px 24px;}
+  .sb-modal{padding:24px 18px;}
+}
+
+.sb-field{margin-bottom:16px;}
+.sb-field label{
+  display:block; font-size:12.5px; color:var(--text-dim);
+  margin-bottom:7px; font-family:'JetBrains Mono', monospace; letter-spacing:.02em;
+}
+.sb-field input,
+.sb-field textarea,
+.sb-field select{
+  width:100%;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  color:var(--text);
+  font-family:'Inter', sans-serif;
+  font-size:14.5px;
+  padding:12px 14px;
+  transition:border-color .2s ease;
+}
+.sb-field input:focus,
+.sb-field textarea:focus,
+.sb-field select:focus{border-color:var(--accent); outline:none;}
+.sb-field textarea{resize:vertical; min-height:80px;}
+.sb-field-row{display:flex; gap:12px;}
+.sb-field-row .sb-field{flex:1;}
+.sb-check{display:flex; align-items:flex-start; gap:10px; font-size:14px; cursor:pointer; margin-bottom:16px;}
+.sb-check input{width:16px; height:16px; margin-top:2px; accent-color:var(--accent); flex-shrink:0;}
+.sb-hint{font-size:12px; color:var(--text-faint); margin-top:6px;}
+.sb-error{font-size:12.5px; color:#e0836f; margin-top:6px; display:none;}
+.sb-error.show{display:block;}
+
+.sb-tabs{display:flex; gap:4px; margin-bottom:24px; border-bottom:1px solid var(--line-soft);}
+.sb-tab{
+  padding:10px 4px; margin-right:20px; font-size:13.5px; color:var(--text-faint);
+  cursor:pointer; border-bottom:2px solid transparent; transition:color .2s ease, border-color .2s ease;
+  font-family:'JetBrains Mono', monospace;
+}
+.sb-tab.active{color:var(--text); border-color:var(--accent);}
+.sb-panel{display:none;}
+.sb-panel.active{display:block;}
+
+.sb-form-block{
+  border:1px solid var(--line-soft); border-radius:var(--radius); padding:18px 18px 4px;
+  margin-bottom:18px; background:rgba(255,255,255,0.012);
+}
+.sb-form-block > .sb-block-title{
+  font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--accent); margin-bottom:14px; display:block;
+}
+
+.sb-summary{
+  background:var(--bg); border:1px solid var(--line); border-radius:var(--radius);
+  padding:16px 18px; margin:18px 0; font-size:14px;
+}
+.sb-summary-row{display:flex; justify-content:space-between; padding:5px 0; color:var(--text-dim);}
+.sb-summary-row.total{color:var(--text); font-weight:600; border-top:1px solid var(--line-soft); margin-top:6px; padding-top:10px;}
+.sb-summary-row.prepay{color:var(--accent);}
+
+.sb-profile-head{display:flex; align-items:center; gap:16px; margin-bottom:22px;}
+.sb-profile-avatar{
+  width:64px; height:64px; border-radius:50%; overflow:hidden; flex-shrink:0;
+  background:var(--accent-soft); display:flex; align-items:center; justify-content:center;
+  font-family:'Unbounded', sans-serif; font-size:22px; color:var(--accent);
+  border:1px solid var(--line); position:relative; cursor:pointer;
+}
+.sb-profile-avatar img{width:100%; height:100%; object-fit:cover;}
+.sb-profile-avatar input{position:absolute; inset:0; opacity:0; cursor:pointer;}
+.sb-profile-name{font-family:'Unbounded', sans-serif; font-size:17px;}
+.sb-profile-email{font-size:13px; color:var(--text-dim); margin-top:3px;}
+.sb-verify-badge{
+  display:inline-flex; align-items:center; gap:5px; font-size:11.5px;
+  margin-top:6px; font-family:'JetBrains Mono', monospace;
+}
+.sb-verify-badge.ok{color:#7fbf8f;}
+.sb-verify-badge.no{color:#e0b25f;}
+
+.sb-stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:22px;}
+.sb-stat{
+  border:1px solid var(--line-soft); border-radius:var(--radius); padding:14px 10px; text-align:center;
+}
+.sb-stat b{display:block; font-family:'Unbounded', sans-serif; font-size:19px; margin-bottom:2px;}
+.sb-stat span{font-size:11px; color:var(--text-faint);}
+
+.sb-order-card{
+  border:1px solid var(--line-soft); border-radius:var(--radius); padding:16px 18px;
+  margin-bottom:12px; transition:border-color .2s ease;
+}
+.sb-order-card:hover{border-color:var(--line);}
+.sb-order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px;}
+.sb-order-id{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--accent);}
+.sb-order-tariff{font-size:14.5px; font-weight:600;}
+.sb-order-meta{font-size:12.5px; color:var(--text-faint); margin-top:2px;}
+.sb-order-price{font-family:'Unbounded', sans-serif; font-size:15px; white-space:nowrap;}
+
+.sb-badge{
+  display:inline-flex; align-items:center; gap:6px; font-size:11.5px;
+  padding:4px 10px; border-radius:20px; font-family:'JetBrains Mono', monospace;
+  border:1px solid var(--line);
+}
+.sb-badge::before{content:''; width:6px; height:6px; border-radius:50%; background:currentColor;}
+.sb-badge.st-pending{color:#e0b25f;}
+.sb-badge.st-confirmed{color:#6fb1d6;}
+.sb-badge.st-in_progress{color:var(--accent);}
+.sb-badge.st-completed{color:#7fbf8f;}
+.sb-badge.st-cancelled, .sb-badge.st-rejected{color:#e0836f;}
+
+.sb-badge.pay-awaiting_prepayment{color:#e0b25f;}
+.sb-badge.pay-prepayment_received{color:#7fbf8f;}
+.sb-badge.pay-fully_paid{color:#7fbf8f;}
+
+.sb-timeline{display:flex; align-items:center; margin:14px 0 4px; gap:0;}
+.sb-tl-step{flex:1; text-align:center; position:relative;}
+.sb-tl-dot{
+  width:10px; height:10px; border-radius:50%; background:var(--line);
+  margin:0 auto 6px; position:relative; z-index:2; border:2px solid var(--bg-raised);
+}
+.sb-tl-step.done .sb-tl-dot{background:var(--accent);}
+.sb-tl-step::before{
+  content:''; position:absolute; top:4px; left:-50%; width:100%; height:2px; background:var(--line); z-index:1;
+}
+.sb-tl-step:first-child::before{display:none;}
+.sb-tl-step.done::before{background:var(--accent);}
+.sb-tl-label{font-size:10.5px; color:var(--text-faint);}
+.sb-tl-step.done .sb-tl-label{color:var(--text-dim);}
+.sb-timeline.cancelled .sb-tl-dot, .sb-timeline.cancelled .sb-tl-step::before{background:#e0836f !important;}
+
+.sb-order-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+.sb-mini-btn{
+  font-size:12.5px; padding:8px 14px; border-radius:var(--radius); cursor:pointer;
+  border:1px solid var(--line); background:transparent; color:var(--text); font-family:'Inter', sans-serif;
+  transition:border-color .2s ease, color .2s ease;
+}
+.sb-mini-btn:hover{border-color:var(--accent); color:var(--accent);}
+.sb-mini-btn.danger:hover{border-color:#e0836f; color:#e0836f;}
+.sb-mini-btn.accent{background:var(--accent); color:var(--bg); border-color:var(--accent);}
+.sb-mini-btn.accent:hover{opacity:.85; color:var(--bg);}
+
+.sb-order-detail{margin-top:12px; padding-top:12px; border-top:1px solid var(--line-soft); font-size:13.5px; display:none;}
+.sb-order-detail.open{display:block;}
+.sb-order-detail dl{display:grid; grid-template-columns:130px 1fr; gap:6px 10px;}
+.sb-order-detail dt{color:var(--text-faint);}
+.sb-order-detail dd{color:var(--text);}
+
+.sb-payment-box{
+  border:1px solid var(--accent-dim); border-radius:var(--radius); padding:12px 14px; margin-top:12px; font-size:13px;
+}
+
+.sb-empty-state{text-align:center; padding:40px 10px; color:var(--text-faint); font-size:14px;}
+
+.pricing-note{
+  text-align:center; font-size:13px; color:var(--text-dim); margin-top:26px;
+  font-family:'JetBrains Mono', monospace;
+}
+.plan-prepay-tag{font-size:11.5px; color:var(--text-faint); margin:-8px 0 18px;}
+
+.reviews-stats{display:flex; align-items:center; gap:16px; margin-bottom:32px; flex-wrap:wrap;}
+.reviews-stars{color:var(--accent); font-size:20px; letter-spacing:2px;}
+.reviews-avg{font-family:'Unbounded', sans-serif; font-size:22px;}
+.reviews-count{color:var(--text-dim); font-size:13.5px;}
+.reviews-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+@media (max-width:900px){.reviews-grid{grid-template-columns:1fr;}}
+.review-card{
+  background:var(--bg-raised); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:24px 22px; position:relative;
+}
+.review-card-top{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+.review-avatar{
+  width:36px; height:36px; border-radius:50%; overflow:hidden; background:var(--accent-soft);
+  display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--accent);
+  font-family:'Unbounded', sans-serif; flex-shrink:0;
+}
+.review-avatar img{width:100%; height:100%; object-fit:cover;}
+.review-name{font-size:14px; font-weight:600;}
+.review-verified{font-size:10.5px; color:#7fbf8f; font-family:'JetBrains Mono', monospace;}
+.review-stars{color:var(--accent); font-size:13px; margin-bottom:10px; letter-spacing:1px;}
+.review-text{font-size:14px; color:var(--text-dim); line-height:1.6;}
+.review-date{font-size:11.5px; color:var(--text-faint); margin-top:12px;}
+.review-admin-actions{display:flex; gap:6px; margin-top:12px;}
+.review-admin-actions button{font-size:11px; padding:5px 9px;}
+.review-hidden{opacity:.45;}
+
+.sb-review-filters{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
+.sb-chip{
+  font-size:12.5px; padding:7px 13px; border-radius:20px; border:1px solid var(--line);
+  color:var(--text-dim); cursor:pointer; background:transparent; font-family:'Inter', sans-serif;
+}
+.sb-chip.active{border-color:var(--accent); color:var(--accent);}
+.sb-review-list-item{border-bottom:1px solid var(--line-soft); padding:18px 0;}
+.sb-review-list-item:first-child{padding-top:0;}
+
+.sb-star-input{display:flex; gap:6px; font-size:26px; color:var(--line); margin-bottom:4px;}
+.sb-star-input span{cursor:pointer; transition:color .15s ease;}
+.sb-star-input span.active{color:var(--accent);}
+
+.sb-admin-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:22px;}
+.sb-admin-tab{
+  font-size:12.5px; padding:8px 14px; border-radius:20px; border:1px solid var(--line);
+  color:var(--text-dim); cursor:pointer; font-family:'JetBrains Mono', monospace;
+}
+.sb-admin-tab.active{background:var(--accent); border-color:var(--accent); color:var(--bg);}
+.sb-admin-order{
+  border:1px solid var(--line-soft); border-radius:var(--radius); padding:16px; margin-bottom:12px;
+}
+.sb-admin-order .sb-order-detail dl{grid-template-columns:150px 1fr;}
+.sb-admin-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+.sb-comment-box{margin-top:10px;}
+
+.sb-promo-row{
+  display:flex; align-items:center; gap:10px; border:1px solid var(--line-soft); border-radius:var(--radius);
+  padding:10px 14px; margin-bottom:8px; font-size:13px; flex-wrap:wrap;
+}
+.sb-promo-row b{font-family:'JetBrains Mono', monospace; color:var(--accent);}
+.sb-promo-row .sb-tag-off{opacity:.5;}
+
+.sb-toast-wrap{position:fixed; bottom:22px; right:22px; z-index:3000; display:flex; flex-direction:column; gap:10px; max-width:340px;}
+.sb-toast{
+  background:var(--bg-raised); border:1px solid var(--line); border-left:3px solid var(--accent);
+  border-radius:var(--radius); padding:13px 16px; font-size:13.5px; box-shadow:var(--shadow-card);
+  animation:sbtoastin .25s var(--ease);
+}
+.sb-toast.err{border-left-color:#e0836f;}
+@keyframes sbtoastin{from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:translateX(0);}}
+@media (max-width:480px){.sb-toast-wrap{left:12px; right:12px; bottom:12px; max-width:none;}}
+
+.sb-loader-overlay{
+  position:fixed; inset:0; background:rgba(6,6,6,0.5); z-index:4000;
+  display:none; align-items:center; justify-content:center;
+}
+.sb-loader-overlay.open{display:flex;}
+.sb-spinner{width:34px; height:34px; border-radius:50%; border:2px solid var(--line); border-top-color:var(--accent); animation:sbspin .7s linear infinite;}
+@keyframes sbspin{to{transform:rotate(360deg);}}
+
+.sb-inline-loader{display:inline-block; width:16px; height:16px; border-radius:50%; border:2px solid var(--line-soft); border-top-color:var(--accent); animation:sbspin .6s linear infinite; vertical-align:-3px; margin-right:6px;}
+
+.faq-list{max-width:760px;}
+.faq-item{border-bottom:1px solid var(--line-soft); padding:18px 0;}
+.faq-q{font-size:15px; font-weight:600; margin-bottom:8px;}
+.faq-a{font-size:14px; color:var(--text-dim); line-height:1.6;}
+
+@media (max-width:480px){
+  .sb-stat-grid{grid-template-columns:repeat(3,1fr); gap:6px;}
+  .sb-stat b{font-size:16px;}
+  .sb-field-row{flex-direction:column; gap:0;}
+  .dropdown{width:calc(100vw - 24px); right:-6px;}
+}
+
 /* ---------- Buttons ---------- */
 
 .btn{
@@ -1007,7 +1361,41 @@ footer{
       <a href="#process">Процесс</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <a href="#contacts" class="header-cta">Связаться</a>
+    <div class="header-auth">
+      <div id="guestArea" style="display:flex; gap:10px;">
+        <a href="#" id="loginOpenBtn" class="header-cta">Войти</a>
+      </div>
+      <div id="userArea" class="header-wrap" style="display:none; align-items:center; gap:10px;">
+        <div class="header-wrap" id="notifWrap">
+          <button class="icon-btn" id="notifBtn" type="button" title="Уведомления" aria-label="Уведомления">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            <span class="notif-dot" id="notifDot"></span>
+          </button>
+          <div class="dropdown" id="notifDropdown">
+            <div class="dropdown-head"><span>Уведомления</span></div>
+            <div id="notifList"><div class="notif-empty">Пока нет уведомлений</div></div>
+          </div>
+        </div>
+        <div class="header-wrap" id="adminWrap" style="display:none;">
+          <button class="icon-btn" id="adminOpenBtn" type="button" title="Админ-панель" aria-label="Админ-панель">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+          </button>
+        </div>
+        <div class="header-wrap" id="profileWrap">
+          <button class="avatar-btn" id="avatarBtn" type="button" aria-label="Профиль"><span id="avatarInitial">?</span><img id="avatarImg" style="display:none;" alt=""></button>
+          <div class="dropdown" id="profileDropdown" style="width:220px;">
+            <div style="padding:14px 18px; border-bottom:1px solid var(--line-soft);">
+              <div id="ddNickname" style="font-size:14px; font-weight:600;"></div>
+              <div id="ddEmail" style="font-size:12px; color:var(--text-dim); margin-top:2px;"></div>
+            </div>
+            <div style="padding:8px;">
+              <a href="#" id="openProfileBtn" style="display:block; padding:10px 10px; font-size:13.5px; border-radius:4px;">Профиль и заказы</a>
+              <a href="#" id="logoutBtn" style="display:block; padding:10px 10px; font-size:13.5px; border-radius:4px; color:#e0836f;">Выйти</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -1072,7 +1460,8 @@ footer{
             <li>Базовые анимации</li>
             <li>Отправка файла(ов)</li>
           </ul>
-          <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Start" data-price="5 000 ₽">Заказать за 5 000 ₽</a>
+          <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
+          <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Start" data-price-num="5000">Заказать за 5 000 ₽</a>
         </div>
 
         <div class="plan featured reveal">
@@ -1090,7 +1479,8 @@ footer{
             <li>Дополнительные функциональные блоки</li>
             <li>Отправка файла(ов)</li>
           </ul>
-          <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Business" data-price="10 000 ₽">Заказать за 10 000 ₽</a>
+          <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
+          <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Business" data-price-num="10000">Заказать за 10 000 ₽</a>
         </div>
 
         <div class="plan reveal">
@@ -1108,7 +1498,8 @@ footer{
             <li>Адаптация под все устройства</li>
             <li>Отправка файла(ов)</li>
           </ul>
-          <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Pro" data-price="20 000 ₽" data-discuss="1">Обсудить проект за 20 000 ₽</a>
+          <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
+          <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Pro" data-price-num="20000" data-discuss="1">Обсудить проект за 20 000 ₽</a>
         </div>
 
         <div class="plan reveal">
@@ -1128,10 +1519,12 @@ footer{
             <li>Сложная структура сайта / веб-приложения</li>
           </ul>
           <p class="plan-example mono">Пример: <a href="https://iamskoup1.github.io/kapani/" target="_blank" rel="noopener">Капанёвский сайт ↗</a></p>
-          <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Ultra" data-price="40 000 ₽" data-discuss="1">Обсудить проект за 40 000 ₽</a>
+          <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
+          <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Ultra" data-price-num="40000" data-discuss="1">Обсудить проект за 40 000 ₽</a>
         </div>
 
       </div>
+      <p class="pricing-note">💳 Предоплата — 50% от итоговой стоимости заказа. Остаток — после завершения работы.</p>
     </div>
   </section>
 
@@ -1260,11 +1653,43 @@ footer{
     <div class="container">
       <div class="section-head">
         <h2>Отзывы клиентов</h2>
-        <p>Собираем отзывы по мере завершения проектов.</p>
+        <p>Реальные отзывы клиентов после завершения проектов.</p>
       </div>
-      <div class="review-placeholder reveal">
-        <span class="review-mark mono" aria-hidden="true">"</span>
-        <p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p>
+      <div class="reviews-stats reveal">
+        <span class="reviews-stars" id="reviewsStarsTop">★★★★★</span>
+        <span class="reviews-avg" id="reviewsAvgTop">—</span>
+        <span class="reviews-count" id="reviewsCountTop">Пока нет отзывов</span>
+      </div>
+      <div class="reviews-grid" id="reviewsGridTop">
+        <div class="review-placeholder reveal" style="grid-column:1/-1;">
+          <span class="review-mark mono" aria-hidden="true">"</span>
+          <p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:32px;">
+        <a href="#" id="allReviewsBtn" class="btn btn-secondary">Все отзывы</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <h2>Частые вопросы</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-q">Как происходит оплата?</div>
+          <div class="faq-a">После подтверждения заказа вносится предоплата 50% от его итоговой стоимости. Оставшиеся 50% оплачиваются после завершения работы.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q">Нужна ли регистрация для заказа?</div>
+          <div class="faq-a">Да, для оформления заказа нужно создать аккаунт и подтвердить email — так мы сможем показывать статус заказа в личном кабинете.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q">Можно ли отменить заказ?</div>
+          <div class="faq-a">Да, пока заказ ожидает подтверждения или подтверждён и ещё не взят в работу — отменить его можно в один клик в личном кабинете.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1329,26 +1754,331 @@ footer{
   </div>
 </footer>
 
+<!-- ============ SpecialBlack: модальные окна ============ -->
+
+<!-- Auth modal -->
+<div class="sb-overlay" id="authOverlay">
+  <div class="sb-modal">
+    <button class="sb-close" data-close-overlay="authOverlay">✕</button>
+    <div class="sb-tabs">
+      <div class="sb-tab active" data-authtab="login">Вход</div>
+      <div class="sb-tab" data-authtab="register">Регистрация</div>
+      <div class="sb-tab" data-authtab="reset">Восстановление</div>
+    </div>
+
+    <div class="sb-panel active" id="loginPanel">
+      <h3>Вход в аккаунт</h3>
+      <p class="sb-sub">Войдите, чтобы оформлять заказы и следить за их статусом.</p>
+      <form id="loginForm">
+        <div class="sb-field"><label>Email</label><input type="email" id="loginEmail" required autocomplete="email"></div>
+        <div class="sb-field"><label>Пароль</label><input type="password" id="loginPassword" required autocomplete="current-password"></div>
+        <div class="sb-error" id="loginError"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn">Войти</button>
+      </form>
+    </div>
+
+    <div class="sb-panel" id="registerPanel">
+      <h3>Создать аккаунт</h3>
+      <p class="sb-sub">После регистрации на email придёт письмо для подтверждения.</p>
+      <form id="registerForm">
+        <div class="sb-field"><label>Никнейм</label><input type="text" id="regNickname" required minlength="2" maxlength="24" autocomplete="nickname"></div>
+        <div class="sb-field"><label>Email</label><input type="email" id="regEmail" required autocomplete="email"></div>
+        <div class="sb-field"><label>Пароль</label><input type="password" id="regPassword" required minlength="6" autocomplete="new-password"></div>
+        <p class="sb-hint">Минимум 6 символов.</p>
+        <div class="sb-error" id="registerError"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="registerSubmitBtn" style="margin-top:10px;">Зарегистрироваться</button>
+      </form>
+    </div>
+
+    <div class="sb-panel" id="resetPanel">
+      <h3>Восстановление пароля</h3>
+      <p class="sb-sub">Пришлём ссылку для сброса пароля на email.</p>
+      <form id="resetForm">
+        <div class="sb-field"><label>Email</label><input type="email" id="resetEmail" required autocomplete="email"></div>
+        <div class="sb-error" id="resetError"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="resetSubmitBtn">Отправить ссылку</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Verify email banner modal -->
+<div class="sb-overlay" id="verifyOverlay">
+  <div class="sb-modal">
+    <button class="sb-close" data-close-overlay="verifyOverlay">✕</button>
+    <h3>Подтвердите email</h3>
+    <p class="sb-sub">Мы отправили письмо со ссылкой подтверждения на <b id="verifyEmailText"></b>. Пока email не подтверждён, оформить заказ нельзя.</p>
+    <button class="btn btn-outline-accent btn-block" id="resendVerifyBtn">Подтвердить email повторно</button>
+  </div>
+</div>
+
+<!-- Profile modal -->
+<div class="sb-overlay" id="profileOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="profileOverlay">✕</button>
+    <div class="sb-profile-head">
+      <div class="sb-profile-avatar" id="profileAvatarBox">
+        <span id="profileAvatarInitial">?</span>
+        <img id="profileAvatarImg" style="display:none;" alt="">
+        <input type="file" id="avatarUpload" accept="image/png,image/jpeg,image/webp">
+      </div>
+      <div>
+        <div class="sb-profile-name" id="profileNickname">—</div>
+        <div class="sb-profile-email" id="profileEmail">—</div>
+        <div class="sb-verify-badge" id="profileVerifyBadge"></div>
+      </div>
+    </div>
+
+    <div class="sb-stat-grid">
+      <div class="sb-stat"><b id="statOrders">0</b><span>Заказов</span></div>
+      <div class="sb-stat"><b id="statCompleted">0</b><span>Выполнено</span></div>
+      <div class="sb-stat"><b id="statReviews">0</b><span>Отзывов</span></div>
+    </div>
+
+    <div class="sb-tabs">
+      <div class="sb-tab active" data-profiletab="orders">Мои заказы</div>
+      <div class="sb-tab" data-profiletab="reviews">Мои отзывы</div>
+      <div class="sb-tab" data-profiletab="settings">Настройки</div>
+    </div>
+
+    <div class="sb-panel active" id="ordersPanel">
+      <div id="ordersList"><div class="sb-empty-state">Загрузка…</div></div>
+    </div>
+
+    <div class="sb-panel" id="myReviewsPanel">
+      <div id="myReviewsList"><div class="sb-empty-state">Загрузка…</div></div>
+    </div>
+
+    <div class="sb-panel" id="settingsPanel">
+      <div class="sb-form-block">
+        <span class="sb-block-title">Никнейм</span>
+        <div class="sb-field-row">
+          <div class="sb-field"><input type="text" id="editNickname" maxlength="24"></div>
+        </div>
+        <button class="sb-mini-btn accent" id="saveNicknameBtn">Сохранить никнейм</button>
+      </div>
+      <div class="sb-form-block">
+        <span class="sb-block-title">Email</span>
+        <div class="sb-field-row">
+          <div class="sb-field"><input type="email" id="editEmail"></div>
+        </div>
+        <p class="sb-hint">При изменении email на новый адрес придёт письмо подтверждения.</p>
+        <button class="sb-mini-btn accent" id="saveEmailBtn">Изменить email</button>
+      </div>
+      <div class="sb-form-block">
+        <span class="sb-block-title">Пароль</span>
+        <div class="sb-field-row">
+          <div class="sb-field"><input type="password" id="newPassword" placeholder="Новый пароль" minlength="6"></div>
+        </div>
+        <button class="sb-mini-btn accent" id="savePasswordBtn">Изменить пароль</button>
+      </div>
+      <div class="sb-error" id="settingsError"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Order modal -->
+<div class="sb-overlay" id="orderOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="orderOverlay">✕</button>
+    <h3>Заказать сайт</h3>
+    <p class="sb-sub">Тариф: <b id="orderTariffLabel">—</b></p>
+    <form id="orderForm">
+
+      <div class="sb-form-block">
+        <span class="sb-block-title">О проекте</span>
+        <div class="sb-field"><label>Название проекта / компании</label><input type="text" id="q_projectName" required></div>
+        <div class="sb-field"><label>Краткое описание, какой сайт нужен</label><textarea id="q_description" required></textarea></div>
+        <div class="sb-field"><label>Какие страницы нужны</label><input type="text" id="q_pages" placeholder="Главная, Услуги, Контакты..."></div>
+      </div>
+
+      <div class="sb-form-block">
+        <span class="sb-block-title">Стиль</span>
+        <div class="sb-field-row">
+          <div class="sb-field"><label>Желаемый стиль</label><input type="text" id="q_style" placeholder="Минимализм, тёмный, яркий..."></div>
+          <div class="sb-field"><label>Основные цвета</label><input type="text" id="q_colors" placeholder="Чёрный, золотой..."></div>
+        </div>
+        <div class="sb-field"><label>Примеры сайтов, которые нравятся</label><input type="text" id="q_examples" placeholder="Ссылки или названия"></div>
+      </div>
+
+      <div class="sb-form-block">
+        <span class="sb-block-title">Дополнительно</span>
+        <div class="sb-field"><label>Дополнительные пожелания</label><textarea id="q_wishes"></textarea></div>
+        <div class="sb-field"><label>Контакт для связи в Telegram</label><input type="text" id="q_telegram" placeholder="@username" required></div>
+        <div class="sb-field"><label>Дополнительная информация</label><textarea id="q_extra"></textarea></div>
+      </div>
+
+      <div class="sb-form-block">
+        <span class="sb-block-title">Опции</span>
+        <label class="sb-check"><input type="checkbox" id="q_logo"> Логотип для сайта — +200 ₽</label>
+        <div class="sb-field"><label>Промокод (если есть)</label><input type="text" id="q_promo" placeholder="START10"></div>
+        <div class="sb-error" id="promoError"></div>
+      </div>
+
+      <div class="sb-form-block">
+        <span class="sb-block-title">Условия оплаты</span>
+        <p style="font-size:13.5px; color:var(--text-dim); margin-bottom:8px;">Предоплата — 50% от итоговой стоимости заказа. Оставшиеся 50% оплачиваются после завершения работы.</p>
+      </div>
+
+      <div class="sb-summary">
+        <div class="sb-summary-row"><span>Тариф</span><span id="sumTariff">—</span></div>
+        <div class="sb-summary-row" id="sumLogoRow" style="display:none;"><span>Логотип</span><span>+200 ₽</span></div>
+        <div class="sb-summary-row" id="sumPromoRow" style="display:none;"><span>Скидка по промокоду</span><span id="sumPromoVal">—</span></div>
+        <div class="sb-summary-row total"><span>Итого</span><span id="sumTotal">0 ₽</span></div>
+        <div class="sb-summary-row prepay"><span>Предоплата (50%)</span><span id="sumPrepay">0 ₽</span></div>
+        <div class="sb-summary-row"><span>После выполнения</span><span id="sumRemain">0 ₽</span></div>
+      </div>
+
+      <div class="sb-error" id="orderError"></div>
+      <button type="submit" class="btn btn-primary btn-block" id="createOrderBtn">Создать заказ</button>
+    </form>
+  </div>
+</div>
+
+<!-- Order created / Telegram modal -->
+<div class="sb-overlay" id="orderCreatedOverlay">
+  <div class="sb-modal">
+    <button class="sb-close" data-close-overlay="orderCreatedOverlay">✕</button>
+    <h3>Заказ создан 🎉</h3>
+    <p class="sb-sub">Номер заказа: <b id="createdOrderId" class="mono"></b>. Нажмите кнопку ниже, чтобы отправить анкету в Telegram — сообщение уже заполнено.</p>
+    <a href="#" target="_blank" rel="noopener" class="btn btn-primary btn-block" id="continueTelegramBtn">Продолжить в Telegram</a>
+    <button class="btn btn-secondary btn-block" id="orderCreatedCloseBtn" style="margin-top:10px;">Готово</button>
+  </div>
+</div>
+
+<!-- Guest order gate modal -->
+<div class="sb-overlay" id="gateOverlay">
+  <div class="sb-modal">
+    <button class="sb-close" data-close-overlay="gateOverlay">✕</button>
+    <h3>Нужен аккаунт</h3>
+    <p class="sb-sub">Чтобы оформить заказ, войдите или создайте аккаунт.</p>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-primary" id="gateLoginBtn" style="flex:1;">Войти</button>
+      <button class="btn btn-outline-accent" id="gateRegisterBtn" style="flex:1;">Регистрация</button>
+    </div>
+  </div>
+</div>
+
+<!-- Review modal -->
+<div class="sb-overlay" id="reviewOverlay">
+  <div class="sb-modal">
+    <button class="sb-close" data-close-overlay="reviewOverlay">✕</button>
+    <h3>Оставить отзыв</h3>
+    <p class="sb-sub">Заказ <b id="reviewOrderId" class="mono"></b></p>
+    <form id="reviewForm">
+      <div class="sb-field">
+        <label>Оценка</label>
+        <div class="sb-star-input" id="starInput">
+          <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+        </div>
+      </div>
+      <div class="sb-field"><label>Текст отзыва</label><textarea id="reviewText" required minlength="5" maxlength="600"></textarea></div>
+      <div class="sb-error" id="reviewError"></div>
+      <button type="submit" class="btn btn-primary btn-block" id="submitReviewBtn">Отправить отзыв</button>
+    </form>
+  </div>
+</div>
+
+<!-- All reviews modal -->
+<div class="sb-overlay" id="allReviewsOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="allReviewsOverlay">✕</button>
+    <h3>Все отзывы</h3>
+    <div class="reviews-stats">
+      <span class="reviews-stars" id="reviewsStarsFull">★★★★★</span>
+      <span class="reviews-avg" id="reviewsAvgFull">—</span>
+      <span class="reviews-count" id="reviewsCountFull">Пока нет отзывов</span>
+    </div>
+    <div class="sb-review-filters">
+      <button class="sb-chip active" data-filter="all">Все</button>
+      <button class="sb-chip" data-filter="5">5 звёзд</button>
+      <button class="sb-chip" data-filter="4">4 звезды</button>
+      <button class="sb-chip" data-filter="3">3 звезды</button>
+      <button class="sb-chip" data-filter="2">2 звезды</button>
+      <button class="sb-chip" data-filter="1">1 звезда</button>
+    </div>
+    <div class="sb-field" style="max-width:220px;">
+      <select id="reviewSort">
+        <option value="new">Сначала новые</option>
+        <option value="old">Сначала старые</option>
+        <option value="high">Сначала высокая оценка</option>
+        <option value="low">Сначала низкая оценка</option>
+      </select>
+    </div>
+    <div id="allReviewsList" style="margin-top:16px;"><div class="sb-empty-state">Загрузка…</div></div>
+  </div>
+</div>
+
+<!-- Admin panel modal -->
+<div class="sb-overlay" id="adminOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="adminOverlay">✕</button>
+    <h3>Админ-панель</h3>
+    <div class="sb-tabs">
+      <div class="sb-tab active" data-admintab="orders">Заказы</div>
+      <div class="sb-tab" data-admintab="reviews">Отзывы</div>
+      <div class="sb-tab" data-admintab="promo">Промокоды</div>
+    </div>
+
+    <div class="sb-panel active" id="adminOrdersPanel">
+      <div class="sb-admin-tabs" id="adminStatusTabs">
+        <button class="sb-admin-tab active" data-status="pending">Новые</button>
+        <button class="sb-admin-tab" data-status="confirmed">Подтверждённые</button>
+        <button class="sb-admin-tab" data-status="in_progress">В работе</button>
+        <button class="sb-admin-tab" data-status="completed">Выполненные</button>
+        <button class="sb-admin-tab" data-status="cancelled">Отменённые</button>
+        <button class="sb-admin-tab" data-status="rejected">Отклонённые</button>
+      </div>
+      <div id="adminOrdersList"><div class="sb-empty-state">Загрузка…</div></div>
+    </div>
+
+    <div class="sb-panel" id="adminReviewsPanel">
+      <div id="adminReviewsList"><div class="sb-empty-state">Загрузка…</div></div>
+    </div>
+
+    <div class="sb-panel" id="adminPromoPanel">
+      <div class="sb-form-block">
+        <span class="sb-block-title">Новый промокод</span>
+        <div class="sb-field-row">
+          <div class="sb-field"><label>Код</label><input type="text" id="promoCode" placeholder="START10" style="text-transform:uppercase;"></div>
+          <div class="sb-field"><label>Тип скидки</label>
+            <select id="promoType"><option value="percent">Проценты</option><option value="fixed">Фикс. сумма ₽</option></select>
+          </div>
+          <div class="sb-field"><label>Размер</label><input type="number" id="promoValue" min="1"></div>
+        </div>
+        <div class="sb-field-row">
+          <div class="sb-field"><label>Срок действия (дней, 0 = бессрочно)</label><input type="number" id="promoDays" min="0" value="0"></div>
+          <div class="sb-field"><label>Лимит использований (0 = без лимита)</label><input type="number" id="promoLimit" min="0" value="0"></div>
+        </div>
+        <button class="sb-mini-btn accent" id="createPromoBtn">Создать промокод</button>
+      </div>
+      <div id="promoList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sb-toast-wrap" id="toastWrap"></div>
+<div class="sb-loader-overlay" id="loaderOverlay"><div class="sb-spinner"></div></div>
+
 <script>
-  document.querySelectorAll('.order-btn').forEach(btn => {
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      const plan = this.dataset.plan;
-      const price = this.dataset.price;
-      let text;
-      if(plan === 'Start'){
-        text = 'Здравствуйте! Хочу заказать сайт по тарифу Start за 5 000 ₽.';
-      } else if(plan === 'Business'){
-        text = 'Здравствуйте! Хочу заказать сайт по тарифу Business за 10 000 ₽.';
-      } else if(plan === 'Pro'){
-        text = 'Здравствуйте! Хочу обсудить сайт по тарифу Pro за 20 000 ₽.';
-      } else {
-        text = 'Здравствуйте! Хочу обсудить сайт по тарифу Ultra за 40 000 ₽.';
-      }
-      const url = 'https://t.me/jet18tsi?text=' + encodeURIComponent(text);
-      window.open(url, '_blank', 'noopener');
-    });
+window.__SB_CLICKED_ORDER_BTN__ = null;
+document.querySelectorAll('.order-btn').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent('sb:orderbtn', {detail:{
+      plan: this.dataset.plan,
+      price: Number(this.dataset.priceNum)
+    }}));
   });
+});
+document.getElementById('allReviewsBtn').addEventListener('click', function(e){
+  e.preventDefault();
+  window.dispatchEvent(new CustomEvent('sb:openallreviews'));
+});
+</script>
+
+<script>
+  /* order-btn клики теперь обрабатываются в модуле аккаунтов/заказов ниже (см. sbHandleOrderBtn) */
 
   if('IntersectionObserver' in window){
     const revealEls = document.querySelectorAll('.reveal');
@@ -1364,6 +2094,1031 @@ footer{
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
   }
+</script>
+
+<!-- ============================================================
+     SpecialBlack — аккаунты, заказы, отзывы (Firebase)
+     Перед использованием вставьте свою конфигурацию Firebase ниже
+     (раздел "1. КОНФИГУРАЦИЯ"). Подробности — в FIREBASE_SETUP.md
+     ============================================================ -->
+<script type="module">
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, sendEmailVerification, sendPasswordResetEmail, updateProfile, updatePassword,
+  verifyBeforeUpdateEmail, EmailAuthProvider, reauthenticateWithCredential
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import {
+  getDatabase, ref, set, get, update, push, onValue, off, query, orderByChild, equalTo, increment, remove
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+import {
+  getStorage, ref as sRef, uploadBytes, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+
+/* ======================= 1. КОНФИГУРАЦИЯ ======================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBMi-H9yA9ch88L3HUaQq7QvIosawz-vWk",
+  authDomain: "specialblack-90ffa.firebaseapp.com",
+  databaseURL: "https://specialblack-90ffa-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "specialblack-90ffa",
+  storageBucket: "specialblack-90ffa.firebasestorage.app",
+  messagingSenderId: "199076000534",
+  appId: "1:199076000534:web:9e4bdb7401b58238ef9637",
+  measurementId: "G-W446MDGYPL"
+};
+
+
+const TARIFFS = {
+  Start:    { name: 'Start',    price: 5000 },
+  Business: { name: 'Business', price: 10000 },
+  Pro:      { name: 'Pro',      price: 20000 },
+  Ultra:    { name: 'Ultra',    price: 40000 }
+};
+const LOGO_PRICE = 200;
+const PREPAY_PERCENT = 50;
+const TELEGRAM_USERNAME = 'jet18tsi';
+const ADMIN_EMAIL = 'denisspesivcev8@gmail.com';
+const ADMIN_NICK = 'Кайон';
+
+/* ======================= 2. ИНИЦИАЛИЗАЦИЯ ======================= */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const storage = getStorage(app);
+
+/* ======================= 3. УТИЛИТЫ ======================= */
+
+function $(id){ return document.getElementById(id); }
+function escapeHtml(str){
+  return String(str ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+function formatPrice(n){ return Number(n||0).toLocaleString('ru-RU') + ' ₽'; }
+function formatDate(ts){
+  if(!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleDateString('ru-RU', {day:'numeric', month:'long', year:'numeric'});
+}
+function starsStr(rating){
+  const r = Math.round(Number(rating)||0);
+  return '★★★★★☆☆☆☆☆'.slice(5-r, 10-r);
+}
+function toast(msg, type){
+  const wrap = $('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'sb-toast' + (type === 'err' ? ' err' : '');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 5000);
+}
+function showLoader(){ $('loaderOverlay').classList.add('open'); }
+function hideLoader(){ $('loaderOverlay').classList.remove('open'); }
+function openOverlay(id){ document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open')); $(id).classList.add('open'); }
+function closeOverlay(id){ $(id).classList.remove('open'); }
+document.querySelectorAll('[data-close-overlay]').forEach(btn=>{
+  btn.addEventListener('click', () => closeOverlay(btn.dataset.closeOverlay));
+});
+document.querySelectorAll('.sb-overlay').forEach(ov=>{
+  ov.addEventListener('click', e => { if(e.target === ov) ov.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.sb-overlay.open').forEach(o=>o.classList.remove('open'));
+    document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));
+  }
+});
+
+const STATUS_LABELS = {
+  pending:'Ожидает подтверждения', confirmed:'Подтверждён', in_progress:'В работе',
+  completed:'Выполнен', cancelled:'Отменён', rejected:'Отклонён'
+};
+const PAYMENT_LABELS = {
+  awaiting_prepayment:'🟡 Ожидается предоплата',
+  prepayment_received:'🟢 Предоплата получена',
+  fully_paid:'🟢 Оплачено полностью'
+};
+const STATUS_STEPS = ['pending','confirmed','in_progress','completed'];
+
+/* ======================= 4. СОСТОЯНИЕ ======================= */
+
+let currentUser = null;
+let currentProfile = null;
+let isAdmin = false;
+let myOrders = {};
+let myReviewsByOrder = {};
+let allReviewsCache = {};
+let selectedOrderTariff = null;
+let selectedOrderPrice = 0;
+let currentPromo = null;
+let selectedStarRating = 0;
+let reorderSeed = null;
+
+/* ======================= 5. AUTH ======================= */
+
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  if(!user){
+    $('guestArea').style.display = 'flex';
+    $('userArea').style.display = 'none';
+    isAdmin = false;
+    currentProfile = null;
+    myOrders = {};
+    off(ref(db, 'notifications'));
+    return;
+  }
+  $('guestArea').style.display = 'none';
+  $('userArea').style.display = 'flex';
+
+  // admin check
+  try{
+    const adminSnap = await get(ref(db, 'admins/' + user.uid));
+    isAdmin = adminSnap.exists() === true && adminSnap.val() === true;
+  }catch(e){ isAdmin = false; }
+  $('adminWrap').style.display = isAdmin ? 'block' : 'none';
+
+  await loadOrCreateProfile(user);
+  watchOrders(user.uid);
+  watchNotifications(user.uid);
+  watchMyReviews();
+});
+
+async function loadOrCreateProfile(user){
+  const uref = ref(db, 'users/' + user.uid);
+  let snap = await get(uref);
+  if(!snap.exists()){
+    const data = {
+      nickname: user.displayName || (user.email ? user.email.split('@')[0] : 'Пользователь'),
+      email: user.email,
+      avatarUrl: user.photoURL || null,
+      createdAt: Date.now(),
+      ordersCount: 0, completedCount: 0, reviewsCount: 0
+    };
+    await set(uref, data);
+    snap = await get(uref);
+  }
+  currentProfile = snap.val();
+  onValue(uref, s => { currentProfile = s.val(); renderProfileHeader(); });
+  renderProfileHeader();
+}
+
+function renderProfileHeader(){
+  if(!currentProfile || !currentUser) return;
+  const initial = (currentProfile.nickname || '?').charAt(0).toUpperCase();
+  $('avatarInitial').textContent = initial;
+  $('profileAvatarInitial').textContent = initial;
+  if(currentProfile.avatarUrl){
+    $('avatarImg').src = currentProfile.avatarUrl; $('avatarImg').style.display='block'; $('avatarInitial').style.display='none';
+    $('profileAvatarImg').src = currentProfile.avatarUrl; $('profileAvatarImg').style.display='block'; $('profileAvatarInitial').style.display='none';
+  } else {
+    $('avatarImg').style.display='none'; $('avatarInitial').style.display='block';
+    $('profileAvatarImg').style.display='none'; $('profileAvatarInitial').style.display='block';
+  }
+  $('ddNickname').textContent = currentProfile.nickname || '';
+  $('ddEmail').textContent = currentUser.email || '';
+  $('profileNickname').textContent = currentProfile.nickname || '';
+  $('profileEmail').textContent = currentUser.email || '';
+  $('editNickname').value = currentProfile.nickname || '';
+  $('editEmail').value = currentUser.email || '';
+  $('statOrders').textContent = currentProfile.ordersCount || 0;
+  $('statCompleted').textContent = currentProfile.completedCount || 0;
+  $('statReviews').textContent = currentProfile.reviewsCount || 0;
+  const badge = $('profileVerifyBadge');
+  if(currentUser.emailVerified){
+    badge.className = 'sb-verify-badge ok'; badge.textContent = '✓ Email подтверждён';
+  } else {
+    badge.className = 'sb-verify-badge no'; badge.textContent = '⚠ Email не подтверждён';
+  }
+}
+
+$('loginOpenBtn').addEventListener('click', e => { e.preventDefault(); switchAuthTab('login'); openOverlay('authOverlay'); });
+$('gateLoginBtn').addEventListener('click', () => { closeOverlay('gateOverlay'); switchAuthTab('login'); openOverlay('authOverlay'); });
+$('gateRegisterBtn').addEventListener('click', () => { closeOverlay('gateOverlay'); switchAuthTab('register'); openOverlay('authOverlay'); });
+
+function switchAuthTab(tab){
+  document.querySelectorAll('[data-authtab]').forEach(t => t.classList.toggle('active', t.dataset.authtab === tab));
+  ['login','register','reset'].forEach(p => $(p+'Panel').classList.toggle('active', p === tab));
+}
+document.querySelectorAll('[data-authtab]').forEach(t => t.addEventListener('click', () => switchAuthTab(t.dataset.authtab)));
+
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('loginError').classList.remove('show');
+  const email = $('loginEmail').value.trim(), pass = $('loginPassword').value;
+  try{
+    showLoader();
+    await signInWithEmailAndPassword(auth, email, pass);
+    hideLoader(); closeOverlay('authOverlay'); toast('Добро пожаловать!');
+  }catch(err){
+    hideLoader();
+    $('loginError').textContent = translateAuthError(err); $('loginError').classList.add('show');
+  }
+});
+
+$('registerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('registerError').classList.remove('show');
+  const nickname = $('regNickname').value.trim(), email = $('regEmail').value.trim(), pass = $('regPassword').value;
+  try{
+    showLoader();
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: nickname });
+    await set(ref(db, 'users/' + cred.user.uid), {
+      nickname, email, avatarUrl: null, createdAt: Date.now(),
+      ordersCount: 0, completedCount: 0, reviewsCount: 0
+    });
+    await sendEmailVerification(cred.user);
+    hideLoader();
+    closeOverlay('authOverlay');
+    $('verifyEmailText').textContent = email;
+    openOverlay('verifyOverlay');
+    toast('Аккаунт создан! Проверьте почту.');
+  }catch(err){
+    hideLoader();
+    $('registerError').textContent = translateAuthError(err); $('registerError').classList.add('show');
+  }
+});
+
+$('resetForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('resetError').classList.remove('show');
+  try{
+    showLoader();
+    await sendPasswordResetEmail(auth, $('resetEmail').value.trim());
+    hideLoader();
+    toast('Ссылка для сброса пароля отправлена на почту.');
+    closeOverlay('authOverlay');
+  }catch(err){
+    hideLoader();
+    $('resetError').textContent = translateAuthError(err); $('resetError').classList.add('show');
+  }
+});
+
+$('resendVerifyBtn').addEventListener('click', async () => {
+  if(!auth.currentUser) return;
+  try{
+    showLoader();
+    await sendEmailVerification(auth.currentUser);
+    hideLoader();
+    toast('Письмо отправлено повторно.');
+  }catch(err){ hideLoader(); toast(translateAuthError(err), 'err'); }
+});
+
+$('logoutBtn').addEventListener('click', async e => {
+  e.preventDefault();
+  await signOut(auth);
+  closeOverlay('profileDropdown');
+  toast('Вы вышли из аккаунта.');
+});
+
+function translateAuthError(err){
+  const code = err && err.code || '';
+  const map = {
+    'auth/email-already-in-use':'Этот email уже зарегистрирован.',
+    'auth/invalid-email':'Некорректный email.',
+    'auth/weak-password':'Пароль слишком простой (минимум 6 символов).',
+    'auth/user-not-found':'Пользователь с таким email не найден.',
+    'auth/wrong-password':'Неверный пароль.',
+    'auth/invalid-credential':'Неверный email или пароль.',
+    'auth/too-many-requests':'Слишком много попыток. Попробуйте позже.',
+    'auth/requires-recent-login':'Для этого действия нужно недавно войти в аккаунт заново.'
+  };
+  return map[code] || 'Произошла ошибка. Попробуйте ещё раз.';
+}
+
+/* ======================= 6. HEADER DROPDOWNS ======================= */
+
+$('avatarBtn').addEventListener('click', () => {
+  const dd = $('profileDropdown');
+  dd.classList.contains('open') ? dd.classList.remove('open') : openOverlay('profileDropdown');
+});
+$('notifBtn').addEventListener('click', () => {
+  const dd = $('notifDropdown');
+  if(dd.classList.contains('open')){ dd.classList.remove('open'); }
+  else { openOverlay('notifDropdown'); markNotificationsRead(); }
+});
+document.addEventListener('click', e => {
+  if(!e.target.closest('#profileWrap')) $('profileDropdown').classList.remove('open');
+  if(!e.target.closest('#notifWrap')) $('notifDropdown').classList.remove('open');
+});
+$('openProfileBtn').addEventListener('click', e => {
+  e.preventDefault(); closeOverlay('profileDropdown');
+  switchProfileTab('orders'); openOverlay('profileOverlay');
+});
+$('adminOpenBtn').addEventListener('click', () => { openOverlay('adminOverlay'); loadAdminOrders('pending'); loadAdminReviews(); loadPromoList(); });
+
+function switchProfileTab(tab){
+  document.querySelectorAll('[data-profiletab]').forEach(t => t.classList.toggle('active', t.dataset.profiletab === tab));
+  ['orders','myReviews','settings'].forEach(p => {});
+  $('ordersPanel').classList.toggle('active', tab === 'orders');
+  $('myReviewsPanel').classList.toggle('active', tab === 'reviews');
+  $('settingsPanel').classList.toggle('active', tab === 'settings');
+}
+document.querySelectorAll('[data-profiletab]').forEach(t => t.addEventListener('click', () => switchProfileTab(t.dataset.profiletab)));
+
+/* ======================= 7. ПРОФИЛЬ: НАСТРОЙКИ ======================= */
+
+$('saveNicknameBtn').addEventListener('click', async () => {
+  const val = $('editNickname').value.trim();
+  if(val.length < 2){ toast('Никнейм слишком короткий', 'err'); return; }
+  try{
+    showLoader();
+    await update(ref(db, 'users/' + currentUser.uid), { nickname: val });
+    await updateProfile(currentUser, { displayName: val });
+    hideLoader(); toast('Никнейм обновлён.');
+  }catch(err){ hideLoader(); toast(translateAuthError(err), 'err'); }
+});
+
+$('saveEmailBtn').addEventListener('click', async () => {
+  const val = $('editEmail').value.trim();
+  if(!val || val === currentUser.email) return;
+  try{
+    showLoader();
+    await verifyBeforeUpdateEmail(currentUser, val);
+    hideLoader();
+    toast('Письмо для подтверждения нового email отправлено.');
+  }catch(err){ hideLoader(); $('settingsError').textContent = translateAuthError(err); $('settingsError').classList.add('show'); }
+});
+
+$('savePasswordBtn').addEventListener('click', async () => {
+  const val = $('newPassword').value;
+  if(val.length < 6){ toast('Минимум 6 символов', 'err'); return; }
+  try{
+    showLoader();
+    await updatePassword(currentUser, val);
+    $('newPassword').value = '';
+    hideLoader(); toast('Пароль изменён.');
+  }catch(err){ hideLoader(); $('settingsError').textContent = translateAuthError(err); $('settingsError').classList.add('show'); }
+});
+
+$('avatarUpload').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const okTypes = ['image/jpeg','image/png','image/webp'];
+  if(!okTypes.includes(file.type)){ toast('Разрешены только JPG, PNG, WebP', 'err'); return; }
+  if(file.size > 3 * 1024 * 1024){ toast('Размер файла не более 3 МБ', 'err'); return; }
+  try{
+    showLoader();
+    const path = 'avatars/' + currentUser.uid + '/' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+    const fref = sRef(storage, path);
+    await uploadBytes(fref, file);
+    const url = await getDownloadURL(fref);
+    await update(ref(db, 'users/' + currentUser.uid), { avatarUrl: url });
+    await updateProfile(currentUser, { photoURL: url });
+    hideLoader(); toast('Аватар обновлён.');
+  }catch(err){ hideLoader(); toast('Не удалось загрузить аватар. Проверьте, что Storage подключён.', 'err'); }
+});
+
+/* ======================= 8. ЗАКАЗ: расчёт стоимости ======================= */
+
+window.addEventListener('sb:orderbtn', e => {
+  const { plan, price } = e.detail;
+  openOrderModal(plan, price);
+});
+
+function openOrderModal(plan, price){
+  if(!currentUser){ openOverlay('gateOverlay'); return; }
+  if(!currentUser.emailVerified){
+    $('verifyEmailText').textContent = currentUser.email;
+    openOverlay('verifyOverlay');
+    return;
+  }
+  selectedOrderTariff = plan;
+  selectedOrderPrice = price;
+  currentPromo = null;
+  $('orderForm').reset();
+  $('promoError').classList.remove('show');
+  $('orderError').classList.remove('show');
+  $('orderTariffLabel').textContent = plan + ' — ' + formatPrice(price);
+  if(reorderSeed){
+    $('q_projectName').value = reorderSeed.projectName || '';
+    $('q_description').value = reorderSeed.description || '';
+    $('q_pages').value = reorderSeed.pages || '';
+    $('q_style').value = reorderSeed.style || '';
+    $('q_colors').value = reorderSeed.colors || '';
+    $('q_examples').value = reorderSeed.examples || '';
+    $('q_wishes').value = reorderSeed.wishes || '';
+    $('q_telegram').value = reorderSeed.telegram || '';
+    $('q_extra').value = reorderSeed.extra || '';
+    reorderSeed = null;
+  }
+  recalcOrderSummary();
+  openOverlay('orderOverlay');
+}
+
+$('q_logo').addEventListener('change', recalcOrderSummary);
+let promoDebounce;
+$('q_promo').addEventListener('input', () => {
+  clearTimeout(promoDebounce);
+  promoDebounce = setTimeout(checkPromo, 500);
+});
+
+async function checkPromo(){
+  const code = $('q_promo').value.trim().toUpperCase();
+  $('promoError').classList.remove('show');
+  currentPromo = null;
+  if(!code){ recalcOrderSummary(); return; }
+  try{
+    const snap = await get(ref(db, 'promoCodes/' + code));
+    if(!snap.exists()){ $('promoError').textContent = 'Промокод не найден.'; $('promoError').classList.add('show'); recalcOrderSummary(); return; }
+    const p = snap.val();
+    if(p.active === false){ $('promoError').textContent = 'Промокод отключён.'; $('promoError').classList.add('show'); recalcOrderSummary(); return; }
+    if(p.expiresAt && p.expiresAt > 0 && Date.now() > p.expiresAt){ $('promoError').textContent = 'Срок действия промокода истёк.'; $('promoError').classList.add('show'); recalcOrderSummary(); return; }
+    if(p.maxUses && p.maxUses > 0 && (p.usedCount||0) >= p.maxUses){ $('promoError').textContent = 'Промокод больше не действует (лимит использований).'; $('promoError').classList.add('show'); recalcOrderSummary(); return; }
+    currentPromo = { code, ...p };
+    toast('Промокод применён: ' + code);
+  }catch(e){
+    $('promoError').textContent = 'Не удалось проверить промокод.'; $('promoError').classList.add('show');
+  }
+  recalcOrderSummary();
+}
+
+function computeTotals(){
+  const base = selectedOrderPrice;
+  const logo = $('q_logo').checked ? LOGO_PRICE : 0;
+  let subtotal = base + logo;
+  let discount = 0;
+  if(currentPromo){
+    discount = currentPromo.discountType === 'percent'
+      ? Math.round(subtotal * (currentPromo.discountValue/100))
+      : currentPromo.discountValue;
+    discount = Math.min(discount, subtotal - 1);
+    if(discount < 0) discount = 0;
+  }
+  const total = subtotal - discount;
+  const prepay = Math.round(total * PREPAY_PERCENT / 100);
+  const remain = total - prepay;
+  return { base, logo, discount, total, prepay, remain };
+}
+
+function recalcOrderSummary(){
+  const t = computeTotals();
+  $('sumTariff').textContent = selectedOrderTariff + ' — ' + formatPrice(t.base);
+  $('sumLogoRow').style.display = t.logo ? 'flex' : 'none';
+  $('sumPromoRow').style.display = t.discount ? 'flex' : 'none';
+  if(t.discount) $('sumPromoVal').textContent = '−' + formatPrice(t.discount);
+  $('sumTotal').textContent = formatPrice(t.total);
+  $('sumPrepay').textContent = formatPrice(t.prepay);
+  $('sumRemain').textContent = formatPrice(t.remain);
+}
+
+/* ======================= 9. ЗАКАЗ: создание ======================= */
+
+$('orderForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('orderError').classList.remove('show');
+  if(!currentUser || !currentUser.emailVerified){ toast('Подтвердите email перед созданием заказа.', 'err'); return; }
+  const t = computeTotals();
+  const questionnaire = {
+    projectName: $('q_projectName').value.trim(),
+    description: $('q_description').value.trim(),
+    pages: $('q_pages').value.trim(),
+    style: $('q_style').value.trim(),
+    colors: $('q_colors').value.trim(),
+    examples: $('q_examples').value.trim(),
+    wishes: $('q_wishes').value.trim(),
+    telegram: $('q_telegram').value.trim(),
+    extra: $('q_extra').value.trim()
+  };
+  if(!questionnaire.projectName || !questionnaire.description || !questionnaire.telegram){
+    $('orderError').textContent = 'Заполните обязательные поля анкеты.'; $('orderError').classList.add('show'); return;
+  }
+  try{
+    showLoader();
+    const newRef = push(ref(db, 'orders'));
+    const orderId = newRef.key;
+    const displayId = 'SB-' + orderId.slice(-5).toUpperCase();
+    const orderData = {
+      orderId, displayId,
+      userId: currentUser.uid,
+      userNickname: currentProfile.nickname,
+      userEmail: currentUser.email,
+      createdAt: Date.now(),
+      selectedTariff: selectedOrderTariff,
+      basePrice: t.base,
+      logo: $('q_logo').checked,
+      logoPrice: t.logo,
+      promoCode: currentPromo ? currentPromo.code : null,
+      discountAmount: t.discount,
+      totalPrice: t.total,
+      prepaymentPercent: PREPAY_PERCENT,
+      prepaymentAmount: t.prepay,
+      remainingAmount: t.remain,
+      paymentStatus: 'awaiting_prepayment',
+      questionnaire,
+      status: 'pending',
+      telegramContact: questionnaire.telegram,
+      adminComment: '',
+      clientComment: '',
+      completedAt: null,
+      cancelledAt: null
+    };
+    const notifKey = push(ref(db, 'notifications/' + currentUser.uid)).key;
+    const updates = {};
+    updates['orders/' + orderId] = orderData;
+    updates['users/' + currentUser.uid + '/ordersCount'] = increment(1);
+    if(currentPromo){
+      updates['promoCodes/' + currentPromo.code + '/usedCount'] = increment(1);
+    }
+    updates['notifications/' + currentUser.uid + '/' + notifKey] = {
+      text: 'Заказ ' + displayId + ' создан и ожидает подтверждения.',
+      createdAt: Date.now(), read: false, orderId
+    };
+    await update(ref(db), updates);
+    hideLoader();
+    closeOverlay('orderOverlay');
+    showOrderCreated(orderData);
+  }catch(err){
+    hideLoader();
+    $('orderError').textContent = 'Не удалось создать заказ. Попробуйте ещё раз.'; $('orderError').classList.add('show');
+    console.error(err);
+  }
+});
+
+function showOrderCreated(order){
+  $('createdOrderId').textContent = order.displayId;
+  const q = order.questionnaire;
+  let text = 'Здравствуйте! Я хочу заказать сайт в SpecialBlack.\n\n';
+  text += 'Номер заказа: #' + order.displayId + '\n\n';
+  text += 'Тариф: ' + order.selectedTariff + '\n';
+  text += 'Стоимость: ' + formatPrice(order.totalPrice) + '\n';
+  if(order.logo) text += 'Логотип: Да (+' + formatPrice(order.logoPrice) + ')\n';
+  if(order.discountAmount) text += 'Скидка по промокоду ' + order.promoCode + ': −' + formatPrice(order.discountAmount) + '\n';
+  text += 'Предоплата 50%: ' + formatPrice(order.prepaymentAmount) + '\n';
+  text += 'Остаток после выполнения: ' + formatPrice(order.remainingAmount) + '\n\n';
+  text += 'Название проекта: ' + q.projectName + '\n';
+  text += 'Описание: ' + q.description + '\n';
+  if(q.pages) text += 'Страницы: ' + q.pages + '\n';
+  if(q.style) text += 'Стиль: ' + q.style + '\n';
+  if(q.colors) text += 'Цвета: ' + q.colors + '\n';
+  if(q.examples) text += 'Примеры: ' + q.examples + '\n';
+  if(q.wishes) text += 'Дополнительные пожелания: ' + q.wishes + '\n';
+  if(q.extra) text += 'Дополнительная информация: ' + q.extra + '\n';
+  text += '\nEmail: ' + order.userEmail + '\n';
+  text += 'Никнейм на SpecialBlack: ' + order.userNickname;
+  const url = 'https://t.me/' + TELEGRAM_USERNAME + '?text=' + encodeURIComponent(text);
+  $('continueTelegramBtn').href = url;
+  openOverlay('orderCreatedOverlay');
+}
+$('orderCreatedCloseBtn').addEventListener('click', () => closeOverlay('orderCreatedOverlay'));
+
+/* ======================= 10. МОИ ЗАКАЗЫ ======================= */
+
+function watchOrders(uid){
+  const q = query(ref(db, 'orders'), orderByChild('userId'), equalTo(uid));
+  onValue(q, snap => {
+    myOrders = snap.val() || {};
+    renderMyOrders();
+  });
+}
+
+function renderMyOrders(){
+  const list = Object.values(myOrders).sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+  const el = $('ordersList');
+  if(!list.length){ el.innerHTML = '<div class="sb-empty-state">У вас пока нет заказов.</div>'; return; }
+  el.innerHTML = list.map(orderCardHtml).join('');
+  list.forEach(o => {
+    const card = document.querySelector('[data-order-card="'+o.orderId+'"]');
+    if(!card) return;
+    const toggle = card.querySelector('[data-toggle-detail]');
+    if(toggle) toggle.addEventListener('click', () => card.querySelector('.sb-order-detail').classList.toggle('open'));
+    const cancelBtn = card.querySelector('[data-cancel-order]');
+    if(cancelBtn) cancelBtn.addEventListener('click', () => cancelOrder(o.orderId, o.displayId));
+    const reviewBtn = card.querySelector('[data-review-order]');
+    if(reviewBtn) reviewBtn.addEventListener('click', () => openReviewModal(o));
+    const reorderBtn = card.querySelector('[data-reorder]');
+    if(reorderBtn) reorderBtn.addEventListener('click', () => {
+      reorderSeed = o.questionnaire;
+      closeOverlay('profileOverlay');
+      openOrderModal(o.selectedTariff, TARIFFS[o.selectedTariff] ? TARIFFS[o.selectedTariff].price : o.basePrice);
+    });
+  });
+}
+
+function timelineHtml(order){
+  if(order.status === 'cancelled' || order.status === 'rejected'){
+    return '<div class="sb-timeline cancelled"><div class="sb-tl-step done"><div class="sb-tl-dot"></div><div class="sb-tl-label">'+STATUS_LABELS[order.status]+'</div></div></div>';
+  }
+  const idx = STATUS_STEPS.indexOf(order.status);
+  const labels = {pending:'Создан', confirmed:'Подтверждён', in_progress:'В работе', completed:'Выполнен'};
+  return '<div class="sb-timeline">' + STATUS_STEPS.map((s,i) =>
+    '<div class="sb-tl-step '+(i<=idx?'done':'')+'"><div class="sb-tl-dot"></div><div class="sb-tl-label">'+labels[s]+'</div></div>'
+  ).join('') + '</div>';
+}
+
+function orderCardHtml(o){
+  const hasReview = !!myReviewsByOrder[o.orderId];
+  return '<div class="sb-order-card" data-order-card="'+o.orderId+'">' +
+    '<div class="sb-order-top">' +
+      '<div><div class="sb-order-id">#'+escapeHtml(o.displayId)+'</div>' +
+      '<div class="sb-order-tariff">'+escapeHtml(o.selectedTariff)+'</div>' +
+      '<div class="sb-order-meta">'+formatDate(o.createdAt)+'</div></div>' +
+      '<div style="text-align:right;"><div class="sb-order-price">'+formatPrice(o.totalPrice)+'</div>' +
+      '<span class="sb-badge st-'+o.status+'">'+STATUS_LABELS[o.status]+'</span></div>' +
+    '</div>' +
+    timelineHtml(o) +
+    '<div class="sb-payment-box">Стоимость: '+formatPrice(o.totalPrice)+' · Предоплата: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
+      '<span class="sb-badge pay-'+o.paymentStatus+'" style="margin-top:6px;">'+PAYMENT_LABELS[o.paymentStatus]+'</span></div>' +
+    (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий SpecialBlack: '+escapeHtml(o.clientComment)+'</p>' : '') +
+    '<div class="sb-order-actions">' +
+      '<button type="button" class="sb-mini-btn" data-toggle-detail>Подробнее</button>' +
+      (['pending','confirmed'].includes(o.status) ? '<button type="button" class="sb-mini-btn danger" data-cancel-order>Отменить заказ</button>' : '') +
+      (o.status === 'completed' && !hasReview ? '<button type="button" class="sb-mini-btn accent" data-review-order>Оставить отзыв</button>' : '') +
+      (o.status === 'completed' ? '<button type="button" class="sb-mini-btn" data-reorder>Заказать похожий сайт</button>' : '') +
+    '</div>' +
+    '<div class="sb-order-detail"><dl>' +
+      '<dt>Название проекта</dt><dd>'+escapeHtml(o.questionnaire.projectName)+'</dd>' +
+      '<dt>Описание</dt><dd>'+escapeHtml(o.questionnaire.description)+'</dd>' +
+      (o.questionnaire.pages ? '<dt>Страницы</dt><dd>'+escapeHtml(o.questionnaire.pages)+'</dd>' : '') +
+      (o.questionnaire.style ? '<dt>Стиль</dt><dd>'+escapeHtml(o.questionnaire.style)+'</dd>' : '') +
+      (o.questionnaire.colors ? '<dt>Цвета</dt><dd>'+escapeHtml(o.questionnaire.colors)+'</dd>' : '') +
+      '<dt>Telegram</dt><dd>'+escapeHtml(o.questionnaire.telegram)+'</dd>' +
+    '</dl></div>' +
+  '</div>';
+}
+
+async function cancelOrder(orderId, displayId){
+  if(!confirm('Вы действительно хотите отменить заказ #'+displayId+'?')) return;
+  try{
+    showLoader();
+    await update(ref(db, 'orders/' + orderId), { status: 'cancelled', cancelledAt: Date.now() });
+    hideLoader(); toast('Заказ отменён.');
+  }catch(err){ hideLoader(); toast('Не удалось отменить заказ.', 'err'); }
+}
+
+/* ======================= 11. ОТЗЫВЫ ======================= */
+
+function watchMyReviews(){
+  onValue(ref(db, 'reviewsByOrder'), snap => {
+    const all = snap.val() || {};
+    myReviewsByOrder = {};
+    Object.keys(myOrders).forEach(oid => { if(all[oid]) myReviewsByOrder[oid] = all[oid]; });
+    renderMyOrders();
+    renderMyReviews();
+  });
+}
+
+function renderMyReviews(){
+  const el = $('myReviewsList');
+  const mine = Object.values(allReviewsCache).filter(r => r.userId === (currentUser && currentUser.uid));
+  if(!mine.length){ el.innerHTML = '<div class="sb-empty-state">Вы ещё не оставляли отзывы.</div>'; return; }
+  el.innerHTML = mine.sort((a,b)=>b.createdAt-a.createdAt).map(r =>
+    '<div class="sb-review-list-item"><div class="review-stars">'+starsStr(r.rating)+'</div>' +
+    '<div class="review-text">'+escapeHtml(r.text)+'</div>' +
+    '<div class="review-date">'+formatDate(r.createdAt)+' · заказ #'+escapeHtml((myOrders[r.orderId]||{}).displayId || '')+'</div></div>'
+  ).join('');
+}
+
+function openReviewModal(order){
+  $('reviewOrderId').textContent = order.displayId;
+  $('reviewForm').dataset.orderId = order.orderId;
+  $('reviewText').value = '';
+  selectedStarRating = 0;
+  document.querySelectorAll('#starInput span').forEach(s => s.classList.remove('active'));
+  closeOverlay('profileOverlay');
+  openOverlay('reviewOverlay');
+}
+document.querySelectorAll('#starInput span').forEach(s => {
+  s.addEventListener('click', () => {
+    selectedStarRating = Number(s.dataset.star);
+    document.querySelectorAll('#starInput span').forEach(x => x.classList.toggle('active', Number(x.dataset.star) <= selectedStarRating));
+  });
+});
+
+$('reviewForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('reviewError').classList.remove('show');
+  const orderId = e.target.dataset.orderId;
+  const order = myOrders[orderId];
+  if(!order || order.status !== 'completed'){ toast('Отзыв доступен только для выполненных заказов.', 'err'); return; }
+  if(selectedStarRating < 1){ $('reviewError').textContent = 'Поставьте оценку.'; $('reviewError').classList.add('show'); return; }
+  const text = $('reviewText').value.trim();
+  if(text.length < 5){ $('reviewError').textContent = 'Текст отзыва слишком короткий.'; $('reviewError').classList.add('show'); return; }
+  try{
+    showLoader();
+    const newRef = push(ref(db, 'reviews'));
+    const reviewId = newRef.key;
+    const reviewData = {
+      reviewId, userId: currentUser.uid, userNickname: currentProfile.nickname,
+      userAvatar: currentProfile.avatarUrl || null, orderId,
+      rating: selectedStarRating, text, createdAt: Date.now(), published: true, verified: true
+    };
+    const updates = {};
+    updates['reviews/' + reviewId] = reviewData;
+    updates['reviewsByOrder/' + orderId] = reviewId;
+    updates['users/' + currentUser.uid + '/reviewsCount'] = increment(1);
+    await update(ref(db), updates);
+    hideLoader();
+    closeOverlay('reviewOverlay');
+    toast('Спасибо за отзыв!');
+  }catch(err){ hideLoader(); $('reviewError').textContent = 'Не удалось отправить отзыв.'; $('reviewError').classList.add('show'); }
+});
+
+onValue(ref(db, 'reviews'), snap => {
+  allReviewsCache = snap.val() || {};
+  renderTopReviews();
+  renderAllReviewsModal();
+  renderMyReviews();
+});
+
+function computeAvg(list){
+  if(!list.length) return 0;
+  return list.reduce((s,r) => s + Number(r.rating||0), 0) / list.length;
+}
+
+function renderTopReviews(){
+  const published = Object.values(allReviewsCache).filter(r => r.published !== false);
+  const avg = computeAvg(published);
+  $('reviewsAvgTop').textContent = published.length ? avg.toFixed(1) : '—';
+  $('reviewsCountTop').textContent = published.length ? 'Количество отзывов: ' + published.length : 'Пока нет отзывов';
+  $('reviewsStarsTop').textContent = published.length ? starsStr(avg) : '★★★★★';
+  const top3 = published.sort((a,b) => b.createdAt - a.createdAt).slice(0,3);
+  const grid = $('reviewsGridTop');
+  if(!top3.length){
+    grid.innerHTML = '<div class="review-placeholder reveal" style="grid-column:1/-1;"><span class="review-mark mono" aria-hidden="true">"</span><p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p></div>';
+    return;
+  }
+  grid.innerHTML = top3.map(reviewCardHtml).join('');
+}
+
+function reviewCardHtml(r){
+  const av = r.userAvatar ? '<img src="'+escapeHtml(r.userAvatar)+'" alt="">' : (r.userNickname||'?').charAt(0).toUpperCase();
+  return '<div class="review-card">' +
+    '<div class="review-card-top"><div class="review-avatar">'+av+'</div>' +
+    '<div><div class="review-name">'+escapeHtml(r.userNickname)+'</div>' +
+    (r.verified ? '<div class="review-verified">✓ Проверенный заказ</div>' : '') + '</div></div>' +
+    '<div class="review-stars">'+starsStr(r.rating)+'</div>' +
+    '<p class="review-text">'+escapeHtml(r.text)+'</p>' +
+    '<div class="review-date">'+formatDate(r.createdAt)+'</div>' +
+  '</div>';
+}
+
+let activeReviewFilter = 'all', activeReviewSort = 'new';
+document.querySelectorAll('[data-filter]').forEach(chip => chip.addEventListener('click', () => {
+  document.querySelectorAll('[data-filter]').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  activeReviewFilter = chip.dataset.filter;
+  renderAllReviewsModal();
+}));
+$('reviewSort').addEventListener('change', () => { activeReviewSort = $('reviewSort').value; renderAllReviewsModal(); });
+window.addEventListener('sb:openallreviews', () => { openOverlay('allReviewsOverlay'); renderAllReviewsModal(); });
+
+function renderAllReviewsModal(){
+  let list = Object.values(allReviewsCache).filter(r => r.published !== false);
+  $('reviewsAvgFull').textContent = list.length ? computeAvg(list).toFixed(1) : '—';
+  $('reviewsCountFull').textContent = list.length ? 'Количество отзывов: ' + list.length : 'Пока нет отзывов';
+  $('reviewsStarsFull').textContent = list.length ? starsStr(computeAvg(list)) : '★★★★★';
+  if(activeReviewFilter !== 'all') list = list.filter(r => Math.round(r.rating) === Number(activeReviewFilter));
+  if(activeReviewSort === 'new') list.sort((a,b) => b.createdAt - a.createdAt);
+  if(activeReviewSort === 'old') list.sort((a,b) => a.createdAt - b.createdAt);
+  if(activeReviewSort === 'high') list.sort((a,b) => b.rating - a.rating);
+  if(activeReviewSort === 'low') list.sort((a,b) => a.rating - b.rating);
+  const el = $('allReviewsList');
+  if(!list.length){ el.innerHTML = '<div class="sb-empty-state">Отзывов пока нет.</div>'; return; }
+  el.innerHTML = list.map(r => '<div class="sb-review-list-item">' +
+    '<div class="review-card-top"><div class="review-avatar">'+(r.userAvatar?'<img src="'+escapeHtml(r.userAvatar)+'" alt="">':(r.userNickname||'?').charAt(0).toUpperCase())+'</div>' +
+    '<div><div class="review-name">'+escapeHtml(r.userNickname)+'</div>'+(r.verified?'<div class="review-verified">✓ Проверенный заказ</div>':'')+'</div></div>' +
+    '<div class="review-stars">'+starsStr(r.rating)+'</div>' +
+    '<p class="review-text">'+escapeHtml(r.text)+'</p>' +
+    '<div class="review-date">'+formatDate(r.createdAt)+'</div></div>'
+  ).join('');
+}
+
+/* ======================= 12. УВЕДОМЛЕНИЯ ======================= */
+
+function watchNotifications(uid){
+  onValue(ref(db, 'notifications/' + uid), snap => {
+    const data = snap.val() || {};
+    const list = Object.entries(data).map(([id,v]) => ({id, ...v})).sort((a,b) => b.createdAt - a.createdAt);
+    const unread = list.some(n => !n.read);
+    $('notifDot').classList.toggle('show', unread);
+    const el = $('notifList');
+    if(!list.length){ el.innerHTML = '<div class="notif-empty">Пока нет уведомлений</div>'; return; }
+    el.innerHTML = list.slice(0,20).map(n =>
+      '<div class="notif-item '+(n.read?'':'unread')+'">'+escapeHtml(n.text)+'<span class="notif-time">'+formatDate(n.createdAt)+'</span></div>'
+    ).join('');
+  });
+}
+
+let lastNotifSnapshot = null;
+function markNotificationsRead(){
+  if(!currentUser) return;
+  get(ref(db, 'notifications/' + currentUser.uid)).then(snap => {
+    const data = snap.val() || {};
+    const updates = {};
+    Object.entries(data).forEach(([id,v]) => { if(!v.read) updates['notifications/'+currentUser.uid+'/'+id+'/read'] = true; });
+    if(Object.keys(updates).length) update(ref(db), updates);
+  });
+}
+
+/* ======================= 13. АДМИН-ПАНЕЛЬ ======================= */
+
+document.querySelectorAll('[data-admintab]').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('[data-admintab]').forEach(x => x.classList.toggle('active', x === t));
+  $('adminOrdersPanel').classList.toggle('active', t.dataset.admintab === 'orders');
+  $('adminReviewsPanel').classList.toggle('active', t.dataset.admintab === 'reviews');
+  $('adminPromoPanel').classList.toggle('active', t.dataset.admintab === 'promo');
+}));
+
+document.querySelectorAll('#adminStatusTabs [data-status]').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('#adminStatusTabs [data-status]').forEach(x => x.classList.toggle('active', x===t));
+  loadAdminOrders(t.dataset.status);
+}));
+
+async function loadAdminOrders(status){
+  const el = $('adminOrdersList');
+  el.innerHTML = '<div class="sb-empty-state">Загрузка…</div>';
+  try{
+    const q = query(ref(db, 'orders'), orderByChild('status'), equalTo(status));
+    const snap = await get(q);
+    const list = Object.values(snap.val() || {}).sort((a,b) => b.createdAt - a.createdAt);
+    if(!list.length){ el.innerHTML = '<div class="sb-empty-state">Нет заказов в этом статусе.</div>'; return; }
+    el.innerHTML = list.map(adminOrderCardHtml).join('');
+    list.forEach(o => bindAdminOrderCard(o));
+  }catch(err){ el.innerHTML = '<div class="sb-empty-state">Ошибка загрузки. Проверьте права администратора и Security Rules.</div>'; }
+}
+
+function adminOrderCardHtml(o){
+  const q = o.questionnaire;
+  return '<div class="sb-admin-order" data-admin-order="'+o.orderId+'">' +
+    '<div class="sb-order-top">' +
+      '<div><div class="sb-order-id">#'+escapeHtml(o.displayId)+'</div>' +
+      '<div class="sb-order-tariff">'+escapeHtml(o.selectedTariff)+' · '+escapeHtml(o.userNickname)+'</div>' +
+      '<div class="sb-order-meta">'+escapeHtml(o.userEmail)+' · '+formatDate(o.createdAt)+'</div></div>' +
+      '<div style="text-align:right;"><div class="sb-order-price">'+formatPrice(o.totalPrice)+'</div>' +
+      '<span class="sb-badge st-'+o.status+'">'+STATUS_LABELS[o.status]+'</span></div>' +
+    '</div>' +
+    '<div class="sb-order-detail open"><dl>' +
+      '<dt>Название проекта</dt><dd>'+escapeHtml(q.projectName)+'</dd>' +
+      '<dt>Описание</dt><dd>'+escapeHtml(q.description)+'</dd>' +
+      (q.pages?'<dt>Страницы</dt><dd>'+escapeHtml(q.pages)+'</dd>':'') +
+      (q.style?'<dt>Стиль</dt><dd>'+escapeHtml(q.style)+'</dd>':'') +
+      (q.colors?'<dt>Цвета</dt><dd>'+escapeHtml(q.colors)+'</dd>':'') +
+      (q.examples?'<dt>Примеры</dt><dd>'+escapeHtml(q.examples)+'</dd>':'') +
+      (q.wishes?'<dt>Пожелания</dt><dd>'+escapeHtml(q.wishes)+'</dd>':'') +
+      (q.extra?'<dt>Доп. информация</dt><dd>'+escapeHtml(q.extra)+'</dd>':'') +
+      '<dt>Telegram</dt><dd>'+escapeHtml(q.telegram)+'</dd>' +
+      (o.promoCode?'<dt>Промокод</dt><dd>'+escapeHtml(o.promoCode)+' (−'+formatPrice(o.discountAmount)+')</dd>':'') +
+    '</dl></div>' +
+    '<div class="sb-payment-box">Итоговая стоимость: '+formatPrice(o.totalPrice)+' · Предоплата 50%: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
+      'Статус оплаты: <span class="sb-badge pay-'+o.paymentStatus+'">'+PAYMENT_LABELS[o.paymentStatus]+'</span></div>' +
+    '<div class="sb-comment-box"><label style="font-size:11.5px; color:var(--text-dim); display:block; margin-bottom:5px;">Внутренний комментарий</label>' +
+      '<textarea class="admin-internal-comment" style="width:100%; background:var(--bg); border:1px solid var(--line); border-radius:3px; padding:8px; color:var(--text); font-size:13px;" rows="2">'+escapeHtml(o.adminComment||'')+'</textarea></div>' +
+    '<div class="sb-comment-box"><label style="font-size:11.5px; color:var(--text-dim); display:block; margin-bottom:5px;">Комментарий клиенту (виден в заказе)</label>' +
+      '<textarea class="admin-client-comment" style="width:100%; background:var(--bg); border:1px solid var(--line); border-radius:3px; padding:8px; color:var(--text); font-size:13px;" rows="2">'+escapeHtml(o.clientComment||'')+'</textarea></div>' +
+    '<div class="sb-admin-actions">' +
+      '<button type="button" class="sb-mini-btn accent" data-save-comment>Сохранить комментарии</button>' +
+      (o.status==='pending' ? '<button type="button" class="sb-mini-btn accent" data-set-status="confirmed">Подтвердить</button><button type="button" class="sb-mini-btn danger" data-set-status="rejected">Отклонить</button>' : '') +
+      (o.status==='confirmed' ? '<button type="button" class="sb-mini-btn accent" data-set-status="in_progress">Взять в работу</button><button type="button" class="sb-mini-btn danger" data-set-status="cancelled">Отменить</button>' : '') +
+      (o.status==='in_progress' ? '<button type="button" class="sb-mini-btn accent" data-set-status="completed">Отметить выполненным</button><button type="button" class="sb-mini-btn danger" data-set-status="cancelled">Отменить</button>' : '') +
+      (o.paymentStatus==='awaiting_prepayment' ? '<button type="button" class="sb-mini-btn" data-set-payment="prepayment_received">Предоплата получена</button>' : '') +
+      (o.paymentStatus!=='fully_paid' ? '<button type="button" class="sb-mini-btn" data-set-payment="fully_paid">Оплачено полностью</button>' : '') +
+    '</div>' +
+  '</div>';
+}
+
+function bindAdminOrderCard(o){
+  const card = document.querySelector('[data-admin-order="'+o.orderId+'"]');
+  if(!card) return;
+  const saveBtn = card.querySelector('[data-save-comment]');
+  if(saveBtn) saveBtn.addEventListener('click', async () => {
+    const internal = card.querySelector('.admin-internal-comment').value;
+    const client = card.querySelector('.admin-client-comment').value;
+    try{
+      showLoader();
+      await update(ref(db, 'orders/' + o.orderId), { adminComment: internal, clientComment: client });
+      hideLoader(); toast('Комментарии сохранены.');
+    }catch(err){ hideLoader(); toast('Ошибка сохранения. Проверьте права администратора.', 'err'); }
+  });
+  card.querySelectorAll('[data-set-status]').forEach(btn => btn.addEventListener('click', () => adminSetStatus(o, btn.dataset.setStatus)));
+  card.querySelectorAll('[data-set-payment]').forEach(btn => btn.addEventListener('click', () => adminSetPayment(o, btn.dataset.setPayment)));
+}
+
+async function adminSetStatus(order, newStatus){
+  try{
+    showLoader();
+    const patch = { status: newStatus };
+    if(newStatus === 'completed') patch.completedAt = Date.now();
+    if(newStatus === 'cancelled') patch.cancelledAt = Date.now();
+    const updates = {};
+    updates['orders/' + order.orderId] = { ...order, ...patch };
+    if(newStatus === 'completed'){
+      updates['users/' + order.userId + '/completedCount'] = increment(1);
+    }
+    const notifKey = push(ref(db, 'notifications/' + order.userId)).key;
+    const texts = {
+      confirmed: 'Ваш заказ #'+order.displayId+' подтверждён. Для начала работы необходимо внести предоплату 50% — '+formatPrice(order.prepaymentAmount)+'.',
+      rejected: 'Ваш заказ #'+order.displayId+' был отклонён.',
+      in_progress: 'Ваш заказ #'+order.displayId+' передан в работу.',
+      completed: 'Ваш заказ #'+order.displayId+' выполнен. Теперь вы можете оставить отзыв.',
+      cancelled: 'Ваш заказ #'+order.displayId+' был отменён.'
+    };
+    updates['notifications/' + order.userId + '/' + notifKey] = { text: texts[newStatus] || ('Статус заказа #'+order.displayId+' изменён.'), createdAt: Date.now(), read:false, orderId: order.orderId };
+    await update(ref(db), updates);
+    hideLoader(); toast('Статус обновлён.');
+    loadAdminOrders(document.querySelector('#adminStatusTabs .active').dataset.status);
+  }catch(err){ hideLoader(); toast('Не удалось изменить статус. Проверьте права администратора.', 'err'); }
+}
+
+async function adminSetPayment(order, newPayment){
+  try{
+    showLoader();
+    const updates = {};
+    updates['orders/' + order.orderId + '/paymentStatus'] = newPayment;
+    const notifKey = push(ref(db, 'notifications/' + order.userId)).key;
+    const texts = {
+      prepayment_received: 'Предоплата по заказу #'+order.displayId+' получена.',
+      fully_paid: 'Заказ #'+order.displayId+' оплачен полностью.'
+    };
+    updates['notifications/' + order.userId + '/' + notifKey] = { text: texts[newPayment], createdAt: Date.now(), read:false, orderId: order.orderId };
+    await update(ref(db), updates);
+    hideLoader(); toast('Статус оплаты обновлён.');
+    loadAdminOrders(document.querySelector('#adminStatusTabs .active').dataset.status);
+  }catch(err){ hideLoader(); toast('Не удалось изменить статус оплаты.', 'err'); }
+}
+
+async function loadAdminReviews(){
+  const el = $('adminReviewsList');
+  const list = Object.values(allReviewsCache).sort((a,b) => b.createdAt - a.createdAt);
+  if(!list.length){ el.innerHTML = '<div class="sb-empty-state">Отзывов пока нет.</div>'; return; }
+  el.innerHTML = list.map(r => '<div class="review-card '+(r.published===false?'review-hidden':'')+'" data-admin-review="'+r.reviewId+'">' +
+    '<div class="review-card-top"><div class="review-avatar">'+(r.userAvatar?'<img src="'+escapeHtml(r.userAvatar)+'" alt="">':(r.userNickname||'?').charAt(0).toUpperCase())+'</div>' +
+    '<div><div class="review-name">'+escapeHtml(r.userNickname)+'</div></div></div>' +
+    '<div class="review-stars">'+starsStr(r.rating)+'</div>' +
+    '<p class="review-text">'+escapeHtml(r.text)+'</p>' +
+    '<div class="review-date">'+formatDate(r.createdAt)+' · заказ #'+escapeHtml((myOrders[r.orderId]||{}).displayId || r.orderId.slice(-5))+'</div>' +
+    '<div class="review-admin-actions">' +
+      '<button type="button" class="sb-mini-btn" data-review-toggle-publish="'+r.reviewId+'">'+(r.published===false?'Показать':'Скрыть')+'</button>' +
+      '<button type="button" class="sb-mini-btn danger" data-review-delete="'+r.reviewId+'">Удалить</button>' +
+    '</div></div>'
+  ).join('');
+  el.querySelectorAll('[data-review-toggle-publish]').forEach(btn => btn.addEventListener('click', async () => {
+    const id = btn.dataset.reviewTogglePublish;
+    const r = allReviewsCache[id];
+    try{ await update(ref(db,'reviews/'+id), { published: r.published === false ? true : false }); toast('Готово.'); loadAdminReviews(); }
+    catch(err){ toast('Ошибка.', 'err'); }
+  }));
+  el.querySelectorAll('[data-review-delete]').forEach(btn => btn.addEventListener('click', async () => {
+    if(!confirm('Удалить этот отзыв?')) return;
+    const id = btn.dataset.reviewDelete;
+    const r = allReviewsCache[id];
+    try{
+      showLoader();
+      const updates = {};
+      updates['reviews/'+id] = null;
+      updates['reviewsByOrder/'+r.orderId] = null;
+      await update(ref(db), updates);
+      hideLoader(); toast('Отзыв удалён.'); loadAdminReviews();
+    }catch(err){ hideLoader(); toast('Ошибка удаления.', 'err'); }
+  }));
+}
+
+/* ---- Промокоды ---- */
+
+$('createPromoBtn').addEventListener('click', async () => {
+  const code = $('promoCode').value.trim().toUpperCase();
+  const type = $('promoType').value;
+  const value = Number($('promoValue').value);
+  const days = Number($('promoDays').value);
+  const limit = Number($('promoLimit').value);
+  if(!code || !value){ toast('Заполните код и размер скидки.', 'err'); return; }
+  try{
+    showLoader();
+    await set(ref(db, 'promoCodes/' + code), {
+      code, discountType: type, discountValue: value,
+      expiresAt: days > 0 ? Date.now() + days*86400000 : 0,
+      maxUses: limit, usedCount: 0, active: true, createdAt: Date.now()
+    });
+    hideLoader(); toast('Промокод создан.');
+    $('promoCode').value=''; $('promoValue').value=''; $('promoDays').value=0; $('promoLimit').value=0;
+    loadPromoList();
+  }catch(err){ hideLoader(); toast('Не удалось создать промокод.', 'err'); }
+});
+
+async function loadPromoList(){
+  const el = $('promoList');
+  try{
+    const snap = await get(ref(db, 'promoCodes'));
+    const list = Object.values(snap.val() || {});
+    if(!list.length){ el.innerHTML = '<p class="sb-hint">Промокодов пока нет.</p>'; return; }
+    el.innerHTML = list.map(p => '<div class="sb-promo-row '+(p.active===false?'sb-tag-off':'')+'">' +
+      '<b>'+escapeHtml(p.code)+'</b>' +
+      '<span>'+(p.discountType==='percent' ? p.discountValue+'%' : formatPrice(p.discountValue))+'</span>' +
+      '<span>исп.: '+(p.usedCount||0)+(p.maxUses?'/'+p.maxUses:'')+'</span>' +
+      '<span>'+(p.expiresAt ? 'до '+formatDate(p.expiresAt) : 'бессрочно')+'</span>' +
+      '<button type="button" class="sb-mini-btn" data-promo-toggle="'+p.code+'">'+(p.active===false?'Включить':'Отключить')+'</button>' +
+    '</div>').join('');
+    el.querySelectorAll('[data-promo-toggle]').forEach(btn => btn.addEventListener('click', async () => {
+      const code = btn.dataset.promoToggle;
+      const p = list.find(x => x.code === code);
+      try{ await update(ref(db,'promoCodes/'+code), { active: p.active===false ? true : false }); loadPromoList(); }
+      catch(err){ toast('Ошибка.', 'err'); }
+    }));
+  }catch(err){ el.innerHTML = '<p class="sb-hint">Не удалось загрузить промокоды.</p>'; }
+}
+
 </script>
 
 </body>
