@@ -402,6 +402,7 @@ img,svg{display:block;}
 .sb-badge.pay-awaiting_prepayment{color:#e0b25f;}
 .sb-badge.pay-prepayment_received{color:#7fbf8f;}
 .sb-badge.pay-fully_paid{color:#7fbf8f;}
+.sb-badge.pay-cancelled{color:#e0836f;}
 
 .sb-timeline{display:flex; align-items:center; margin:14px 0 4px; gap:0;}
 .sb-tl-step{flex:1; text-align:center; position:relative;}
@@ -420,6 +421,10 @@ img,svg{display:block;}
 .sb-timeline.cancelled .sb-tl-dot, .sb-timeline.cancelled .sb-tl-step::before{background:#e0836f !important;}
 
 .sb-order-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+.sb-more-row{margin-top:10px; display:flex; justify-content:center;}
+.sb-more-btn{width:100%; max-width:320px; font-size:12.5px; padding:9px 14px;}
+.sb-full-list{max-height:min(68vh, 680px); overflow-y:auto; padding-right:2px;}
+
 .sb-mini-btn{
   font-size:12.5px; padding:8px 14px; border-radius:var(--radius); cursor:pointer;
   border:1px solid var(--line); background:transparent; color:var(--text); font-family:'Inter', sans-serif;
@@ -1960,10 +1965,16 @@ footer{
 
     <div class="sb-panel active" id="ordersPanel">
       <div id="ordersList"><div class="sb-empty-state">Загрузка…</div></div>
+      <div class="sb-more-row" id="myOrdersMoreWrap" style="display:none;">
+        <button type="button" class="sb-mini-btn sb-more-btn" id="openMyOrdersAllBtn">Все мои заказы</button>
+      </div>
     </div>
 
     <div class="sb-panel" id="myReviewsPanel">
       <div id="myReviewsList"><div class="sb-empty-state">Загрузка…</div></div>
+      <div class="sb-more-row" id="myReviewsMoreWrap" style="display:none;">
+        <button type="button" class="sb-mini-btn sb-more-btn" id="openMyReviewsAllBtn">Все мои отзывы</button>
+      </div>
     </div>
 
     <div class="sb-panel" id="settingsPanel">
@@ -2140,6 +2151,30 @@ footer{
       </select>
     </div>
     <div id="allReviewsList" style="margin-top:16px;"><div class="sb-empty-state">Загрузка…</div></div>
+  </div>
+</div>
+
+<!-- My orders full modal -->
+<div class="sb-overlay" id="myOrdersAllOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="myOrdersAllOverlay">✕</button>
+    <h3>Мои заказы</h3>
+    <p class="sb-sub">Полная история ваших заказов.</p>
+    <div id="myOrdersAllList" class="sb-full-list">
+      <div class="sb-empty-state">Загрузка…</div>
+    </div>
+  </div>
+</div>
+
+<!-- My reviews full modal -->
+<div class="sb-overlay" id="myReviewsAllOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="myReviewsAllOverlay">✕</button>
+    <h3>Мои отзывы</h3>
+    <p class="sb-sub">Полная история ваших отзывов.</p>
+    <div id="myReviewsAllList" class="sb-full-list">
+      <div class="sb-empty-state">Загрузка…</div>
+    </div>
   </div>
 </div>
 
@@ -2347,7 +2382,8 @@ const STATUS_LABELS = {
 const PAYMENT_LABELS = {
   awaiting_prepayment:'🟡 Ожидается предоплата',
   prepayment_received:'🟢 Предоплата получена',
-  fully_paid:'🟢 Оплачено полностью'
+  fully_paid:'🟢 Оплачено полностью',
+  cancelled:'🔴 Заказ отменён'
 };
 const STATUS_STEPS = ['pending','confirmed','in_progress','completed'];
 
@@ -2605,6 +2641,15 @@ function switchProfileTab(tab){
   $('settingsPanel').classList.toggle('active', tab === 'settings');
 }
 document.querySelectorAll('[data-profiletab]').forEach(t => t.addEventListener('click', () => switchProfileTab(t.dataset.profiletab)));
+$('openMyOrdersAllBtn').addEventListener('click', () => {
+  renderMyOrdersAll();
+  openOverlay('myOrdersAllOverlay');
+});
+$('openMyReviewsAllBtn').addEventListener('click', () => {
+  renderMyReviewsAll();
+  openOverlay('myReviewsAllOverlay');
+});
+
 
 /* ======================= 7. ПРОФИЛЬ: НАСТРОЙКИ ======================= */
 
@@ -2788,7 +2833,11 @@ function recalcOrderSummary(){
 $('orderForm').addEventListener('submit', async e => {
   e.preventDefault();
   $('orderError').classList.remove('show');
-  if(!currentUser || !currentUser.emailVerified){ toast('Подтвердите email перед созданием заказа.', 'err'); return; }
+  if(!currentUser || !currentUser.emailVerified){
+    toast('Подтвердите email перед созданием заказа.', 'err');
+    return;
+  }
+
   const t = computeTotals();
   const questionnaire = {
     projectName: $('q_projectName').value.trim(),
@@ -2801,20 +2850,32 @@ $('orderForm').addEventListener('submit', async e => {
     telegram: $('q_telegram').value.trim(),
     extra: $('q_extra').value.trim()
   };
+
   if(!questionnaire.projectName || !questionnaire.description || !questionnaire.telegram){
-    $('orderError').textContent = 'Заполните обязательные поля анкеты.'; $('orderError').classList.add('show'); return;
+    $('orderError').textContent = 'Заполните обязательные поля анкеты.';
+    $('orderError').classList.add('show');
+    return;
   }
+
+  const createBtn = $('createOrderBtn');
+  if(createBtn.disabled) return;
+  createBtn.disabled = true;
+  createBtn.setAttribute('aria-busy', 'true');
+
   try{
     showLoader();
+
     const newRef = push(ref(db, 'orders'));
     const orderId = newRef.key;
     const displayId = 'SB-' + orderId.slice(-5).toUpperCase();
+    const now = Date.now();
+
     const orderData = {
       orderId, displayId,
       userId: currentUser.uid,
-      userNickname: currentProfile.nickname,
+      userNickname: (currentProfile && currentProfile.nickname) || currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'Пользователь'),
       userEmail: currentUser.email,
-      createdAt: Date.now(),
+      createdAt: now,
       selectedTariff: selectedOrderTariff,
       basePrice: t.base,
       logo: $('q_logo').checked,
@@ -2834,28 +2895,52 @@ $('orderForm').addEventListener('submit', async e => {
       completedAt: null,
       cancelledAt: null
     };
-    const notifKey = push(ref(db, 'notifications/' + currentUser.uid)).key;
-    const updates = {};
-    updates['orders/' + orderId] = orderData;
-    updates['users/' + currentUser.uid + '/ordersCount'] = increment(1);
+
+    // Критическая операция: сначала гарантированно создаём сам заказ.
+    await set(newRef, orderData);
+
+    // Вторичные операции не должны блокировать создание заказа.
+    const backgroundTasks = [];
+
+    backgroundTasks.push(
+      update(ref(db, 'users/' + currentUser.uid), {
+        ordersCount: increment(1)
+      }).catch(err => console.warn('ordersCount update failed:', err))
+    );
+
     if(currentPromo){
-      updates['promoCodes/' + currentPromo.code + '/usedCount'] = increment(1);
+      backgroundTasks.push(
+        update(ref(db, 'promoCodes/' + currentPromo.code), {
+          usedCount: increment(1)
+        }).catch(err => console.warn('promo usage update failed:', err))
+      );
     }
-    updates['notifications/' + currentUser.uid + '/' + notifKey] = {
-      text: 'Заказ ' + displayId + ' создан и ожидает подтверждения.',
-      createdAt: Date.now(), read: false, orderId
-    };
-    await update(ref(db), updates);
+
+    const notifKey = push(ref(db, 'notifications/' + currentUser.uid)).key;
+    backgroundTasks.push(
+      set(ref(db, 'notifications/' + currentUser.uid + '/' + notifKey), {
+        text: 'Заказ ' + displayId + ' создан и ожидает подтверждения.',
+        createdAt: now,
+        read: false,
+        orderId
+      }).catch(err => console.warn('notification write failed:', err))
+    );
+
+    Promise.allSettled(backgroundTasks);
+
     hideLoader();
     closeOverlay('orderOverlay');
     showOrderCreated(orderData);
   }catch(err){
     hideLoader();
-    $('orderError').textContent = 'Не удалось создать заказ. Попробуйте ещё раз.'; $('orderError').classList.add('show');
-    console.error(err);
+    $('orderError').textContent = 'Не удалось создать заказ. Проверьте соединение и попробуйте ещё раз.';
+    $('orderError').classList.add('show');
+    console.error('Order creation failed:', err);
+  }finally{
+    createBtn.disabled = false;
+    createBtn.removeAttribute('aria-busy');
   }
 });
-
 function showOrderCreated(order){
   $('createdOrderId').textContent = order.displayId;
   const q = order.questionnaire;
@@ -2896,21 +2981,58 @@ function watchOrders(uid){
 function renderMyOrders(){
   const list = Object.values(myOrders).sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
   const el = $('ordersList');
-  if(!list.length){ el.innerHTML = '<div class="sb-empty-state">У вас пока нет заказов.</div>'; return; }
+  const moreWrap = $('myOrdersMoreWrap');
+
+  if(!list.length){
+    el.innerHTML = '<div class="sb-empty-state">У вас пока нет заказов.</div>';
+    moreWrap.style.display = 'none';
+    renderMyOrdersAll();
+    return;
+  }
+
+  const preview = list.slice(0, 5);
+  el.innerHTML = preview.map(orderCardHtml).join('');
+  moreWrap.style.display = list.length > 5 ? 'flex' : 'none';
+
+  bindOrderCards(preview);
+  renderMyOrdersAll();
+}
+
+function renderMyOrdersAll(){
+  const el = $('myOrdersAllList');
+  if(!el) return;
+
+  const list = Object.values(myOrders).sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+  if(!list.length){
+    el.innerHTML = '<div class="sb-empty-state">У вас пока нет заказов.</div>';
+    return;
+  }
+
   el.innerHTML = list.map(orderCardHtml).join('');
+  bindOrderCards(list, true);
+}
+
+function bindOrderCards(list, fullPage){
   list.forEach(o => {
-    const card = document.querySelector('[data-order-card="'+o.orderId+'"]');
+    const card = document.querySelector((fullPage ? '#myOrdersAllList ' : '#ordersList ') + '[data-order-card="'+o.orderId+'"]');
     if(!card) return;
+
     const toggle = card.querySelector('[data-toggle-detail]');
     if(toggle) toggle.addEventListener('click', () => card.querySelector('.sb-order-detail').classList.toggle('open'));
+
     const cancelBtn = card.querySelector('[data-cancel-order]');
     if(cancelBtn) cancelBtn.addEventListener('click', () => cancelOrder(o.orderId, o.displayId));
+
+    const deleteBtn = card.querySelector('[data-delete-order]');
+    if(deleteBtn) deleteBtn.addEventListener('click', () => deleteCancelledOrder(o.orderId, o.displayId));
+
     const reviewBtn = card.querySelector('[data-review-order]');
     if(reviewBtn) reviewBtn.addEventListener('click', () => openReviewModal(o));
+
     const reorderBtn = card.querySelector('[data-reorder]');
     if(reorderBtn) reorderBtn.addEventListener('click', () => {
       reorderSeed = o.questionnaire;
-      closeOverlay('profileOverlay');
+      closeOverlay(fullPage ? 'myOrdersAllOverlay' : 'profileOverlay');
       openOrderModal(o.selectedTariff, TARIFFS[o.selectedTariff] ? TARIFFS[o.selectedTariff].price : o.basePrice);
     });
   });
@@ -2929,6 +3051,8 @@ function timelineHtml(order){
 
 function orderCardHtml(o){
   const hasReview = !!myReviewsByOrder[o.orderId];
+  const isCancelled = o.status === 'cancelled' || o.status === 'rejected';
+  const paymentLabel = isCancelled ? PAYMENT_LABELS.cancelled : PAYMENT_LABELS[o.paymentStatus];
   return '<div class="sb-order-card" data-order-card="'+o.orderId+'">' +
     '<div class="sb-order-top">' +
       '<div><div class="sb-order-id">#'+escapeHtml(o.displayId)+'</div>' +
@@ -2939,11 +3063,12 @@ function orderCardHtml(o){
     '</div>' +
     timelineHtml(o) +
     '<div class="sb-payment-box">Стоимость: '+formatPrice(o.totalPrice)+' · Предоплата: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
-      '<span class="sb-badge pay-'+o.paymentStatus+'" style="margin-top:6px;">'+PAYMENT_LABELS[o.paymentStatus]+'</span></div>' +
+      '<span class="sb-badge '+(isCancelled ? 'pay-cancelled' : 'pay-'+o.paymentStatus)+'" style="margin-top:6px;">'+paymentLabel+'</span></div>' +
     (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий SpecialBlack: '+escapeHtml(o.clientComment)+'</p>' : '') +
     '<div class="sb-order-actions">' +
       '<button type="button" class="sb-mini-btn" data-toggle-detail>Подробнее</button>' +
       (['pending','confirmed'].includes(o.status) ? '<button type="button" class="sb-mini-btn danger" data-cancel-order>Отменить заказ</button>' : '') +
+      (isCancelled ? '<button type="button" class="sb-mini-btn danger" data-delete-order>Удалить</button>' : '') +
       (o.status === 'completed' && !hasReview ? '<button type="button" class="sb-mini-btn accent" data-review-order>Оставить отзыв</button>' : '') +
       (o.status === 'completed' ? '<button type="button" class="sb-mini-btn" data-reorder>Заказать похожий сайт</button>' : '') +
     '</div>' +
@@ -2962,9 +3087,52 @@ async function cancelOrder(orderId, displayId){
   if(!confirm('Вы действительно хотите отменить заказ #'+displayId+'?')) return;
   try{
     showLoader();
-    await update(ref(db, 'orders/' + orderId), { status: 'cancelled', cancelledAt: Date.now() });
-    hideLoader(); toast('Заказ отменён.');
-  }catch(err){ hideLoader(); toast('Не удалось отменить заказ.', 'err'); }
+    await update(ref(db, 'orders/' + orderId), {
+      status: 'cancelled',
+      paymentStatus: 'cancelled',
+      cancelledAt: Date.now()
+    });
+
+    const notifKey = push(ref(db, 'notifications/' + currentUser.uid)).key;
+    set(ref(db, 'notifications/' + currentUser.uid + '/' + notifKey), {
+      text: 'Заказ #' + displayId + ' отменён.',
+      createdAt: Date.now(),
+      read: false,
+      orderId
+    }).catch(err => console.warn('cancel notification failed:', err));
+
+    hideLoader();
+    toast('Заказ отменён.');
+  }catch(err){
+    hideLoader();
+    toast('Не удалось отменить заказ.', 'err');
+    console.error('Cancel order failed:', err);
+  }
+}
+
+async function deleteCancelledOrder(orderId, displayId){
+  if(!currentUser) return;
+  const order = myOrders[orderId];
+  if(!order || !['cancelled','rejected'].includes(order.status)) return;
+  if(!confirm('Удалить отменённый заказ #'+displayId+' из списка?')) return;
+
+  try{
+    showLoader();
+    await remove(ref(db, 'orders/' + orderId));
+
+    // Удаляем привязку отзыва, если она существует; сам отзыв оставляем,
+    // чтобы не разрушать историю публичных отзывов.
+    if(myReviewsByOrder[orderId]){
+      await remove(ref(db, 'reviewsByOrder/' + orderId)).catch(err => console.warn('review link removal failed:', err));
+    }
+
+    hideLoader();
+    toast('Заказ удалён.');
+  }catch(err){
+    hideLoader();
+    toast('Не удалось удалить заказ.', 'err');
+    console.error('Delete order failed:', err);
+  }
 }
 
 /* ======================= 11. ОТЗЫВЫ ======================= */
@@ -2979,16 +3147,48 @@ function watchMyReviews(){
   });
 }
 
+function getMyReviewsList(){
+  return Object.values(allReviewsCache)
+    .filter(r => r.userId === (currentUser && currentUser.uid))
+    .sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+}
+
+function myReviewHtml(r){
+  return '<div class="sb-review-list-item"><div class="review-stars">'+starsStr(r.rating)+'</div>' +
+    '<div class="review-text">'+escapeHtml(r.text)+'</div>' +
+    '<div class="review-date">'+formatDate(r.createdAt)+' · заказ #'+escapeHtml((myOrders[r.orderId]||{}).displayId || '')+'</div></div>';
+}
+
 function renderMyReviews(){
   const el = $('myReviewsList');
-  const mine = Object.values(allReviewsCache).filter(r => r.userId === (currentUser && currentUser.uid));
-  if(!mine.length){ el.innerHTML = '<div class="sb-empty-state">Вы ещё не оставляли отзывы.</div>'; return; }
-  el.innerHTML = mine.sort((a,b)=>b.createdAt-a.createdAt).map(r =>
-    '<div class="sb-review-list-item"><div class="review-stars">'+starsStr(r.rating)+'</div>' +
-    '<div class="review-text">'+escapeHtml(r.text)+'</div>' +
-    '<div class="review-date">'+formatDate(r.createdAt)+' · заказ #'+escapeHtml((myOrders[r.orderId]||{}).displayId || '')+'</div></div>'
-  ).join('');
+  const moreWrap = $('myReviewsMoreWrap');
+  const mine = getMyReviewsList();
+
+  if(!mine.length){
+    el.innerHTML = '<div class="sb-empty-state">Вы ещё не оставляли отзывы.</div>';
+    moreWrap.style.display = 'none';
+    renderMyReviewsAll();
+    return;
+  }
+
+  el.innerHTML = mine.slice(0,5).map(myReviewHtml).join('');
+  moreWrap.style.display = mine.length > 5 ? 'flex' : 'none';
+  renderMyReviewsAll();
 }
+
+function renderMyReviewsAll(){
+  const el = $('myReviewsAllList');
+  if(!el) return;
+  const mine = getMyReviewsList();
+
+  if(!mine.length){
+    el.innerHTML = '<div class="sb-empty-state">Вы ещё не оставляли отзывы.</div>';
+    return;
+  }
+
+  el.innerHTML = mine.map(myReviewHtml).join('');
+}
+
 
 function openReviewModal(order){
   $('reviewOrderId').textContent = order.displayId;
