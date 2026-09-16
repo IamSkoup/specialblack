@@ -1826,6 +1826,7 @@ footer{
         <div class="sb-profile-name" id="profileNickname">—</div>
         <div class="sb-profile-email" id="profileEmail">—</div>
         <div class="sb-verify-badge" id="profileVerifyBadge"></div>
+        <button class="sb-mini-btn accent" id="resendProfileVerifyBtn" type="button" style="display:none; margin-top:8px;">Отправить письмо ещё раз</button>
       </div>
     </div>
 
@@ -2284,10 +2285,13 @@ function renderProfileHeader(){
   $('statCompleted').textContent = currentProfile.completedCount || 0;
   $('statReviews').textContent = currentProfile.reviewsCount || 0;
   const badge = $('profileVerifyBadge');
+  const resendProfileVerifyBtn = $('resendProfileVerifyBtn');
   if(currentUser.emailVerified){
     badge.className = 'sb-verify-badge ok'; badge.textContent = '✓ Email подтверждён';
+    resendProfileVerifyBtn.style.display = 'none';
   } else {
     badge.className = 'sb-verify-badge no'; badge.textContent = '⚠ Email не подтверждён';
+    resendProfileVerifyBtn.style.display = 'inline-flex';
   }
 }
 
@@ -2356,6 +2360,16 @@ $('resetForm').addEventListener('submit', async e => {
 
 $('resendVerifyBtn').addEventListener('click', async () => {
   if(!auth.currentUser) return;
+  try{
+    showLoader();
+    await sendEmailVerification(auth.currentUser);
+    hideLoader();
+    toast('Письмо отправлено повторно.');
+  }catch(err){ hideLoader(); toast(translateAuthError(err), 'err'); }
+});
+
+$('resendProfileVerifyBtn').addEventListener('click', async () => {
+  if(!auth.currentUser || auth.currentUser.emailVerified) return;
   try{
     showLoader();
     await sendEmailVerification(auth.currentUser);
