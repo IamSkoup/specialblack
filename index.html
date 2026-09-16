@@ -536,8 +536,119 @@ img,svg{display:block;}
   .sb-stat-grid{grid-template-columns:repeat(3,1fr); gap:6px;}
   .sb-stat b{font-size:16px;}
   .sb-field-row{flex-direction:column; gap:0;}
-  .dropdown{width:calc(100vw - 24px); right:-6px;}
 }
+
+/* ---------- Notifications ---------- */
+.notif-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.notif-all-btn,
+.notif-clear-all,
+.notif-delete-btn{
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text-dim);
+  cursor:pointer;
+  font-family:'Inter', sans-serif;
+  transition:border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+.notif-all-btn{
+  width:100%;
+  padding:10px 14px;
+  font-size:12.5px;
+  margin-top:10px;
+  border-radius:var(--radius);
+  color:var(--accent);
+  border-color:var(--accent-dim);
+}
+.notif-all-btn:hover{background:var(--accent-soft); border-color:var(--accent); color:var(--accent);}
+.notif-clear-all{
+  padding:7px 10px;
+  font-size:11.5px;
+  border-radius:var(--radius);
+}
+.notif-clear-all:hover,
+.notif-delete-btn:hover{
+  border-color:#e0836f;
+  color:#e0836f;
+  background:rgba(224,131,111,.05);
+}
+.notif-item{
+  position:relative;
+  padding-right:52px;
+}
+.notif-item .notif-main{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.notif-item .notif-time{
+  white-space:nowrap;
+}
+.notif-delete-btn{
+  position:absolute;
+  top:11px;
+  right:12px;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  line-height:1;
+}
+#allNotificationsList .notif-item{
+  padding:16px 54px 16px 18px;
+}
+#allNotificationsList .notif-item .notif-time{
+  margin-top:6px;
+}
+#allNotificationsEmpty{padding:38px 18px;}
+#notificationsOverlay .sb-modal{
+  max-height:min(82vh, 760px);
+  overflow:hidden;
+}
+#notificationsOverlay .notif-page-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  padding-right:36px;
+  margin-bottom:18px;
+}
+#notificationsOverlay .notif-page-head h3{margin-bottom:0;}
+#allNotificationsList{
+  max-height:calc(min(82vh, 760px) - 120px);
+  overflow-y:auto;
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius);
+}
+@media (max-width:600px){
+  #notifDropdown{
+    position:fixed;
+    top:74px;
+    right:12px;
+    left:auto;
+    width:min(340px, calc(100vw - 24px));
+    max-width:none;
+    max-height:calc(100vh - 94px);
+  }
+  #notificationsOverlay{
+    padding:72px 10px 20px;
+    align-items:flex-start;
+  }
+  #notificationsOverlay .sb-modal{
+    width:100%;
+    max-height:calc(100vh - 92px);
+    padding:24px 14px 16px;
+  }
+  #allNotificationsList{
+    max-height:calc(100vh - 190px);
+  }
+}
+
 
 /* ---------- Buttons ---------- */
 
@@ -1352,7 +1463,7 @@ footer{
 
 <header class="site-header">
   <div class="container">
-    <div class="logo"><span class="dot"></span>SpecialBlack</div>
+    <a class="logo" id="siteLogo" href="#" aria-label="Наверх"><span class="dot"></span>SpecialBlack</a>
     <nav class="nav-links">
       <a href="#pricing">Тарифы</a>
       <a href="#works">Работы</a>
@@ -1372,8 +1483,13 @@ footer{
             <span class="notif-dot" id="notifDot"></span>
           </button>
           <div class="dropdown" id="notifDropdown">
-            <div class="dropdown-head"><span>Уведомления</span></div>
+            <div class="dropdown-head">
+              <span>Уведомления</span>
+            </div>
             <div id="notifList"><div class="notif-empty">Пока нет уведомлений</div></div>
+            <div id="notifAllWrap" style="display:none; padding:0 18px 14px;">
+              <button type="button" class="notif-all-btn" id="openAllNotificationsBtn">Все уведомления</button>
+            </div>
           </div>
         </div>
         <div class="header-wrap" id="adminWrap" style="display:none;">
@@ -1878,6 +1994,23 @@ footer{
   </div>
 </div>
 
+<!-- All notifications modal -->
+<div class="sb-overlay" id="notificationsOverlay">
+  <div class="sb-modal sb-wide">
+    <button class="sb-close" data-close-overlay="notificationsOverlay">✕</button>
+    <div class="notif-page-head">
+      <div>
+        <h3>Все уведомления</h3>
+        <p class="sb-sub" style="margin-bottom:0;">Полная история уведомлений вашего аккаунта.</p>
+      </div>
+      <button type="button" class="notif-clear-all" id="clearAllNotificationsBtn">Очистить все</button>
+    </div>
+    <div id="allNotificationsList">
+      <div class="notif-empty" id="allNotificationsEmpty">Пока нет уведомлений</div>
+    </div>
+  </div>
+</div>
+
 <!-- Order modal -->
 <div class="sb-overlay" id="orderOverlay">
   <div class="sb-modal sb-wide">
@@ -2161,6 +2294,23 @@ function formatDate(ts){
   const d = new Date(ts);
   return d.toLocaleDateString('ru-RU', {day:'numeric', month:'long', year:'numeric'});
 }
+function formatNotificationDateTime(ts){
+  if(!ts) return '—';
+  const d = new Date(ts);
+  const date = d.toLocaleDateString('ru-RU', {
+    day:'numeric',
+    month:'long',
+    year:'numeric',
+    timeZone:'Europe/Moscow'
+  });
+  const time = d.toLocaleTimeString('ru-RU', {
+    hour:'2-digit',
+    minute:'2-digit',
+    hour12:false,
+    timeZone:'Europe/Moscow'
+  });
+  return date + ', ' + time + ' МСК';
+}
 function starsStr(rating){
   const r = Math.round(Number(rating)||0);
   return '★★★★★☆☆☆☆☆'.slice(5-r, 10-r);
@@ -2411,6 +2561,28 @@ $('notifBtn').addEventListener('click', () => {
   if(dd.classList.contains('open')){ dd.classList.remove('open'); }
   else { openOverlay('notifDropdown'); markNotificationsRead(); }
 });
+$('openAllNotificationsBtn').addEventListener('click', () => {
+  $('notifDropdown').classList.remove('open');
+  renderAllNotificationsPage();
+  openOverlay('notificationsOverlay');
+});
+$('clearAllNotificationsBtn').addEventListener('click', async () => {
+  await clearAllNotifications();
+});
+$('notifList').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-notif-delete]');
+  if(!btn || !currentUser) return;
+  e.preventDefault();
+  e.stopPropagation();
+  await deleteNotification(btn.dataset.notifDelete);
+});
+$('allNotificationsList').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-notif-delete]');
+  if(!btn || !currentUser) return;
+  e.preventDefault();
+  e.stopPropagation();
+  await deleteNotification(btn.dataset.notifDelete);
+});
 document.addEventListener('click', e => {
   if(!e.target.closest('#profileWrap')) $('profileDropdown').classList.remove('open');
   if(!e.target.closest('#notifWrap')) $('notifDropdown').classList.remove('open');
@@ -2420,6 +2592,10 @@ $('openProfileBtn').addEventListener('click', e => {
   switchProfileTab('orders'); openOverlay('profileOverlay');
 });
 $('adminOpenBtn').addEventListener('click', () => { openOverlay('adminOverlay'); loadAdminOrders('pending'); loadAdminReviews(); loadPromoList(); });
+$('siteLogo').addEventListener('click', e => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 function switchProfileTab(tab){
   document.querySelectorAll('[data-profiletab]').forEach(t => t.classList.toggle('active', t.dataset.profiletab === tab));
@@ -2931,27 +3107,80 @@ function renderAllReviewsModal(){
 
 /* ======================= 12. УВЕДОМЛЕНИЯ ======================= */
 
+let notificationsCache = [];
+
+function getNotificationsList(data){
+  return Object.entries(data || {})
+    .map(([id,v]) => ({id, ...v}))
+    .sort((a,b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+}
+
+function notificationHtml(n, fullPage){
+  return '<div class="notif-item '+(n.read?'':'unread')+'">' +
+    '<div class="notif-main">'+escapeHtml(n.text)+'</div>' +
+    '<span class="notif-time">'+formatNotificationDateTime(n.createdAt)+'</span>' +
+    '<button type="button" class="notif-delete-btn" data-notif-delete="'+escapeHtml(n.id)+'" title="Удалить" aria-label="Удалить уведомление">×</button>' +
+  '</div>';
+}
+
+function renderNotificationDropdown(){
+  const el = $('notifList');
+  const allWrap = $('notifAllWrap');
+  if(!notificationsCache.length){
+    el.innerHTML = '<div class="notif-empty">Пока нет уведомлений</div>';
+    allWrap.style.display = 'none';
+    return;
+  }
+  el.innerHTML = notificationsCache.slice(0,5).map(n => notificationHtml(n, false)).join('');
+  allWrap.style.display = notificationsCache.length > 5 ? 'block' : 'none';
+}
+
+function renderAllNotificationsPage(){
+  const el = $('allNotificationsList');
+  if(!notificationsCache.length){
+    el.innerHTML = '<div class="notif-empty" id="allNotificationsEmpty">Пока нет уведомлений</div>';
+    return;
+  }
+  el.innerHTML = notificationsCache.map(n => notificationHtml(n, true)).join('');
+}
+
 function watchNotifications(uid){
   onValue(ref(db, 'notifications/' + uid), snap => {
-    const data = snap.val() || {};
-    const list = Object.entries(data).map(([id,v]) => ({id, ...v})).sort((a,b) => b.createdAt - a.createdAt);
-    const unread = list.some(n => !n.read);
+    notificationsCache = getNotificationsList(snap.val() || {});
+    const unread = notificationsCache.some(n => !n.read);
     $('notifDot').classList.toggle('show', unread);
-    const el = $('notifList');
-    if(!list.length){ el.innerHTML = '<div class="notif-empty">Пока нет уведомлений</div>'; return; }
-    el.innerHTML = list.slice(0,20).map(n =>
-      '<div class="notif-item '+(n.read?'':'unread')+'">'+escapeHtml(n.text)+'<span class="notif-time">'+formatDate(n.createdAt)+'</span></div>'
-    ).join('');
+    renderNotificationDropdown();
+    if($('notificationsOverlay').classList.contains('open')) renderAllNotificationsPage();
   });
 }
 
-let lastNotifSnapshot = null;
+async function deleteNotification(id){
+  if(!currentUser || !id) return;
+  try{
+    await remove(ref(db, 'notifications/' + currentUser.uid + '/' + id));
+  }catch(err){
+    toast('Не удалось удалить уведомление.', 'err');
+  }
+}
+
+async function clearAllNotifications(){
+  if(!currentUser || !notificationsCache.length) return;
+  try{
+    await remove(ref(db, 'notifications/' + currentUser.uid));
+    toast('Уведомления очищены.');
+  }catch(err){
+    toast('Не удалось очистить уведомления.', 'err');
+  }
+}
+
 function markNotificationsRead(){
   if(!currentUser) return;
   get(ref(db, 'notifications/' + currentUser.uid)).then(snap => {
     const data = snap.val() || {};
     const updates = {};
-    Object.entries(data).forEach(([id,v]) => { if(!v.read) updates['notifications/'+currentUser.uid+'/'+id+'/read'] = true; });
+    Object.entries(data).forEach(([id,v]) => {
+      if(!v.read) updates['notifications/'+currentUser.uid+'/'+id+'/read'] = true;
+    });
     if(Object.keys(updates).length) update(ref(db), updates);
   });
 }
