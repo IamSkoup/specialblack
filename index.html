@@ -49,6 +49,23 @@ body{
   overflow-wrap:break-word;
   word-break:break-word;
 }
+/* При открытых модальных окнах страница под ними не должна прокручиваться. */
+html.modal-open,
+body.modal-open{
+  overscroll-behavior:none;
+}
+body.modal-open{
+  position:fixed;
+  left:0;
+  right:0;
+  width:100%;
+  overflow:hidden;
+  touch-action:none;
+}
+body.modal-open .sb-overlay{
+  touch-action:auto;
+}
+
 
 /* ---------- Scroll reveal ---------- */
 .reveal{
@@ -2358,20 +2375,60 @@ function toast(msg, type){
   wrap.appendChild(el);
   setTimeout(() => el.remove(), 5000);
 }
+let modalScrollY = 0;
+
+function hasOpenOverlay(){
+  return !!document.querySelector('.sb-overlay.open');
+}
+
+function syncModalScrollLock(){
+  const open = hasOpenOverlay();
+  if(open){
+    if(!document.body.classList.contains('modal-open')){
+      modalScrollY = window.scrollY || window.pageYOffset || 0;
+      document.documentElement.classList.add('modal-open');
+      document.body.classList.add('modal-open');
+      document.body.style.top = (-modalScrollY) + 'px';
+    }
+  }else if(document.body.classList.contains('modal-open')){
+    document.documentElement.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
+    document.body.style.top = '';
+    window.scrollTo(0, modalScrollY);
+  }
+}
+
 function showLoader(){ $('loaderOverlay').classList.add('open'); }
 function hideLoader(){ $('loaderOverlay').classList.remove('open'); }
-function openOverlay(id){ document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open')); $(id).classList.add('open'); }
-function closeOverlay(id){ $(id).classList.remove('open'); }
+function openOverlay(id){
+  document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));
+  const overlay = $(id);
+  if(!overlay) return;
+  overlay.classList.add('open');
+  syncModalScrollLock();
+}
+function closeOverlay(id){
+  const overlay = $(id);
+  if(!overlay) return;
+  overlay.classList.remove('open');
+  syncModalScrollLock();
+}
 document.querySelectorAll('[data-close-overlay]').forEach(btn=>{
   btn.addEventListener('click', () => closeOverlay(btn.dataset.closeOverlay));
 });
 document.querySelectorAll('.sb-overlay').forEach(ov=>{
-  ov.addEventListener('click', e => { if(e.target === ov) ov.classList.remove('open'); });
+  ov.addEventListener('click', e => {
+    if(e.target === ov) {
+      ov.classList.remove('open');
+      syncModalScrollLock();
+    }
+  });
 });
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape'){
     document.querySelectorAll('.sb-overlay.open').forEach(o=>o.classList.remove('open'));
     document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));
+    syncModalScrollLock();
   }
 });
 
@@ -3092,6 +3149,18 @@ async function cancelOrder(orderId, displayId){
       paymentStatus: 'cancelled',
       cancelledAt: Date.now()
     });
+
+    // Оптимистично обновляем локальное состояние сразу после успешной записи.
+    // Благодаря этому карточка меняет статус без ожидания следующего рендера/перезагрузки.
+    if(myOrders[orderId]){
+      myOrders[orderId] = {
+        ...myOrders[orderId],
+        status: 'cancelled',
+        paymentStatus: 'cancelled',
+        cancelledAt: Date.now()
+      };
+      renderMyOrders();
+    }
 
     const notifKey = push(ref(db, 'notifications/' + currentUser.uid)).key;
     set(ref(db, 'notifications/' + currentUser.uid + '/' + notifKey), {
