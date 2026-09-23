@@ -1597,6 +1597,7 @@ footer{
             <li>Кнопки связи</li>
             <li>Базовые анимации</li>
             <li>Отправка файла(ов)</li>
+            <li>Публикация сайта (по желанию)</li>
           </ul>
           <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
           <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Start" data-price-num="5000">Заказать за 5 000 ₽</a>
@@ -1616,6 +1617,7 @@ footer{
             <li>Анимации</li>
             <li>Дополнительные функциональные блоки</li>
             <li>Отправка файла(ов)</li>
+            <li>Публикация сайта (по желанию)</li>
           </ul>
           <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
           <a href="#" class="btn btn-outline-accent btn-block order-btn" data-plan="Business" data-price-num="10000">Заказать за 10 000 ₽</a>
@@ -1635,6 +1637,8 @@ footer{
             <li>Интеграции при необходимости</li>
             <li>Адаптация под все устройства</li>
             <li>Отправка файла(ов)</li>
+            <li>База данных</li>
+            <li>Публикация сайта (по желанию)</li>
           </ul>
           <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
           <a href="#" class="btn btn-secondary btn-block order-btn" data-plan="Pro" data-price-num="20000" data-discuss="1">Обсудить проект за 20 000 ₽</a>
@@ -1655,6 +1659,7 @@ footer{
             <li>Внутренние сервисы и взаимосвязанные разделы</li>
             <li>Индивидуальная логика проекта</li>
             <li>Сложная структура сайта / веб-приложения</li>
+            <li>Публикация сайта (по желанию)</li>
           </ul>
           <p class="plan-example mono">Пример: <a href="https://iamskoup1.github.io/kapani/" target="_blank" rel="noopener">Капанёвский сайт ↗</a></p>
           <p class="plan-prepay-tag mono">💳 Предоплата — 50% от стоимости заказа</p>
@@ -2073,6 +2078,8 @@ footer{
       <div class="sb-form-block">
         <span class="sb-block-title">Опции</span>
         <label class="sb-check"><input type="checkbox" id="q_logo"> Логотип для сайта — +200 ₽</label>
+        <label class="sb-check"><input type="checkbox" id="q_publish"> Публикация — +1 000 ₽</label>
+        <p class="sb-hint" style="margin-top:-4px; margin-bottom:10px;">Мы публикуем сайт на базовом домене *.github.io/*, если хотите другой, вам придётся купить его самому.</p>
         <div class="sb-field"><label>Промокод (если есть)</label><input type="text" id="q_promo" placeholder="START10"></div>
         <div class="sb-error" id="promoError"></div>
       </div>
@@ -2085,6 +2092,7 @@ footer{
       <div class="sb-summary">
         <div class="sb-summary-row"><span>Тариф</span><span id="sumTariff">—</span></div>
         <div class="sb-summary-row" id="sumLogoRow" style="display:none;"><span>Логотип</span><span>+200 ₽</span></div>
+        <div class="sb-summary-row" id="sumPublishRow" style="display:none;"><span>Публикация</span><span>+1 000 ₽</span></div>
         <div class="sb-summary-row" id="sumPromoRow" style="display:none;"><span>Скидка по промокоду</span><span id="sumPromoVal">—</span></div>
         <div class="sb-summary-row total"><span>Итого</span><span id="sumTotal">0 ₽</span></div>
         <div class="sb-summary-row prepay"><span>Предоплата (50%)</span><span id="sumPrepay">0 ₽</span></div>
@@ -2321,6 +2329,7 @@ const TARIFFS = {
   Ultra:    { name: 'Ultra',    price: 40000 }
 };
 const LOGO_PRICE = 200;
+const PUBLISH_PRICE = 1000;
 const PREPAY_PERCENT = 50;
 const TELEGRAM_USERNAME = 'jet18tsi';
 const ADMIN_EMAIL = 'denisspesivcev8@gmail.com';
@@ -2830,6 +2839,7 @@ function openOrderModal(plan, price){
 }
 
 $('q_logo').addEventListener('change', recalcOrderSummary);
+$('q_publish').addEventListener('change', recalcOrderSummary);
 let promoDebounce;
 $('q_promo').addEventListener('input', () => {
   clearTimeout(promoDebounce);
@@ -2859,7 +2869,8 @@ async function checkPromo(){
 function computeTotals(){
   const base = selectedOrderPrice;
   const logo = $('q_logo').checked ? LOGO_PRICE : 0;
-  let subtotal = base + logo;
+  const publish = $('q_publish').checked ? PUBLISH_PRICE : 0;
+  let subtotal = base + logo + publish;
   let discount = 0;
   if(currentPromo){
     discount = currentPromo.discountType === 'percent'
@@ -2871,13 +2882,14 @@ function computeTotals(){
   const total = subtotal - discount;
   const prepay = Math.round(total * PREPAY_PERCENT / 100);
   const remain = total - prepay;
-  return { base, logo, discount, total, prepay, remain };
+  return { base, logo, publish, discount, total, prepay, remain };
 }
 
 function recalcOrderSummary(){
   const t = computeTotals();
   $('sumTariff').textContent = selectedOrderTariff + ' — ' + formatPrice(t.base);
   $('sumLogoRow').style.display = t.logo ? 'flex' : 'none';
+  $('sumPublishRow').style.display = t.publish ? 'flex' : 'none';
   $('sumPromoRow').style.display = t.discount ? 'flex' : 'none';
   if(t.discount) $('sumPromoVal').textContent = '−' + formatPrice(t.discount);
   $('sumTotal').textContent = formatPrice(t.total);
@@ -2934,9 +2946,12 @@ $('orderForm').addEventListener('submit', async e => {
       userEmail: currentUser.email,
       createdAt: now,
       selectedTariff: selectedOrderTariff,
+      hasDatabase: (selectedOrderTariff === 'Pro' || selectedOrderTariff === 'Ultra'),
       basePrice: t.base,
       logo: $('q_logo').checked,
       logoPrice: t.logo,
+      publish: $('q_publish').checked,
+      publishPrice: t.publish,
       promoCode: currentPromo ? currentPromo.code : null,
       discountAmount: t.discount,
       totalPrice: t.total,
@@ -3006,6 +3021,8 @@ function showOrderCreated(order){
   text += 'Тариф: ' + order.selectedTariff + '\n';
   text += 'Стоимость: ' + formatPrice(order.totalPrice) + '\n';
   if(order.logo) text += 'Логотип: Да (+' + formatPrice(order.logoPrice) + ')\n';
+  if(order.publish) text += 'Публикация: Да (+' + formatPrice(order.publishPrice) + ') — на базовом домене *.github.io/*\n';
+  if(order.hasDatabase) text += 'В тариф включена база данных — вам также отправятся данные от почты, к которой будет подключена база данных.\n';
   if(order.discountAmount) text += 'Скидка по промокоду ' + order.promoCode + ': −' + formatPrice(order.discountAmount) + '\n';
   text += 'Предоплата 50%: ' + formatPrice(order.prepaymentAmount) + '\n';
   text += 'Остаток после выполнения: ' + formatPrice(order.remainingAmount) + '\n\n';
@@ -3140,6 +3157,8 @@ function orderCardHtml(o){
       (o.questionnaire.style ? '<dt>Стиль</dt><dd>'+escapeHtml(o.questionnaire.style)+'</dd>' : '') +
       (o.questionnaire.colors ? '<dt>Цвета</dt><dd>'+escapeHtml(o.questionnaire.colors)+'</dd>' : '') +
       '<dt>Telegram</dt><dd>'+escapeHtml(o.questionnaire.telegram)+'</dd>' +
+      (o.publish ? '<dt>Публикация</dt><dd>Да (+'+formatPrice(o.publishPrice)+'), домен *.github.io/*</dd>' : '') +
+      (o.hasDatabase ? '<dt>База данных</dt><dd>Включена в тариф — данные от почты придут отдельно</dd>' : '') +
     '</dl></div>' +
   '</div>';
 }
@@ -3510,6 +3529,8 @@ function adminOrderCardHtml(o){
       (q.wishes?'<dt>Пожелания</dt><dd>'+escapeHtml(q.wishes)+'</dd>':'') +
       (q.extra?'<dt>Доп. информация</dt><dd>'+escapeHtml(q.extra)+'</dd>':'') +
       '<dt>Telegram</dt><dd>'+escapeHtml(q.telegram)+'</dd>' +
+      (o.publish?'<dt>Публикация</dt><dd>Да (+'+formatPrice(o.publishPrice)+'), домен *.github.io/*</dd>':'') +
+      (o.hasDatabase?'<dt>База данных</dt><dd>Включена в тариф — данные от почты придут клиенту отдельно</dd>':'') +
       (o.promoCode?'<dt>Промокод</dt><dd>'+escapeHtml(o.promoCode)+' (−'+formatPrice(o.discountAmount)+')</dd>':'') +
     '</dl></div>' +
     '<div class="sb-payment-box">Итоговая стоимость: '+formatPrice(o.totalPrice)+' · Предоплата 50%: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
