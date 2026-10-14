@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" type="image/png" sizes="128x128" href="assets/washingtonsites-icon.png">
+<link rel="icon" type="image/jpg" href="icon.jpg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WashingtonSites — веб-студия</title>
+<title>SpecialBlack — веб-студия</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root{
-  --bg: #f4efe6;
-  --bg-raised: #fffdf8;
-  --line: #ddd2c4;
-  --line-soft: #e9e0d5;
-  --text: #2d2924;
-  --text-dim: #625a51;
-  --text-faint: #81766b;
-  --accent: #b84b35;
-  --accent-soft: rgba(184, 75, 53, 0.10);
-  --accent-dim: rgba(184, 75, 53, 0.34);
-  --radius: 6px;
-  --radius-lg: 12px;
-  --shadow-card: 0 18px 40px -24px rgba(55,39,27,.2);
+  --bg: #0a0a0a;
+  --bg-raised: #0e0e0e;
+  --line: #1e1e1e;
+  --line-soft: #161616;
+  --text: #f1f0ec;
+  --text-dim: #8d8c88;
+  --text-faint: #5a5955;
+  --accent: #c9a15a;
+  --accent-soft: rgba(201, 161, 90, 0.12);
+  --accent-dim: rgba(201, 161, 90, 0.35);
+  --radius: 3px;
+  --radius-lg: 8px;
+  --shadow-card: 0 20px 44px -22px rgba(0,0,0,0.6);
   --ease: cubic-bezier(.22,.85,.34,1);
 }
 
@@ -35,9 +35,12 @@ html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 }
 
 body{
-  background:var(--bg);
+  background:
+    radial-gradient(1100px 560px at 84% -6%, rgba(201,161,90,0.07), transparent 60%),
+    radial-gradient(900px 500px at -6% 18%, rgba(255,255,255,0.025), transparent 55%),
+    var(--bg);
   color:var(--text);
-  font-family:'Manrope', sans-serif;
+  font-family:'Inter', sans-serif;
   font-size:16px;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
@@ -96,11 +99,11 @@ body.modal-open .sb-overlay{
 img,svg,video,canvas{max-width:100%;}
 
 .mono{
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
 }
 
 h1,h2,h3{
-  font-family:'Manrope', sans-serif;
+  font-family:'Unbounded', sans-serif;
   font-weight:600;
   letter-spacing:-0.015em;
   line-height:1.12;
@@ -150,7 +153,7 @@ img,svg{display:block;}
 }
 
 .logo{
-  font-family:'Manrope', sans-serif;
+  font-family:'Unbounded', sans-serif;
   font-weight:600;
   font-size:17px;
   letter-spacing:-0.01em;
@@ -159,7 +162,12 @@ img,svg{display:block;}
   gap:8px;
 }
 
-.logo .brand-mark{width:32px;height:32px;flex:0 0 32px;object-fit:contain;}
+.logo .dot{
+  width:6px;height:6px;
+  background:var(--accent);
+  border-radius:50%;
+  flex-shrink:0;
+}
 
 .nav-links{
   display:flex;
@@ -194,7 +202,7 @@ img,svg{display:block;}
   .header-cta{font-size:13px; padding:8px 14px;}
 }
 
-/* ================= WashingtonSites: аккаунты / заказы / отзывы ================= */
+/* ================= SpecialBlack: аккаунты / заказы / отзывы ================= */
 
 .header-auth{display:flex; align-items:center; gap:10px;}
 
@@ -228,7 +236,7 @@ img,svg{display:block;}
   cursor:pointer; flex-shrink:0;
   background:var(--accent-soft);
   display:flex; align-items:center; justify-content:center;
-  font-family:'Manrope', sans-serif; font-size:13px; color:var(--accent);
+  font-family:'Unbounded', sans-serif; font-size:13px; color:var(--accent);
   transition:border-color .25s ease;
 }
 .avatar-btn:hover{border-color:var(--accent);}
@@ -249,7 +257,7 @@ img,svg{display:block;}
 .dropdown.open{opacity:1; visibility:visible; transform:translateY(0);}
 .dropdown-head{
   padding:14px 18px; border-bottom:1px solid var(--line-soft);
-  font-size:13px; color:var(--text-dim); font-family:'Manrope', sans-serif;
+  font-size:13px; color:var(--text-dim); font-family:'JetBrains Mono', monospace;
   display:flex; align-items:center; justify-content:space-between;
 }
 .dropdown-head a{font-size:12px; color:var(--accent);}
@@ -306,7 +314,7 @@ img,svg{display:block;}
 .sb-field{margin-bottom:16px;}
 .sb-field label{
   display:block; font-size:12.5px; color:var(--text-dim);
-  margin-bottom:7px; font-family:'Manrope', sans-serif; letter-spacing:.02em;
+  margin-bottom:7px; font-family:'JetBrains Mono', monospace; letter-spacing:.02em;
 }
 .sb-field input,
 .sb-field textarea,
@@ -316,7 +324,7 @@ img,svg{display:block;}
   border:1px solid var(--line);
   border-radius:var(--radius);
   color:var(--text);
-  font-family:'Manrope', sans-serif;
+  font-family:'Inter', sans-serif;
   font-size:14.5px;
   padding:12px 14px;
   transition:border-color .2s ease;
@@ -330,14 +338,14 @@ img,svg{display:block;}
 .sb-check{display:flex; align-items:flex-start; gap:10px; font-size:14px; cursor:pointer; margin-bottom:16px;}
 .sb-check input{width:16px; height:16px; margin-top:2px; accent-color:var(--accent); flex-shrink:0;}
 .sb-hint{font-size:12px; color:var(--text-faint); margin-top:6px;}
-.sb-error{font-size:12.5px; color:#a33a2b; margin-top:6px; display:none;}
+.sb-error{font-size:12.5px; color:#e0836f; margin-top:6px; display:none;}
 .sb-error.show{display:block;}
 
 .sb-tabs{display:flex; gap:4px; margin-bottom:24px; border-bottom:1px solid var(--line-soft);}
 .sb-tab{
   padding:10px 4px; margin-right:20px; font-size:13.5px; color:var(--text-faint);
   cursor:pointer; border-bottom:2px solid transparent; transition:color .2s ease, border-color .2s ease;
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
 }
 .sb-tab.active{color:var(--text); border-color:var(--accent);}
 .sb-panel{display:none;}
@@ -348,7 +356,7 @@ img,svg{display:block;}
   margin-bottom:18px; background:rgba(255,255,255,0.012);
 }
 .sb-form-block > .sb-block-title{
-  font-family:'Manrope', sans-serif; font-size:12px; text-transform:uppercase;
+  font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase;
   letter-spacing:.06em; color:var(--accent); margin-bottom:14px; display:block;
 }
 
@@ -364,25 +372,25 @@ img,svg{display:block;}
 .sb-profile-avatar{
   width:64px; height:64px; border-radius:50%; overflow:hidden; flex-shrink:0;
   background:var(--accent-soft); display:flex; align-items:center; justify-content:center;
-  font-family:'Manrope', sans-serif; font-size:22px; color:var(--accent);
+  font-family:'Unbounded', sans-serif; font-size:22px; color:var(--accent);
   border:1px solid var(--line); position:relative; cursor:pointer;
 }
 .sb-profile-avatar img{width:100%; height:100%; object-fit:cover;}
 .sb-profile-avatar input{position:absolute; inset:0; opacity:0; cursor:pointer;}
-.sb-profile-name{font-family:'Manrope', sans-serif; font-size:17px;}
+.sb-profile-name{font-family:'Unbounded', sans-serif; font-size:17px;}
 .sb-profile-email{font-size:13px; color:var(--text-dim); margin-top:3px;}
 .sb-verify-badge{
   display:inline-flex; align-items:center; gap:5px; font-size:11.5px;
-  margin-top:6px; font-family:'Manrope', sans-serif;
+  margin-top:6px; font-family:'JetBrains Mono', monospace;
 }
-.sb-verify-badge.ok{color:#4f7454;}
-.sb-verify-badge.no{color:#8c6726;}
+.sb-verify-badge.ok{color:#7fbf8f;}
+.sb-verify-badge.no{color:#e0b25f;}
 
 .sb-stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:22px;}
 .sb-stat{
   border:1px solid var(--line-soft); border-radius:var(--radius); padding:14px 10px; text-align:center;
 }
-.sb-stat b{display:block; font-family:'Manrope', sans-serif; font-size:19px; margin-bottom:2px;}
+.sb-stat b{display:block; font-family:'Unbounded', sans-serif; font-size:19px; margin-bottom:2px;}
 .sb-stat span{font-size:11px; color:var(--text-faint);}
 
 .sb-order-card{
@@ -391,27 +399,27 @@ img,svg{display:block;}
 }
 .sb-order-card:hover{border-color:var(--line);}
 .sb-order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px;}
-.sb-order-id{font-family:'Manrope', sans-serif; font-size:13px; color:var(--accent);}
+.sb-order-id{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--accent);}
 .sb-order-tariff{font-size:14.5px; font-weight:600;}
 .sb-order-meta{font-size:12.5px; color:var(--text-faint); margin-top:2px;}
-.sb-order-price{font-family:'Manrope', sans-serif; font-size:15px; white-space:nowrap;}
+.sb-order-price{font-family:'Unbounded', sans-serif; font-size:15px; white-space:nowrap;}
 
 .sb-badge{
   display:inline-flex; align-items:center; gap:6px; font-size:11.5px;
-  padding:4px 10px; border-radius:20px; font-family:'Manrope', sans-serif;
+  padding:4px 10px; border-radius:20px; font-family:'JetBrains Mono', monospace;
   border:1px solid var(--line);
 }
 .sb-badge::before{content:''; width:6px; height:6px; border-radius:50%; background:currentColor;}
-.sb-badge.st-pending{color:#8c6726;}
-.sb-badge.st-confirmed{color:#8f6845;}
+.sb-badge.st-pending{color:#e0b25f;}
+.sb-badge.st-confirmed{color:#6fb1d6;}
 .sb-badge.st-in_progress{color:var(--accent);}
-.sb-badge.st-completed{color:#4f7454;}
-.sb-badge.st-cancelled, .sb-badge.st-rejected{color:#a33a2b;}
+.sb-badge.st-completed{color:#7fbf8f;}
+.sb-badge.st-cancelled, .sb-badge.st-rejected{color:#e0836f;}
 
-.sb-badge.pay-awaiting_prepayment{color:#8c6726;}
-.sb-badge.pay-prepayment_received{color:#4f7454;}
-.sb-badge.pay-fully_paid{color:#4f7454;}
-.sb-badge.pay-cancelled{color:#a33a2b;}
+.sb-badge.pay-awaiting_prepayment{color:#e0b25f;}
+.sb-badge.pay-prepayment_received{color:#7fbf8f;}
+.sb-badge.pay-fully_paid{color:#7fbf8f;}
+.sb-badge.pay-cancelled{color:#e0836f;}
 
 .sb-timeline{display:flex; align-items:center; margin:14px 0 4px; gap:0;}
 .sb-tl-step{flex:1; text-align:center; position:relative;}
@@ -427,7 +435,7 @@ img,svg{display:block;}
 .sb-tl-step.done::before{background:var(--accent);}
 .sb-tl-label{font-size:10.5px; color:var(--text-faint);}
 .sb-tl-step.done .sb-tl-label{color:var(--text-dim);}
-.sb-timeline.cancelled .sb-tl-dot, .sb-timeline.cancelled .sb-tl-step::before{background:#a33a2b !important;}
+.sb-timeline.cancelled .sb-tl-dot, .sb-timeline.cancelled .sb-tl-step::before{background:#e0836f !important;}
 
 .sb-order-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
 .sb-more-row{margin-top:10px; display:flex; justify-content:center;}
@@ -436,11 +444,11 @@ img,svg{display:block;}
 
 .sb-mini-btn{
   font-size:12.5px; padding:8px 14px; border-radius:var(--radius); cursor:pointer;
-  border:1px solid var(--line); background:transparent; color:var(--text); font-family:'Manrope', sans-serif;
+  border:1px solid var(--line); background:transparent; color:var(--text); font-family:'Inter', sans-serif;
   transition:border-color .2s ease, color .2s ease;
 }
 .sb-mini-btn:hover{border-color:var(--accent); color:var(--accent);}
-.sb-mini-btn.danger:hover{border-color:#a33a2b; color:#a33a2b;}
+.sb-mini-btn.danger:hover{border-color:#e0836f; color:#e0836f;}
 .sb-mini-btn.accent{background:var(--accent); color:var(--bg); border-color:var(--accent);}
 .sb-mini-btn.accent:hover{opacity:.85; color:var(--bg);}
 
@@ -458,13 +466,13 @@ img,svg{display:block;}
 
 .pricing-note{
   text-align:center; font-size:13px; color:var(--text-dim); margin-top:26px;
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
 }
 .plan-prepay-tag{font-size:11.5px; color:var(--text-faint); margin:-8px 0 18px;}
 
 .reviews-stats{display:flex; align-items:center; gap:16px; margin-bottom:32px; flex-wrap:wrap;}
 .reviews-stars{color:var(--accent); font-size:20px; letter-spacing:2px;}
-.reviews-avg{font-family:'Manrope', sans-serif; font-size:22px;}
+.reviews-avg{font-family:'Unbounded', sans-serif; font-size:22px;}
 .reviews-count{color:var(--text-dim); font-size:13.5px;}
 .reviews-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
 @media (max-width:900px){.reviews-grid{grid-template-columns:1fr;}}
@@ -476,11 +484,11 @@ img,svg{display:block;}
 .review-avatar{
   width:36px; height:36px; border-radius:50%; overflow:hidden; background:var(--accent-soft);
   display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--accent);
-  font-family:'Manrope', sans-serif; flex-shrink:0;
+  font-family:'Unbounded', sans-serif; flex-shrink:0;
 }
 .review-avatar img{width:100%; height:100%; object-fit:cover;}
 .review-name{font-size:14px; font-weight:600;}
-.review-verified{font-size:10.5px; color:#4f7454; font-family:'Manrope', sans-serif;}
+.review-verified{font-size:10.5px; color:#7fbf8f; font-family:'JetBrains Mono', monospace;}
 .review-stars{color:var(--accent); font-size:13px; margin-bottom:10px; letter-spacing:1px;}
 .review-text{font-size:14px; color:var(--text-dim); line-height:1.6;}
 .review-date{font-size:11.5px; color:var(--text-faint); margin-top:12px;}
@@ -491,7 +499,7 @@ img,svg{display:block;}
 .sb-review-filters{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
 .sb-chip{
   font-size:12.5px; padding:7px 13px; border-radius:20px; border:1px solid var(--line);
-  color:var(--text-dim); cursor:pointer; background:transparent; font-family:'Manrope', sans-serif;
+  color:var(--text-dim); cursor:pointer; background:transparent; font-family:'Inter', sans-serif;
 }
 .sb-chip.active{border-color:var(--accent); color:var(--accent);}
 .sb-review-list-item{border-bottom:1px solid var(--line-soft); padding:18px 0;}
@@ -504,7 +512,7 @@ img,svg{display:block;}
 .sb-admin-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:22px;}
 .sb-admin-tab{
   font-size:12.5px; padding:8px 14px; border-radius:20px; border:1px solid var(--line);
-  color:var(--text-dim); cursor:pointer; font-family:'Manrope', sans-serif;
+  color:var(--text-dim); cursor:pointer; font-family:'JetBrains Mono', monospace;
 }
 .sb-admin-tab.active{background:var(--accent); border-color:var(--accent); color:var(--bg);}
 .sb-admin-order{
@@ -518,7 +526,7 @@ img,svg{display:block;}
   display:flex; align-items:center; gap:10px; border:1px solid var(--line-soft); border-radius:var(--radius);
   padding:10px 14px; margin-bottom:8px; font-size:13px; flex-wrap:wrap;
 }
-.sb-promo-row b{font-family:'Manrope', sans-serif; color:var(--accent);}
+.sb-promo-row b{font-family:'JetBrains Mono', monospace; color:var(--accent);}
 .sb-promo-row .sb-tag-off{opacity:.5;}
 
 .sb-toast-wrap{position:fixed; bottom:22px; right:22px; z-index:3000; display:flex; flex-direction:column; gap:10px; max-width:340px;}
@@ -527,7 +535,7 @@ img,svg{display:block;}
   border-radius:var(--radius); padding:13px 16px; font-size:13.5px; box-shadow:var(--shadow-card);
   animation:sbtoastin .25s var(--ease);
 }
-.sb-toast.err{border-left-color:#a33a2b;}
+.sb-toast.err{border-left-color:#e0836f;}
 @keyframes sbtoastin{from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:translateX(0);}}
 @media (max-width:480px){.sb-toast-wrap{left:12px; right:12px; bottom:12px; max-width:none;}}
 
@@ -565,7 +573,7 @@ img,svg{display:block;}
   background:transparent;
   color:var(--text-dim);
   cursor:pointer;
-  font-family:'Manrope', sans-serif;
+  font-family:'Inter', sans-serif;
   transition:border-color .2s ease, color .2s ease, background-color .2s ease;
 }
 .notif-all-btn{
@@ -585,9 +593,9 @@ img,svg{display:block;}
 }
 .notif-clear-all:hover,
 .notif-delete-btn:hover{
-  border-color:#a33a2b;
-  color:#a33a2b;
-  background:rgba(163,58,43,.05);
+  border-color:#e0836f;
+  color:#e0836f;
+  background:rgba(224,131,111,.05);
 }
 .notif-item{
   position:relative;
@@ -672,7 +680,7 @@ img,svg{display:block;}
   justify-content:center;
   text-align:center;
   gap:8px;
-  font-family:'Manrope', sans-serif;
+  font-family:'Inter', sans-serif;
   font-weight:600;
   font-size:14.5px;
   padding:14px 26px;
@@ -733,7 +741,7 @@ img,svg{display:block;}
 }
 
 .eyebrow{
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:12.5px;
   letter-spacing:0.08em;
   text-transform:uppercase;
@@ -837,7 +845,7 @@ img,svg{display:block;}
 
 .window-bar .url{
   margin-left:12px;
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:11.5px;
   color:var(--text-faint);
 }
@@ -994,7 +1002,7 @@ section{
   position:absolute;
   top:-1px; right:24px;
   transform:translateY(-50%);
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:10.5px;
   letter-spacing:0.06em;
   color:var(--bg);
@@ -1004,7 +1012,7 @@ section{
 }
 
 .plan-name{
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:13px;
   color:var(--text-dim);
   letter-spacing:0.04em;
@@ -1013,7 +1021,7 @@ section{
 }
 
 .plan-price{
-  font-family:'Manrope', sans-serif;
+  font-family:'Unbounded', sans-serif;
   font-size:clamp(30px, 2vw + 22px, 40px);
   font-weight:600;
   margin-bottom:16px;
@@ -1252,7 +1260,7 @@ section{
 }
 
 .why-num{
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:12px;
   color:var(--accent);
   margin-bottom:20px;
@@ -1316,7 +1324,7 @@ section{
 }
 
 .process-num{
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:13px;
   color:var(--text-faint);
   margin-bottom:24px;
@@ -1433,7 +1441,7 @@ section{
 }
 
 .contact-label{
-  font-family:'Manrope', sans-serif;
+  font-family:'JetBrains Mono', monospace;
   font-size:12px;
   color:var(--text-faint);
   text-transform:uppercase;
@@ -1471,148 +1479,13 @@ footer{
 @media (max-width:420px){
   .footer-row{justify-content:center; text-align:center;}
 }
-/* ---------- Warm editorial redesign ---------- */
-:root{
-  --bg:#f4efe6;
-  --bg-raised:#fffdf8;
-  --line:#ddd2c4;
-  --line-soft:#e9e0d5;
-  --text:#2d2924;
-  --text-dim:#625a51;
-  --text-faint:#81766b;
-  --accent:#b84b35;
-  --accent-soft:rgba(184,75,53,.1);
-  --accent-dim:rgba(184,75,53,.34);
-  --radius:6px;
-  --radius-lg:12px;
-  --shadow-card:0 18px 40px -24px rgba(55,39,27,.2);
-}
-body{
-  background:linear-gradient(rgba(248,244,236,.9),rgba(248,244,236,.92)),url("assets/washington-street.jpg") center/cover fixed;
-  color:var(--text);
-  font-family:'Manrope',sans-serif;
-  font-size:16px;
-  line-height:1.68;
-}
-.mono{font-family:'Manrope',sans-serif;font-weight:600;letter-spacing:.025em;}
-h1,h2,h3,.logo,.plan-price,.sb-profile-name,.sb-stat b,.reviews-avg,.sb-order-price{
-  font-family:'Manrope',sans-serif;
-  font-weight:800;
-  letter-spacing:-.035em;
-}
-.site-header{background:rgba(248,244,236,.94);backdrop-filter:blur(16px);border-bottom-color:rgba(77,62,46,.14);}
-.logo{font-size:22px;letter-spacing:-.055em;text-transform:none;color:#2d2924;}
-.logo .brand-mark{width:32px;height:32px;flex:0 0 32px;object-fit:contain;}
-.logo-sites{color:var(--accent);}
-.nav-links{font-size:13px;font-weight:700;letter-spacing:0;text-transform:none;gap:26px;color:#625a51;}
-.nav-links a:hover{color:var(--accent);}
-.header-cta{border-radius:5px;background:var(--accent);color:#fff!important;font-weight:700;text-transform:none;letter-spacing:0;}
-.hero{padding:156px 0 88px;overflow:hidden;border-bottom:1px solid var(--line-soft);}
-.hero::before{
-  content:'';position:absolute;inset:72px 0 0;pointer-events:none;opacity:.13;
-  background-image:linear-gradient(rgba(142,93,62,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(142,93,62,.16) 1px,transparent 1px);
-  background-size:56px 56px;mask-image:linear-gradient(90deg,transparent 28%,#000 100%);
-}
-.hero-grid{position:relative;z-index:1;grid-template-columns:1.02fr .98fr;gap:52px;}
-.eyebrow{font-size:12px;letter-spacing:.08em;font-weight:800;color:var(--accent);}
-.eyebrow::before{width:26px;height:2px;background:var(--accent);}
-.hero h1{max-width:670px;margin-bottom:22px;font-size:clamp(44px,5vw,68px);line-height:1.02;text-transform:none;letter-spacing:-.055em;}
-.hero-desc{font-size:17px;max-width:490px;color:#5c554d;line-height:1.7;}
-.hero-facts li{color:#5c554d;font-size:13px;font-weight:700;}
-.hero-facts li::before{border-radius:50%;width:6px;height:6px;background:var(--accent);transform:none;}
-.btn{border-radius:5px;text-transform:none;letter-spacing:0;font-weight:750;font-size:14px;}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 10px 24px rgba(149,62,43,.18);}
-.btn-primary:hover{background:#9e3e2b;box-shadow:0 12px 28px rgba(149,62,43,.22);}
-.btn-outline-accent{border-color:#bcae9d;color:#453c33;}
-.btn-outline-accent:hover{background:rgba(184,75,53,.07);border-color:var(--accent);color:var(--accent);}
-.btn-secondary{background:#f3ece1;color:#433a31;border-color:#ddd2c4;}
-.btn-secondary:hover{background:#ebe1d3;border-color:#c7b8a6;}
-.hero-visual{min-height:430px;position:relative;overflow:hidden;border:1px solid rgba(76,52,34,.16);border-radius:8px 8px 8px 48px;box-shadow:0 30px 62px -36px rgba(65,43,27,.48);background:#b8794d;transform:rotate(.5deg);}
-.hero-visual::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(45,32,23,.08),transparent 56%),linear-gradient(0deg,rgba(32,25,19,.72),transparent 44%);pointer-events:none;}
-.hero-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
-.hero-photo-caption{position:absolute;z-index:2;left:24px;right:24px;bottom:19px;display:flex;justify-content:space-between;gap:12px;color:#fffaf2;font-size:11px;font-weight:800;letter-spacing:.04em;}
-.hero-photo-caption span:last-child{color:#ffe0ce;text-align:right;}
-.hero-photo-stamp{position:absolute;z-index:2;right:20px;top:20px;width:84px;height:84px;border:1px solid rgba(255,250,242,.8);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fffaf2;text-align:center;transform:rotate(9deg);background:rgba(50,36,25,.22);backdrop-filter:blur(3px);}
-.hero-photo-stamp span{font:800 11px/.94 'Manrope',sans-serif;letter-spacing:.08em;}
-.hero-photo-stamp b{font-size:13px;margin-top:4px;color:#ffd4bd;}
-section{border-top-color:rgba(77,62,46,.1);}
-.section-head{max-width:720px;}
-.section-head h2{font-size:clamp(34px,4vw,52px);text-transform:none;line-height:1.08;letter-spacing:-.045em;}
-.section-head h2::after{content:'';display:block;width:44px;height:4px;margin-top:16px;background:var(--accent);border-radius:3px;}
-.section-head p{color:var(--text-dim);font-size:16px;}
-.plan,.work-card,.why-item,.review-card,.faq-item,.process-item{border-color:var(--line);background:rgba(255,253,248,.93);border-radius:10px;}
-.plan,.work-card{box-shadow:0 14px 32px -26px rgba(55,39,27,.35);}
-.plan:hover,.work-card:hover{border-color:rgba(184,75,53,.48);box-shadow:0 22px 45px -28px rgba(55,39,27,.32);}
-.plan.featured{background:linear-gradient(180deg,rgba(184,75,53,.07),rgba(255,253,248,.97) 45%);border-color:var(--accent-dim);}
-.plan-badge{color:#fff;background:var(--accent);font-family:'Manrope',sans-serif;font-weight:800;}
-.plan-name,.work-tag,.sb-admin-tab,.sb-badge{font-family:'Manrope',sans-serif;}
-.plan-price{font-size:40px;color:#302a24;}
-.plan-desc,.work-card p,.faq-a,.process-item p,.why-item p{color:#625a51;}
-.plan-features li{color:#37312b;}
-.work-card{padding:20px 20px 22px;}
-.work-preview{height:auto;aspect-ratio:3/2;padding:0;border:0;border-radius:7px;background:#e7ddcf;overflow:hidden;margin-bottom:18px;}
-.work-preview-image{width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.22,.85,.34,1);}
-.work-card:hover .work-preview-image{transform:scale(1.035);}
-.work-tag{color:#963b2b;background:rgba(184,75,53,.08);border:1px solid rgba(184,75,53,.18);font-weight:750;letter-spacing:.02em;text-transform:none;}
-.work-card h3{font-size:23px;letter-spacing:-.04em;}
-.work-btn{color:#a23f2d;border-color:var(--line-soft);}
-.work-btn:hover{color:#783326;}
-.why-item{background:rgba(255,253,248,.82);}
-.why-item:hover{background:#fffdf8;}
-.why-num{color:var(--accent);font-family:'Manrope',sans-serif;font-weight:800;}
-.why-item h3,.process-item h3{font-size:18px;letter-spacing:-.025em;}
-.review-card,.faq-item,.process-item{box-shadow:0 10px 24px -22px rgba(55,39,27,.28);}
-.faq-item{border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin-bottom:10px;background:rgba(255,253,248,.88);}
-.faq-q{font-size:16px;color:#302a24;font-weight:750;}
-.process-item{padding:22px 22px 20px;border:1px solid var(--line);border-radius:8px;background:rgba(255,253,248,.88);}
-.process-num{color:var(--accent);font-family:'Manrope',sans-serif;font-weight:800;}
-.cta-section{background:#3d352d;color:#fffaf2;border:1px solid rgba(45,35,27,.18);border-radius:12px;position:relative;overflow:hidden;}
-.cta-section::before{background:radial-gradient(circle,rgba(231,164,116,.2),transparent 70%);}
-.cta-section h2{font-size:clamp(34px,4.4vw,54px);text-transform:none;letter-spacing:-.045em;}
-.cta-section p{color:#e7dbcc;}
-.cta-section .btn-primary{background:#d45b42;}
-footer{background:#332d27;border-top:1px solid #51463b;}
-.footer-row{color:#e1d6c9;}
-.sb-modal,.dropdown{background:#fffaf2;color:var(--text);border-color:var(--line);box-shadow:0 25px 80px rgba(49,37,25,.2);}
-.sb-modal h3{font-size:30px;text-transform:none;}
-.sb-tab{color:#71675d;}
-.sb-tab.active{color:#302a24;border-color:var(--accent);}
-.dropdown-head{color:var(--text-dim);}
-input,textarea,select{background:#fffdf8!important;color:#302a24!important;border-color:#d5c8b8!important;}
-input::placeholder,textarea::placeholder{color:#8a7d70;}
-:focus-visible{outline-color:#a6402d;}
-
-@media(max-width:920px){
-  .hero-grid{grid-template-columns:1fr;gap:34px;}
-  .hero-visual{order:0;min-height:380px;max-width:none;}
-  .hero h1{max-width:760px;}
-}
-@media(max-width:768px){
-  .nav-links{gap:14px;font-size:12px;}
-  .hero{padding-top:130px;}
-}
-@media(max-width:600px){
-  .site-header .container{height:64px;}
-  .nav-links{display:none;}
-  .logo{font-size:20px;}
-  .hero{padding:112px 0 58px;}
-  .hero h1{font-size:clamp(40px,11vw,58px);}
-  .hero-desc{font-size:16px;}
-  .hero-visual{min-height:290px;border-bottom-left-radius:34px;}
-  .hero-photo-stamp{width:68px;height:68px;right:13px;top:13px;}
-  .hero-photo-stamp span{font-size:9px;}
-  .hero-photo-caption{left:15px;right:15px;bottom:14px;font-size:9px;}
-  .section-head h2{font-size:38px;}
-  .work-card{padding:17px 17px 19px;}
-}
-
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container">
-    <a class="logo" id="siteLogo" href="#" aria-label="WashingtonSites — на главную"><img class="brand-mark" src="assets/washingtonsites-logo.png" alt=""><span>Washington<span class="logo-sites">Sites</span></span></a>
+    <a class="logo" id="siteLogo" href="#" aria-label="Наверх"><span class="dot"></span>SpecialBlack</a>
     <nav class="nav-links">
       <a href="#pricing">Тарифы</a>
       <a href="#works">Работы</a>
@@ -1655,7 +1528,7 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
             </div>
             <div style="padding:8px;">
               <a href="#" id="openProfileBtn" style="display:block; padding:10px 10px; font-size:13.5px; border-radius:4px;">Профиль и заказы</a>
-              <a href="#" id="logoutBtn" style="display:block; padding:10px 10px; font-size:13.5px; border-radius:4px; color:#a33a2b;">Выйти</a>
+              <a href="#" id="logoutBtn" style="display:block; padding:10px 10px; font-size:13.5px; border-radius:4px; color:#e0836f;">Выйти</a>
             </div>
           </div>
         </div>
@@ -1683,9 +1556,22 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
         </div>
       </div>
       <div class="hero-visual">
-        <img src="assets/washington-street.jpg" alt="Золотой час на американской городской улице с кирпичными домами и такси" fetchpriority="high">
-        <div class="hero-photo-caption"><span>AMERICAN STREETS</span><span>Дизайн с характером</span></div>
-        <div class="hero-photo-stamp" aria-hidden="true"><span>MAKE<br>IT<br>MATTER</span><b>✳</b></div>
+        <div class="window-frame">
+          <div class="window-bar">
+            <span></span><span></span><span></span>
+            <span class="url mono"></span>
+          </div>
+          <div class="window-body">
+            <div class="draw-line w1"></div>
+            <div class="draw-line w2"></div>
+            <div class="draw-line w3"></div>
+            <div class="block-row">
+              <div class="block-chip"></div>
+              <div class="block-chip"></div>
+              <div class="block-chip"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1795,7 +1681,14 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
       <div class="works-grid">
 
         <div class="work-card reveal">
-          <div class="work-preview"><img class="work-preview-image" src="assets/cafe-mint.jpg" alt="Солнечный интерьер кафе с деревянной стойкой и мятными деталями" loading="lazy"></div>
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
+          </div>
           <span class="work-tag mono">Кафе</span>
           <h3>Кафе «Мята»</h3>
           <p>Уютный сайт-визитка для заведения общественного питания.</p>
@@ -1805,7 +1698,14 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
         </div>
 
         <div class="work-card reveal">
-          <div class="work-preview"><img class="work-preview-image" src="assets/nova-homes.jpg" alt="Фасад кирпичного таунхауса с красной дверью и зелёными деревьями" loading="lazy"></div>
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
+          </div>
           <span class="work-tag mono">Недвижимость</span>
           <h3>Nova Home</h3>
           <p>Сайт агентства недвижимости с акцентом на доверие и подачу объектов.</p>
@@ -1815,7 +1715,14 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
         </div>
 
         <div class="work-card reveal">
-          <div class="work-preview"><img class="work-preview-image" src="assets/nexus-tech.jpg" alt="Наушники, камера и аудиотехника на светлых подиумах" loading="lazy"></div>
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
+          </div>
           <span class="work-tag mono">Техника</span>
           <h3>NEXUS</h3>
           <p>Каталог-сайт магазина техники с современной структурой и подачей товара.</p>
@@ -1825,7 +1732,14 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
         </div>
 
         <div class="work-card reveal">
-          <div class="work-preview"><img class="work-preview-image" src="assets/city-service.jpg" alt="Карта города, заметки и телефон с интерфейсом цифрового сервиса" loading="lazy"></div>
+          <div class="work-preview" aria-hidden="true">
+            <div class="work-preview-bar"><span></span><span></span><span></span></div>
+            <div class="work-preview-body">
+              <div class="work-preview-line w1"></div>
+              <div class="work-preview-line w2"></div>
+              <div class="work-preview-blocks"><span></span><span></span><span></span></div>
+            </div>
+          </div>
           <span class="work-tag mono">Веб-сервис</span>
           <h3>Капанёвский сайт</h3>
           <p>Большой интерактивный веб-проект с множеством взаимосвязанных систем: аккаунты, база данных, экономика, бизнесы, маркет, банк, профили и чаты.</p>
@@ -1841,7 +1755,7 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
   <section id="why">
     <div class="container">
       <div class="section-head">
-        <h2>Почему WashingtonSites</h2>
+        <h2>Почему SpecialBlack</h2>
       </div>
       <div class="why-grid">
         <div class="why-item reveal">
@@ -1892,7 +1806,7 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
       <div class="reviews-grid" id="reviewsGridTop">
         <div class="review-placeholder reveal" style="grid-column:1/-1;">
           <span class="review-mark mono" aria-hidden="true">"</span>
-          <p>Здесь появятся реальные отзывы клиентов WashingtonSites.</p>
+          <p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p>
         </div>
       </div>
       <div style="text-align:center; margin-top:32px;">
@@ -1978,12 +1892,12 @@ input::placeholder,textarea::placeholder{color:#8a7d70;}
 
 <footer>
   <div class="container footer-row">
-    <span>© 2026 WashingtonSites</span>
+    <span>© 2026 SpecialBlack</span>
     <span class="mono">t.me/jet18tsi</span>
   </div>
 </footer>
 
-<!-- ============ WashingtonSites: модальные окна ============ -->
+<!-- ============ SpecialBlack: модальные окна ============ -->
 
 <!-- Auth modal -->
 <div class="sb-overlay" id="authOverlay">
@@ -2377,7 +2291,7 @@ document.getElementById('allReviewsBtn').addEventListener('click', function(e){
 </script>
 
 <!-- ============================================================
-     WashingtonSites — аккаунты, заказы, отзывы (Firebase)
+     SpecialBlack — аккаунты, заказы, отзывы (Firebase)
      Перед использованием вставьте свою конфигурацию Firebase ниже
      (раздел "1. КОНФИГУРАЦИЯ"). Подробности — в FIREBASE_SETUP.md
      ============================================================ -->
@@ -3102,7 +3016,7 @@ $('orderForm').addEventListener('submit', async e => {
 function showOrderCreated(order){
   $('createdOrderId').textContent = order.displayId;
   const q = order.questionnaire;
-  let text = 'Здравствуйте! Я хочу заказать сайт в WashingtonSites.\n\n';
+  let text = 'Здравствуйте! Я хочу заказать сайт в SpecialBlack.\n\n';
   text += 'Номер заказа: #' + order.displayId + '\n\n';
   text += 'Тариф: ' + order.selectedTariff + '\n';
   text += 'Стоимость: ' + formatPrice(order.totalPrice) + '\n';
@@ -3121,7 +3035,7 @@ function showOrderCreated(order){
   if(q.wishes) text += 'Дополнительные пожелания: ' + q.wishes + '\n';
   if(q.extra) text += 'Дополнительная информация: ' + q.extra + '\n';
   text += '\nEmail: ' + order.userEmail + '\n';
-  text += 'Никнейм на WashingtonSites: ' + order.userNickname;
+  text += 'Никнейм на SpecialBlack: ' + order.userNickname;
   const url = 'https://t.me/' + TELEGRAM_USERNAME + '?text=' + encodeURIComponent(text);
   $('continueTelegramBtn').href = url;
   openOverlay('orderCreatedOverlay');
@@ -3227,7 +3141,7 @@ function orderCardHtml(o){
     timelineHtml(o) +
     '<div class="sb-payment-box">Стоимость: '+formatPrice(o.totalPrice)+' · Предоплата: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
       '<span class="sb-badge '+(isCancelled ? 'pay-cancelled' : 'pay-'+o.paymentStatus)+'" style="margin-top:6px;">'+paymentLabel+'</span></div>' +
-    (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий WashingtonSites: '+escapeHtml(o.clientComment)+'</p>' : '') +
+    (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий SpecialBlack: '+escapeHtml(o.clientComment)+'</p>' : '') +
     '<div class="sb-order-actions">' +
       '<button type="button" class="sb-mini-btn" data-toggle-detail>Подробнее</button>' +
       '<button type="button" class="sb-mini-btn accent" data-contact-telegram>Связаться в телеграм</button>' +
@@ -3439,7 +3353,7 @@ function renderTopReviews(){
   const top3 = published.sort((a,b) => b.createdAt - a.createdAt).slice(0,3);
   const grid = $('reviewsGridTop');
   if(!top3.length){
-    grid.innerHTML = '<div class="review-placeholder reveal" style="grid-column:1/-1;"><span class="review-mark mono" aria-hidden="true">"</span><p>Здесь появятся реальные отзывы клиентов WashingtonSites.</p></div>';
+    grid.innerHTML = '<div class="review-placeholder reveal" style="grid-column:1/-1;"><span class="review-mark mono" aria-hidden="true">"</span><p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p></div>';
     return;
   }
   grid.innerHTML = top3.map(reviewCardHtml).join('');

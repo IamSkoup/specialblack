@@ -1,4 +1,4 @@
-# Подключение Firebase к WashingtonSites
+# Подключение Firebase к SpecialBlack
 
 В исходном `index.html` Firebase не был подключён, поэтому конфигурация создаётся с нуля.
 Всё, что описано ниже, нужно сделать один раз.
@@ -21,7 +21,7 @@
 ## Шаг 1. Создать проект Firebase
 
 1. Откройте [console.firebase.google.com](https://console.firebase.google.com) → **Add project**.
-2. Введите название (например, `WashingtonSites`), пройдите мастер создания (Google Analytics не
+2. Введите название (например, `specialblack`), пройдите мастер создания (Google Analytics не
    обязателен).
 
 ## Шаг 2. Включить нужные сервисы
