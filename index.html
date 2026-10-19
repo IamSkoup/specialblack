@@ -36,7 +36,7 @@ html{scroll-behavior:smooth; overflow-x:hidden; width:100%; background:#090a0c;}
 }
 
 body{
-  background:linear-gradient(180deg,#090a0c 0%,#22252b 30%,#111318 55%,#282b32 78%,#090a0c 100%);
+  background:linear-gradient(180deg,#090a0c 0%,#15171a 30%,#0e0f12 55%,#191b1f 78%,#090a0c 100%);
   min-height:100vh;
   color:var(--text);
   font-family:Arial, 'Liberation Sans', sans-serif;
@@ -66,8 +66,8 @@ body.modal-open .sb-overlay{
 /* ---------- Scroll reveal ---------- */
 .reveal{
   opacity:0;
-  transform:translateY(16px);
-  transition:opacity .7s var(--ease), transform .7s var(--ease);
+  transform:translateY(20px);
+  transition:opacity 1.05s var(--ease), transform 1.05s var(--ease);
 }
 .reveal.is-visible{
   opacity:1;
@@ -598,14 +598,42 @@ section[id]{scroll-margin-top:80px;}
 
 .sb-inline-loader{display:inline-block; width:16px; height:16px; border-radius:50%; border:2px solid var(--line-soft); border-top-color:var(--accent); animation:sbspin .6s linear infinite; vertical-align:-3px; margin-right:6px;}
 
-.faq-list{max-width:760px;}
-.faq-item{border-bottom:1px solid var(--line-soft); padding:12px 0;}
-.faq-q{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;cursor:pointer;list-style:none;}
-.faq-q::-webkit-details-marker{display:none;}
-.faq-q::after{content:'+';color:var(--accent);font-size:20px;font-weight:400;line-height:1;}
-.faq-item[open] .faq-q::after{content:'−';}
-.faq-a{font-size:14px; color:var(--text-dim); line-height:1.6;}
-.faq-item[open] .faq-a{padding-top:10px;}
+.faq-list{display:grid; gap:10px; max-width:760px;}
+.faq-item{
+  background:#15171a; border:1px solid #303236; border-radius:var(--radius-lg);
+  transition:background-color .32s var(--ease), border-color .32s var(--ease), box-shadow .32s var(--ease), transform .32s var(--ease), opacity 1.05s var(--ease);
+}
+.faq-item:hover,.faq-item:focus-within{
+  background:#1c1e22; border-color:rgba(239,112,96,.5);
+  box-shadow:0 10px 28px rgba(0,0,0,.2),0 0 20px rgba(239,112,96,.055);
+  transform:translateY(-2px);
+}
+.faq-item.is-open{background:#1b1d21; border-color:var(--accent-dim);}
+.faq-q{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  width:100%; padding:18px 20px; background:transparent; border:0;
+  color:var(--text); font:600 15px Arial, 'Liberation Sans', sans-serif;
+  text-align:left; line-height:1.45; cursor:pointer;
+}
+.faq-q:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+.faq-mark{
+  display:grid; place-items:center; width:28px; height:28px; flex:none;
+  border:1px solid var(--line); border-radius:50%; color:var(--accent);
+  font-size:21px; font-weight:400; line-height:1;
+  transition:transform .38s var(--ease), background-color .38s var(--ease), border-color .38s var(--ease);
+}
+.faq-item.is-open .faq-mark{transform:rotate(45deg); background:var(--accent-soft); border-color:var(--accent-dim);}
+.faq-answer{
+  display:grid; grid-template-rows:0fr; opacity:0;
+  transition:grid-template-rows .42s var(--ease),opacity .32s ease;
+}
+.faq-item.is-open .faq-answer{grid-template-rows:1fr; opacity:1;}
+.faq-a{overflow:hidden; min-height:0; padding:0 20px; color:var(--text-dim); font-size:14px; line-height:1.6;}
+.faq-a p{padding:0 0 20px;}
+@media (prefers-reduced-motion:reduce){
+  .faq-item,.faq-mark,.faq-answer{transition:none;}
+  .faq-item:hover,.faq-item:focus-within{transform:none;}
+}
 
 @media (max-width:480px){
   .sb-order-card{padding:15px;}
@@ -943,6 +971,22 @@ section{
   .section-head{margin-bottom:24px;}
 }
 
+.section-intro{
+  display:grid; grid-template-columns:minmax(0,1fr) 252px;
+  align-items:end; gap:26px; margin-bottom:34px;
+}
+.section-intro .section-head{margin-bottom:0;}
+.section-art{
+  width:100%; height:148px; margin:0; overflow:hidden;
+  border:1px solid var(--line); border-radius:var(--radius-lg);
+  background:var(--bg-raised);
+}
+.section-art img{width:100%; height:100%; object-fit:cover; filter:brightness(.78) saturate(.85);}
+@media (max-width:620px){
+  .section-intro{grid-template-columns:minmax(0,1fr) 100px; gap:14px; align-items:center; margin-bottom:22px;}
+  .section-art{height:96px;}
+}
+
 /* ---------- Pricing ---------- */
 
 .pricing-grid{
@@ -965,7 +1009,7 @@ section{
   display:flex;
   flex-direction:column;
   position:relative;
-  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), opacity 1.05s var(--ease);
 }
 
 .plan:hover{
@@ -1123,7 +1167,7 @@ section{
   border:1px solid var(--line);
   border-radius:var(--radius-lg);
   padding:28px 26px;
-  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background-color .35s var(--ease);
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background-color .35s var(--ease), opacity 1.05s var(--ease);
 }
 
 .work-card:hover{
@@ -1238,7 +1282,7 @@ section{
 .why-item{
   padding:26px 24px;
   background:var(--bg-raised);
-  transition:background-color .3s var(--ease);
+  transition:background-color .3s var(--ease), opacity 1.05s var(--ease), transform 1.05s var(--ease);
 }
 
 .why-item:hover{
@@ -1304,7 +1348,7 @@ section{
   padding-right:28px;
   padding-left:22px;
   position:relative;
-  transition:transform .3s var(--ease);
+  transition:transform .3s var(--ease), opacity 1.05s var(--ease);
 }
 
 .process-item:hover{
@@ -1416,12 +1460,12 @@ section{
 /* ---------- Contacts ---------- */
 
 .contact-wrap{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  flex-wrap:wrap;
-  gap:36px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 220px auto;
+  align-items:center;
+  gap:24px;
 }
+.contact-wrap .section-art{height:136px;}
 
 .contact-wrap h2{
   font-size:clamp(22px, 2vw + 14px, 30px);
@@ -1434,8 +1478,14 @@ section{
   max-width:560px;
 }
 
-@media (max-width:480px){
-  .contact-wrap{align-items:stretch;}
+@media (max-width:1100px){
+  .contact-wrap{grid-template-columns:minmax(0,1fr) 200px;}
+  .contact-wrap .btn{grid-column:1/-1; justify-self:start;}
+}
+@media (max-width:620px){
+  .contact-wrap{grid-template-columns:minmax(0,1fr) 100px; gap:16px 14px;}
+  .contact-wrap .section-art{height:96px;}
+  .contact-value{font-size:14.5px;}
   .contact-wrap .btn{width:100%;}
 }
 
@@ -1551,9 +1601,12 @@ footer{
 
   <section id="pricing">
     <div class="container">
-      <div class="section-head reveal">
-        <h2>Сколько стоит сайт</h2>
-        <p>Выберите отправную точку. Перед началом работы уточним состав проекта и итоговую стоимость.</p>
+      <div class="section-intro">
+        <div class="section-head reveal">
+          <h2>Сколько стоит сайт</h2>
+          <p>Выберите отправную точку. Перед началом работы уточним состав проекта и итоговую стоимость.</p>
+        </div>
+        <figure class="section-art reveal"><img src="assets/section-pricing.webp" width="640" height="400" loading="lazy" decoding="async" alt="Рабочий стол с наброском сайта и калькулятором"></figure>
       </div>
 
       <div class="pricing-switcher" role="group" aria-label="Выберите тариф">
@@ -1681,9 +1734,12 @@ footer{
 
   <section id="why">
     <div class="container">
-      <div class="section-head reveal">
-        <h2>Что вы получите</h2>
-        <p>Оставляем только то, что помогает посетителю понять ваше предложение и связаться с вами.</p>
+      <div class="section-intro">
+        <div class="section-head reveal">
+          <h2>Что вы получите</h2>
+          <p>Оставляем только то, что помогает посетителю понять ваше предложение и связаться с вами.</p>
+        </div>
+        <figure class="section-art reveal"><img src="assets/section-benefits.webp" width="640" height="400" loading="lazy" decoding="async" alt="Один и тот же сайт на ноутбуке и телефоне"></figure>
       </div>
       <div class="why-grid">
         <div class="why-item reveal">
@@ -1730,22 +1786,25 @@ footer{
 
   <section id="faq">
     <div class="container">
-      <div class="section-head reveal">
-        <h2>Частые вопросы</h2>
+      <div class="section-intro">
+        <div class="section-head reveal">
+          <h2>Частые вопросы</h2>
+        </div>
+        <figure class="section-art reveal"><img src="assets/section-faq.webp" width="640" height="400" loading="lazy" decoding="async" alt="Блокнот с отмеченными пунктами"></figure>
       </div>
       <div class="faq-list">
-        <details class="faq-item reveal">
-          <summary class="faq-q">Как происходит оплата?</summary>
-          <div class="faq-a">После подтверждения заказа вы оплачиваете половину суммы. Вторую половину — после завершения работы.</div>
-        </details>
-        <details class="faq-item reveal">
-          <summary class="faq-q">Нужна ли регистрация для заказа?</summary>
-          <div class="faq-a">Да. Создайте аккаунт и подтвердите почту: тогда сможете следить за заказом в личном кабинете.</div>
-        </details>
-        <details class="faq-item reveal">
-          <summary class="faq-q">Можно ли отменить заказ?</summary>
-          <div class="faq-a">Да, пока мы не начали работу. Кнопка отмены будет в личном кабинете.</div>
-        </details>
+        <div class="faq-item reveal">
+          <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-payment">Как происходит оплата?<span class="faq-mark" aria-hidden="true">+</span></button>
+          <div class="faq-answer" id="faq-payment" inert><div class="faq-a"><p>После подтверждения заказа вы оплачиваете половину суммы. Вторую половину — после завершения работы.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-account">Нужна ли регистрация для заказа?<span class="faq-mark" aria-hidden="true">+</span></button>
+          <div class="faq-answer" id="faq-account" inert><div class="faq-a"><p>Да. Создайте аккаунт и подтвердите почту: тогда сможете следить за заказом в личном кабинете.</p></div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-cancel">Можно ли отменить заказ?<span class="faq-mark" aria-hidden="true">+</span></button>
+          <div class="faq-answer" id="faq-cancel" inert><div class="faq-a"><p>Да, пока мы не начали работу. Кнопка отмены будет в личном кабинете.</p></div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1799,6 +1858,7 @@ footer{
           <h2>Расскажите о проекте</h2>
           <p class="contact-value">Напишите в Telegram, что вам нужно. Ответим, с чего начать и какой формат подойдёт.</p>
         </div>
+        <figure class="section-art"><img src="assets/section-contact.webp" width="640" height="400" loading="lazy" decoding="async" alt="Телефон с открытым чатом"></figure>
         <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-primary">Написать @jet18tsi</a>
       </div>
     </div>
@@ -2202,6 +2262,19 @@ document.getElementById('allReviewsBtn').addEventListener('click', function(e){
 
 <script>
   /* order-btn клики теперь обрабатываются в модуле аккаунтов/заказов ниже (см. sbHandleOrderBtn) */
+
+  document.querySelectorAll('.faq-q').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.closest('.faq-item');
+      const opening = button.getAttribute('aria-expanded') !== 'true';
+      document.querySelectorAll('.faq-item').forEach(other => {
+        const active = other === item && opening;
+        other.classList.toggle('is-open', active);
+        other.querySelector('.faq-q').setAttribute('aria-expanded', String(active));
+        other.querySelector('.faq-answer').inert = !active;
+      });
+    });
+  });
 
   if('IntersectionObserver' in window){
     const revealEls = document.querySelectorAll('.reveal');
