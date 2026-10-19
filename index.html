@@ -46,6 +46,18 @@ body{
   overflow-wrap:break-word;
   word-break:break-word;
 }
+
+/* The ambient image belongs to the document, so it scrolls with the page. */
+main{position:relative;isolation:isolate;}
+main::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:url('assets/washington-ambient.webp') center top / max(100%, 1280px) auto repeat-y;
+  opacity:.7;
+}
 /* При открытых модальных окнах страница под ними не должна прокручиваться. */
 html.modal-open,
 body.modal-open{
@@ -74,8 +86,17 @@ body.modal-open .sb-overlay{
   opacity:1;
   transform:translateY(0);
 }
+.media-reveal{overflow:hidden;}
+.media-reveal img{
+  transition:transform 1.2s var(--ease);
+  transform:scale(1.065);
+}
+.media-reveal.is-visible img{transform:scale(1);}
+.media-reveal:hover img{transform:scale(1.035);}
 @media (prefers-reduced-motion: reduce){
   .reveal{opacity:1; transform:none; transition:none;}
+  .media-reveal img,
+  .media-reveal:hover img{transform:none;transition:none;}
 }
 
 .pricing-grid .reveal:nth-child(2){transition-delay:.08s;}
@@ -758,6 +779,16 @@ img,svg{display:block;}
   width:100%;
 }
 
+@keyframes hero-enter{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero-grid > div > *{animation:hero-enter .85s var(--ease) both;}
+.hero-grid > div > :nth-child(2){animation-delay:.1s;}
+.hero-grid > div > :nth-child(3){animation-delay:.2s;}
+.hero-grid > div > :nth-child(4){animation-delay:.3s;}
+.hero-grid > div > :nth-child(5){animation-delay:.4s;}
+
 .eyebrow{
   font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:12.5px;
@@ -1150,7 +1181,9 @@ section{
   overflow:hidden;
   margin-bottom:20px;
   aspect-ratio:3/2;
+  transition:background-size .7s var(--ease),filter .7s var(--ease);
 }
+.work-card:hover .work-preview{filter:saturate(1.15) brightness(1.08);}
 
 .work-preview-bar,
 .work-preview-body{display:none;}
@@ -1266,6 +1299,32 @@ section{
 
 /* ---------- Why us ---------- */
 
+.why-lead{
+  display:grid;
+  grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+  gap:48px;
+  align-items:center;
+  margin-bottom:48px;
+}
+.why-lead .section-head{margin:0;}
+.why-lead .section-head p{max-width:390px;}
+.why-photo{
+  margin:0;
+  height:300px;
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+}
+.why-photo picture,
+.why-photo img{display:block;width:100%;height:100%;}
+.why-photo img{object-fit:cover;}
+
+@media (max-width:768px){
+  .why-lead{grid-template-columns:1fr;gap:26px;margin-bottom:28px;}
+  .why-photo{height:260px;}
+}
+@media (max-width:480px){.why-photo{height:210px;}}
+
 .why-grid{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
@@ -1316,9 +1375,28 @@ section{
 
 /* ---------- Process ---------- */
 
+.process-layout{
+  display:grid;
+  grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+  gap:46px;
+  align-items:stretch;
+}
+.process-photo{
+  margin:0;
+  min-height:360px;
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+}
+.process-photo picture,
+.process-photo img{display:block;width:100%;height:100%;}
+.process-photo img{object-fit:cover;object-position:center;}
+
 .process-list{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:32px 18px;
+  align-content:center;
 }
 
 .process-item{
@@ -1350,6 +1428,9 @@ section{
   background:var(--line);
 }
 
+.process-item::after{display:none;}
+.process-item:hover::before{box-shadow:0 0 0 7px var(--accent-soft);}
+
 .process-num{
   font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:13px;
@@ -1369,13 +1450,14 @@ section{
 }
 
 @media (max-width:900px){
-  .process-list{grid-template-columns:1fr 1fr; row-gap:40px;}
-  .process-item:nth-child(2)::after{display:none;}
-  .process-item:not(:last-child)::after{display:none;}
+  .process-layout{grid-template-columns:1fr;gap:38px;}
+  .process-photo{min-height:0;height:320px;}
+  .process-list{row-gap:40px;}
 }
 @media (max-width:560px){
   .process-list{grid-template-columns:1fr; row-gap:36px;}
   .process-item{padding-right:0;}
+  .process-photo{height:240px;}
 }
 
 /* ---------- Reviews ---------- */
@@ -1424,6 +1506,17 @@ section{
   background:radial-gradient(circle, rgba(239,112,96,0.1), transparent 70%);
   filter:blur(20px);
   pointer-events:none;
+  animation:cta-glow 5s ease-in-out infinite alternate;
+}
+
+@keyframes cta-glow{
+  from{opacity:.45;transform:translate(-50%,-50%) scale(.9);}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1.13);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-grid > div > *{animation:none;opacity:1;transform:none;}
+  .cta-section::before{animation:none;}
 }
 
 .cta-section .container{
@@ -1591,7 +1684,7 @@ footer{
 
   <section id="pricing">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2>Сколько стоит сайт</h2>
         <p>Выберите отправную точку. Перед началом работы уточним состав проекта и итоговую стоимость.</p>
       </div>
@@ -1686,7 +1779,7 @@ footer{
 
   <section id="works">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2>Что мы уже сделали</h2>
         <p>Откройте готовые проекты и посмотрите, как устроены страницы, навигация и подача информации.</p>
       </div>
@@ -1767,8 +1860,17 @@ footer{
 
   <section id="why">
     <div class="container">
-      <div class="section-head">
-        <h2>Как мы работаем</h2>
+      <div class="why-lead">
+        <div class="section-head reveal">
+          <h2>Как мы работаем</h2>
+          <p>Сначала разбираемся в вашей задаче. Потом собираем страницы, на которых человеку легко найти главное.</p>
+        </div>
+        <figure class="why-photo media-reveal reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/washington-street-640.webp 640w, assets/washington-street-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 55vw">
+            <img src="assets/washington-street.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Городская улица с магазинами и домами в вечернем свете">
+          </picture>
+        </figure>
       </div>
       <div class="why-grid">
         <div class="why-item reveal">
@@ -1807,7 +1909,7 @@ footer{
 
   <section id="reviews">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2>Отзывы клиентов</h2>
         <p>Отзывы появляются здесь после завершения заказов.</p>
       </div>
@@ -1830,7 +1932,7 @@ footer{
 
   <section id="faq">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2>Частые вопросы</h2>
       </div>
       <div class="faq-list">
@@ -1852,10 +1954,17 @@ footer{
 
   <section id="process">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <h2>Как проходит работа</h2>
       </div>
-      <div class="process-list">
+      <div class="process-layout">
+        <figure class="process-photo media-reveal reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/studio-desk-700.webp 700w, assets/studio-desk-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 42vw">
+            <img src="assets/studio-desk-1400.webp" width="1400" height="933" loading="lazy" decoding="async" alt="Рабочий стол с макетом сайта на ноутбуке и эскизами страниц">
+          </picture>
+        </figure>
+        <div class="process-list">
         <div class="process-item reveal">
           <div class="process-num mono">01</div>
           <h3>Обсуждаем задачу</h3>
@@ -1876,12 +1985,13 @@ footer{
           <h3>Передаём готовый проект</h3>
           <p>Показываем результат, вносим согласованные правки и передаём сайт.</p>
         </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="cta-section">
-    <div class="container">
+    <div class="container reveal">
       <h2>Расскажите, какой сайт вам нужен</h2>
       <p>Напишите пару слов о задаче. Ответим, какой формат подойдёт и с чего начать.</p>
       <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-primary">Обсудить проект</a>
@@ -1890,7 +2000,7 @@ footer{
 
   <section id="contacts">
     <div class="container">
-      <div class="contact-wrap">
+      <div class="contact-wrap reveal">
         <div>
           <h2>Контакты</h2>
           <div class="contact-label mono">Telegram</div>
