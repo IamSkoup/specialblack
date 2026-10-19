@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" type="image/jpg" href="icon.jpg">
+<link rel="icon" type="image/png" href="assets/washingtonsites-icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SpecialBlack — веб-студия</title>
+<meta name="theme-color" content="#0b1d33">
+<meta name="description" content="WashingtonSites: сайты для бизнеса, услуг и новых проектов. Посмотрите работы, выберите формат и обсудите свой сайт напрямую с разработчиком.">
+<title>WashingtonSites — сайты для вашего дела</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
 :root{
-  --bg: #0a0a0a;
-  --bg-raised: #0e0e0e;
-  --line: #1e1e1e;
-  --line-soft: #161616;
-  --text: #f1f0ec;
-  --text-dim: #8d8c88;
-  --text-faint: #5a5955;
-  --accent: #c9a15a;
-  --accent-soft: rgba(201, 161, 90, 0.12);
-  --accent-dim: rgba(201, 161, 90, 0.35);
+  --bg: #0b1d33;
+  --bg-raised: #112942;
+  --line: #30445a;
+  --line-soft: #22374e;
+  --text: #f8f7f2;
+  --text-dim: #becbd6;
+  --text-faint: #93a5b6;
+  --accent: #ef7060;
+  --accent-soft: rgba(239,112,96,.13);
+  --accent-dim: rgba(239,112,96,.42);
   --radius: 3px;
   --radius-lg: 8px;
   --shadow-card: 0 20px 44px -22px rgba(0,0,0,0.6);
@@ -35,12 +35,9 @@ html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 }
 
 body{
-  background:
-    radial-gradient(1100px 560px at 84% -6%, rgba(201,161,90,0.07), transparent 60%),
-    radial-gradient(900px 500px at -6% 18%, rgba(255,255,255,0.025), transparent 55%),
-    var(--bg);
+  background:var(--bg);
   color:var(--text);
-  font-family:'Inter', sans-serif;
+  font-family:Arial, 'Liberation Sans', sans-serif;
   font-size:16px;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
@@ -99,14 +96,14 @@ body.modal-open .sb-overlay{
 img,svg,video,canvas{max-width:100%;}
 
 .mono{
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
 }
 
 h1,h2,h3{
-  font-family:'Unbounded', sans-serif;
-  font-weight:600;
-  letter-spacing:-0.015em;
-  line-height:1.12;
+  font-family:Georgia, 'Liberation Serif', serif;
+  font-weight:700;
+  letter-spacing:-0.03em;
+  line-height:1.16;
 }
 
 a{color:inherit; text-decoration:none;}
@@ -140,7 +137,7 @@ img,svg{display:block;}
   position:fixed;
   top:0; left:0; right:0;
   z-index:100;
-  background:rgba(10,10,10,0.82);
+  background:rgba(11,29,51,.94);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
 }
@@ -153,19 +150,18 @@ img,svg{display:block;}
 }
 
 .logo{
-  font-family:'Unbounded', sans-serif;
-  font-weight:600;
+  font-family:Georgia, 'Liberation Serif', serif;
+  font-weight:700;
   font-size:17px;
   letter-spacing:-0.01em;
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
 }
 
-.logo .dot{
-  width:6px;height:6px;
-  background:var(--accent);
-  border-radius:50%;
+.logo .mark{
+  width:30px;height:30px;
+  object-fit:contain;
   flex-shrink:0;
 }
 
@@ -198,11 +194,12 @@ img,svg{display:block;}
 
 @media (max-width:420px){
   .site-header .container{height:64px;}
-  .logo{font-size:15px;}
+  .logo{font-size:14px; gap:6px;}
+  .logo .mark{width:24px;height:24px;}
   .header-cta{font-size:13px; padding:8px 14px;}
 }
 
-/* ================= SpecialBlack: аккаунты / заказы / отзывы ================= */
+/* ================= WashingtonSites: аккаунты / заказы / отзывы ================= */
 
 .header-auth{display:flex; align-items:center; gap:10px;}
 
@@ -236,7 +233,7 @@ img,svg{display:block;}
   cursor:pointer; flex-shrink:0;
   background:var(--accent-soft);
   display:flex; align-items:center; justify-content:center;
-  font-family:'Unbounded', sans-serif; font-size:13px; color:var(--accent);
+  font-family:Georgia, 'Liberation Serif', serif; font-size:13px; color:var(--accent);
   transition:border-color .25s ease;
 }
 .avatar-btn:hover{border-color:var(--accent);}
@@ -257,7 +254,7 @@ img,svg{display:block;}
 .dropdown.open{opacity:1; visibility:visible; transform:translateY(0);}
 .dropdown-head{
   padding:14px 18px; border-bottom:1px solid var(--line-soft);
-  font-size:13px; color:var(--text-dim); font-family:'JetBrains Mono', monospace;
+  font-size:13px; color:var(--text-dim); font-family:'Courier New', 'Liberation Mono', monospace;
   display:flex; align-items:center; justify-content:space-between;
 }
 .dropdown-head a{font-size:12px; color:var(--accent);}
@@ -266,7 +263,7 @@ img,svg{display:block;}
   font-size:13.5px; color:var(--text); line-height:1.5;
   cursor:default;
 }
-.notif-item.unread{background:rgba(201,161,90,0.05);}
+.notif-item.unread{background:rgba(239,112,96,0.05);}
 .notif-item .notif-time{display:block; margin-top:4px; font-size:11.5px; color:var(--text-faint);}
 .notif-empty{padding:28px 18px; text-align:center; color:var(--text-faint); font-size:13.5px;}
 
@@ -314,7 +311,7 @@ img,svg{display:block;}
 .sb-field{margin-bottom:16px;}
 .sb-field label{
   display:block; font-size:12.5px; color:var(--text-dim);
-  margin-bottom:7px; font-family:'JetBrains Mono', monospace; letter-spacing:.02em;
+  margin-bottom:7px; font-family:'Courier New', 'Liberation Mono', monospace; letter-spacing:.02em;
 }
 .sb-field input,
 .sb-field textarea,
@@ -324,7 +321,7 @@ img,svg{display:block;}
   border:1px solid var(--line);
   border-radius:var(--radius);
   color:var(--text);
-  font-family:'Inter', sans-serif;
+  font-family:Arial, 'Liberation Sans', sans-serif;
   font-size:14.5px;
   padding:12px 14px;
   transition:border-color .2s ease;
@@ -345,7 +342,7 @@ img,svg{display:block;}
 .sb-tab{
   padding:10px 4px; margin-right:20px; font-size:13.5px; color:var(--text-faint);
   cursor:pointer; border-bottom:2px solid transparent; transition:color .2s ease, border-color .2s ease;
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
 }
 .sb-tab.active{color:var(--text); border-color:var(--accent);}
 .sb-panel{display:none;}
@@ -356,7 +353,7 @@ img,svg{display:block;}
   margin-bottom:18px; background:rgba(255,255,255,0.012);
 }
 .sb-form-block > .sb-block-title{
-  font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase;
+  font-family:'Courier New', 'Liberation Mono', monospace; font-size:12px; text-transform:uppercase;
   letter-spacing:.06em; color:var(--accent); margin-bottom:14px; display:block;
 }
 
@@ -372,16 +369,16 @@ img,svg{display:block;}
 .sb-profile-avatar{
   width:64px; height:64px; border-radius:50%; overflow:hidden; flex-shrink:0;
   background:var(--accent-soft); display:flex; align-items:center; justify-content:center;
-  font-family:'Unbounded', sans-serif; font-size:22px; color:var(--accent);
+  font-family:Georgia, 'Liberation Serif', serif; font-size:22px; color:var(--accent);
   border:1px solid var(--line); position:relative; cursor:pointer;
 }
 .sb-profile-avatar img{width:100%; height:100%; object-fit:cover;}
 .sb-profile-avatar input{position:absolute; inset:0; opacity:0; cursor:pointer;}
-.sb-profile-name{font-family:'Unbounded', sans-serif; font-size:17px;}
+.sb-profile-name{font-family:Georgia, 'Liberation Serif', serif; font-size:17px;}
 .sb-profile-email{font-size:13px; color:var(--text-dim); margin-top:3px;}
 .sb-verify-badge{
   display:inline-flex; align-items:center; gap:5px; font-size:11.5px;
-  margin-top:6px; font-family:'JetBrains Mono', monospace;
+  margin-top:6px; font-family:'Courier New', 'Liberation Mono', monospace;
 }
 .sb-verify-badge.ok{color:#7fbf8f;}
 .sb-verify-badge.no{color:#e0b25f;}
@@ -390,7 +387,7 @@ img,svg{display:block;}
 .sb-stat{
   border:1px solid var(--line-soft); border-radius:var(--radius); padding:14px 10px; text-align:center;
 }
-.sb-stat b{display:block; font-family:'Unbounded', sans-serif; font-size:19px; margin-bottom:2px;}
+.sb-stat b{display:block; font-family:Georgia, 'Liberation Serif', serif; font-size:19px; margin-bottom:2px;}
 .sb-stat span{font-size:11px; color:var(--text-faint);}
 
 .sb-order-card{
@@ -399,14 +396,14 @@ img,svg{display:block;}
 }
 .sb-order-card:hover{border-color:var(--line);}
 .sb-order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px;}
-.sb-order-id{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--accent);}
+.sb-order-id{font-family:'Courier New', 'Liberation Mono', monospace; font-size:13px; color:var(--accent);}
 .sb-order-tariff{font-size:14.5px; font-weight:600;}
 .sb-order-meta{font-size:12.5px; color:var(--text-faint); margin-top:2px;}
-.sb-order-price{font-family:'Unbounded', sans-serif; font-size:15px; white-space:nowrap;}
+.sb-order-price{font-family:Georgia, 'Liberation Serif', serif; font-size:15px; white-space:nowrap;}
 
 .sb-badge{
   display:inline-flex; align-items:center; gap:6px; font-size:11.5px;
-  padding:4px 10px; border-radius:20px; font-family:'JetBrains Mono', monospace;
+  padding:4px 10px; border-radius:20px; font-family:'Courier New', 'Liberation Mono', monospace;
   border:1px solid var(--line);
 }
 .sb-badge::before{content:''; width:6px; height:6px; border-radius:50%; background:currentColor;}
@@ -444,7 +441,7 @@ img,svg{display:block;}
 
 .sb-mini-btn{
   font-size:12.5px; padding:8px 14px; border-radius:var(--radius); cursor:pointer;
-  border:1px solid var(--line); background:transparent; color:var(--text); font-family:'Inter', sans-serif;
+  border:1px solid var(--line); background:transparent; color:var(--text); font-family:Arial, 'Liberation Sans', sans-serif;
   transition:border-color .2s ease, color .2s ease;
 }
 .sb-mini-btn:hover{border-color:var(--accent); color:var(--accent);}
@@ -466,13 +463,13 @@ img,svg{display:block;}
 
 .pricing-note{
   text-align:center; font-size:13px; color:var(--text-dim); margin-top:26px;
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
 }
 .plan-prepay-tag{font-size:11.5px; color:var(--text-faint); margin:-8px 0 18px;}
 
 .reviews-stats{display:flex; align-items:center; gap:16px; margin-bottom:32px; flex-wrap:wrap;}
 .reviews-stars{color:var(--accent); font-size:20px; letter-spacing:2px;}
-.reviews-avg{font-family:'Unbounded', sans-serif; font-size:22px;}
+.reviews-avg{font-family:Georgia, 'Liberation Serif', serif; font-size:22px;}
 .reviews-count{color:var(--text-dim); font-size:13.5px;}
 .reviews-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
 @media (max-width:900px){.reviews-grid{grid-template-columns:1fr;}}
@@ -484,11 +481,11 @@ img,svg{display:block;}
 .review-avatar{
   width:36px; height:36px; border-radius:50%; overflow:hidden; background:var(--accent-soft);
   display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--accent);
-  font-family:'Unbounded', sans-serif; flex-shrink:0;
+  font-family:Georgia, 'Liberation Serif', serif; flex-shrink:0;
 }
 .review-avatar img{width:100%; height:100%; object-fit:cover;}
 .review-name{font-size:14px; font-weight:600;}
-.review-verified{font-size:10.5px; color:#7fbf8f; font-family:'JetBrains Mono', monospace;}
+.review-verified{font-size:10.5px; color:#7fbf8f; font-family:'Courier New', 'Liberation Mono', monospace;}
 .review-stars{color:var(--accent); font-size:13px; margin-bottom:10px; letter-spacing:1px;}
 .review-text{font-size:14px; color:var(--text-dim); line-height:1.6;}
 .review-date{font-size:11.5px; color:var(--text-faint); margin-top:12px;}
@@ -499,7 +496,7 @@ img,svg{display:block;}
 .sb-review-filters{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;}
 .sb-chip{
   font-size:12.5px; padding:7px 13px; border-radius:20px; border:1px solid var(--line);
-  color:var(--text-dim); cursor:pointer; background:transparent; font-family:'Inter', sans-serif;
+  color:var(--text-dim); cursor:pointer; background:transparent; font-family:Arial, 'Liberation Sans', sans-serif;
 }
 .sb-chip.active{border-color:var(--accent); color:var(--accent);}
 .sb-review-list-item{border-bottom:1px solid var(--line-soft); padding:18px 0;}
@@ -512,7 +509,7 @@ img,svg{display:block;}
 .sb-admin-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:22px;}
 .sb-admin-tab{
   font-size:12.5px; padding:8px 14px; border-radius:20px; border:1px solid var(--line);
-  color:var(--text-dim); cursor:pointer; font-family:'JetBrains Mono', monospace;
+  color:var(--text-dim); cursor:pointer; font-family:'Courier New', 'Liberation Mono', monospace;
 }
 .sb-admin-tab.active{background:var(--accent); border-color:var(--accent); color:var(--bg);}
 .sb-admin-order{
@@ -526,7 +523,7 @@ img,svg{display:block;}
   display:flex; align-items:center; gap:10px; border:1px solid var(--line-soft); border-radius:var(--radius);
   padding:10px 14px; margin-bottom:8px; font-size:13px; flex-wrap:wrap;
 }
-.sb-promo-row b{font-family:'JetBrains Mono', monospace; color:var(--accent);}
+.sb-promo-row b{font-family:'Courier New', 'Liberation Mono', monospace; color:var(--accent);}
 .sb-promo-row .sb-tag-off{opacity:.5;}
 
 .sb-toast-wrap{position:fixed; bottom:22px; right:22px; z-index:3000; display:flex; flex-direction:column; gap:10px; max-width:340px;}
@@ -573,7 +570,7 @@ img,svg{display:block;}
   background:transparent;
   color:var(--text-dim);
   cursor:pointer;
-  font-family:'Inter', sans-serif;
+  font-family:Arial, 'Liberation Sans', sans-serif;
   transition:border-color .2s ease, color .2s ease, background-color .2s ease;
 }
 .notif-all-btn{
@@ -680,7 +677,7 @@ img,svg{display:block;}
   justify-content:center;
   text-align:center;
   gap:8px;
-  font-family:'Inter', sans-serif;
+  font-family:Arial, 'Liberation Sans', sans-serif;
   font-weight:600;
   font-size:14.5px;
   padding:14px 26px;
@@ -693,13 +690,13 @@ img,svg{display:block;}
 }
 
 .btn-primary{
-  background:var(--text);
-  color:var(--bg);
+  background:var(--accent);
+  color:#0b1d33;
 }
 .btn-primary:hover{
-  background:var(--accent);
+  background:#ff8d7f;
   transform:translateY(-2px);
-  box-shadow:0 12px 24px -12px rgba(201,161,90,0.45);
+  box-shadow:0 12px 24px -12px rgba(239,112,96,.5);
 }
 
 .btn-secondary{
@@ -716,7 +713,7 @@ img,svg{display:block;}
 .btn-outline-accent{
   background:transparent;
   color:var(--accent);
-  border:1px solid rgba(201,161,90,0.4);
+  border:1px solid rgba(239,112,96,0.4);
 }
 .btn-outline-accent:hover{
   background:var(--accent-soft);
@@ -729,19 +726,40 @@ img,svg{display:block;}
 /* ---------- Hero ---------- */
 
 .hero{
-  padding:180px 0 100px;
+  min-height:min(830px, 100svh);
+  padding:150px 0 105px;
   position:relative;
+  display:flex;
+  align-items:center;
+  isolation:isolate;
+  overflow:hidden;
+  border-top:0;
+  background:#07599a;
+}
+
+.hero-photo,
+.hero-photo img,
+.hero::after{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+.hero-photo{z-index:-2;}
+.hero-photo img{object-fit:cover;object-position:center 48%;}
+.hero::after{
+  content:'';
+  z-index:-1;
+  background:linear-gradient(90deg,rgba(5,22,42,.88) 0%,rgba(5,28,52,.78) 34%,rgba(5,32,58,.35) 67%,rgba(5,32,58,.12) 100%),linear-gradient(0deg,rgba(5,22,42,.58),transparent 42%);
 }
 
 .hero-grid{
-  display:grid;
-  grid-template-columns:1.15fr 0.85fr;
-  gap:64px;
-  align-items:center;
+  width:100%;
 }
 
 .eyebrow{
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:12.5px;
   letter-spacing:0.08em;
   text-transform:uppercase;
@@ -760,15 +778,17 @@ img,svg{display:block;}
 }
 
 .hero h1{
-  font-size:clamp(30px, 4.6vw + 12px, 56px);
-  max-width:640px;
+  font-size:clamp(42px, 5vw, 76px);
+  max-width:690px;
   margin-bottom:24px;
+  text-wrap:balance;
+  text-shadow:0 3px 30px rgba(4,18,35,.4);
 }
 
 .hero-desc{
-  color:var(--text-dim);
-  font-size:clamp(15px, 1vw + 12px, 17px);
-  max-width:480px;
+  color:#ecf2f7;
+  font-size:clamp(16px, 1vw + 13px, 19px);
+  max-width:560px;
   margin-bottom:34px;
 }
 
@@ -785,7 +805,7 @@ img,svg{display:block;}
   align-items:center;
   gap:8px;
   font-size:13px;
-  color:var(--text-dim);
+  color:#ebf2f7;
 }
 
 .hero-facts li::before{
@@ -803,9 +823,7 @@ img,svg{display:block;}
 }
 
 /* signature graphic: a browser window that draws itself */
-.hero-visual{
-  position:relative;
-}
+.hero-visual{display:none;}
 
 .hero-visual::before{
   content:'';
@@ -813,7 +831,7 @@ img,svg{display:block;}
   top:-14%; right:-16%;
   width:70%;
   height:70%;
-  background:radial-gradient(circle, rgba(201,161,90,0.16), transparent 70%);
+  background:radial-gradient(circle, rgba(239,112,96,0.16), transparent 70%);
   filter:blur(18px);
   pointer-events:none;
   z-index:0;
@@ -845,7 +863,7 @@ img,svg{display:block;}
 
 .window-bar .url{
   margin-left:12px;
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:11.5px;
   color:var(--text-faint);
 }
@@ -898,7 +916,7 @@ img,svg{display:block;}
   animation:fadein .6s ease forwards;
 }
 .block-chip:nth-child(1){animation-delay:.75s;}
-.block-chip:nth-child(2){animation-delay:.85s;background:var(--accent-soft); border-color:rgba(201,161,90,0.35);}
+.block-chip:nth-child(2){animation-delay:.85s;background:var(--accent-soft); border-color:rgba(239,112,96,0.35);}
 .block-chip:nth-child(3){animation-delay:.95s;}
 
 @keyframes fadein{
@@ -907,14 +925,15 @@ img,svg{display:block;}
 }
 
 @media (max-width:920px){
-  .hero-grid{grid-template-columns:1fr;}
-  .hero h1{max-width:100%;}
-  .hero-visual{order:-1; max-width:420px; width:100%;}
-  .hero{padding:150px 0 70px;}
+  .hero{min-height:740px;padding:150px 0 70px;}
+  .hero h1{max-width:620px;}
 }
 
 @media (max-width:480px){
-  .hero{padding:130px 0 56px;}
+  .hero{min-height:720px;min-height:100svh;padding:125px 0 55px;align-items:flex-end;}
+  .hero-photo img{object-position:58% center;}
+  .hero::after{background:linear-gradient(0deg,rgba(5,22,42,.96) 0%,rgba(5,22,42,.88) 30%,rgba(5,22,42,.18) 78%),linear-gradient(90deg,rgba(5,22,42,.2),transparent);}
+  .hero h1{font-size:clamp(36px, 10vw, 48px);}
   .hero-desc{max-width:100%;}
   .hero-facts{gap:8px 16px; margin-bottom:30px;}
   .hero-facts li{font-size:12.5px;}
@@ -990,7 +1009,7 @@ section{
 }
 
 .plan.featured{
-  background:linear-gradient(180deg, rgba(201,161,90,0.06), var(--bg-raised) 40%);
+  background:linear-gradient(180deg, rgba(239,112,96,0.06), var(--bg-raised) 40%);
   border-color:var(--accent-dim);
 }
 
@@ -1002,7 +1021,7 @@ section{
   position:absolute;
   top:-1px; right:24px;
   transform:translateY(-50%);
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:10.5px;
   letter-spacing:0.06em;
   color:var(--bg);
@@ -1012,7 +1031,7 @@ section{
 }
 
 .plan-name{
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:13px;
   color:var(--text-dim);
   letter-spacing:0.04em;
@@ -1021,7 +1040,7 @@ section{
 }
 
 .plan-price{
-  font-family:'Unbounded', sans-serif;
+  font-family:Georgia, 'Liberation Serif', serif;
   font-size:clamp(30px, 2vw + 22px, 40px);
   font-weight:600;
   margin-bottom:16px;
@@ -1121,16 +1140,24 @@ section{
   transform:translateY(-5px);
   border-color:var(--accent-dim);
   box-shadow:var(--shadow-card);
-  background:linear-gradient(180deg, rgba(201,161,90,0.05), var(--bg-raised) 45%);
+  background:linear-gradient(180deg, rgba(239,112,96,0.05), var(--bg-raised) 45%);
 }
 
 .work-preview{
   border:1px solid var(--line);
   border-radius:6px;
-  background:var(--bg);
+  background:var(--bg) center / cover no-repeat;
   overflow:hidden;
   margin-bottom:20px;
+  aspect-ratio:3/2;
 }
+
+.work-preview-bar,
+.work-preview-body{display:none;}
+.works-grid .work-card:nth-child(1) .work-preview{background-image:url('assets/cafe-mint.jpg');}
+.works-grid .work-card:nth-child(2) .work-preview{background-image:url('assets/nova-homes.jpg');}
+.works-grid .work-card:nth-child(3) .work-preview{background-image:url('assets/nexus-tech.jpg');}
+.works-grid .work-card:nth-child(4) .work-preview{background-image:url('assets/city-service.jpg');}
 
 .work-preview-bar{
   display:flex;
@@ -1185,7 +1212,7 @@ section{
   text-transform:uppercase;
   color:var(--accent);
   background:var(--accent-soft);
-  border:1px solid rgba(201,161,90,0.3);
+  border:1px solid rgba(239,112,96,0.3);
   padding:5px 10px;
   border-radius:3px;
   margin-bottom:16px;
@@ -1260,7 +1287,7 @@ section{
 }
 
 .why-num{
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:12px;
   color:var(--accent);
   margin-bottom:20px;
@@ -1324,7 +1351,7 @@ section{
 }
 
 .process-num{
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:13px;
   color:var(--text-faint);
   margin-bottom:24px;
@@ -1394,7 +1421,7 @@ section{
   top:50%; left:50%;
   width:640px; height:320px;
   transform:translate(-50%,-50%);
-  background:radial-gradient(circle, rgba(201,161,90,0.1), transparent 70%);
+  background:radial-gradient(circle, rgba(239,112,96,0.1), transparent 70%);
   filter:blur(20px);
   pointer-events:none;
 }
@@ -1441,7 +1468,7 @@ section{
 }
 
 .contact-label{
-  font-family:'JetBrains Mono', monospace;
+  font-family:'Courier New', 'Liberation Mono', monospace;
   font-size:12px;
   color:var(--text-faint);
   text-transform:uppercase;
@@ -1485,13 +1512,13 @@ footer{
 
 <header class="site-header">
   <div class="container">
-    <a class="logo" id="siteLogo" href="#" aria-label="Наверх"><span class="dot"></span>SpecialBlack</a>
+    <a class="logo" id="siteLogo" href="#" aria-label="WashingtonSites — наверх"><img class="mark" src="assets/washingtonsites-icon.png" alt="">WashingtonSites</a>
     <nav class="nav-links">
       <a href="#pricing">Тарифы</a>
       <a href="#works">Работы</a>
-      <a href="#why">Почему мы</a>
+      <a href="#why">Подход</a>
       <a href="#reviews">Отзывы</a>
-      <a href="#process">Процесс</a>
+      <a href="#process">Этапы</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <div class="header-auth">
@@ -1540,37 +1567,23 @@ footer{
 <main>
 
   <section class="hero">
+    <picture class="hero-photo" aria-hidden="true">
+      <source type="image/webp" srcset="assets/capitol-640.webp 640w, assets/capitol-1100.webp 1100w, assets/capitol-1586.webp 1586w" sizes="100vw">
+      <img src="assets/capitol-1586.webp" width="1586" height="992" alt="" fetchpriority="high" decoding="async">
+    </picture>
     <div class="container hero-grid">
       <div>
-        <div class="eyebrow">веб-студия</div>
-        <h1>Создаём сайты, которые выглядят профессионально и работают на ваш бизнес.</h1>
-        <p class="hero-desc">Разрабатываем сайты под заказ — от простого лендинга до многостраничного проекта. Стоимость начинается от 2 000 ₽, реальные примеры работ можно посмотреть ниже.</p>
+        <div class="eyebrow">WashingtonSites · сайты</div>
+        <h1>Вашему делу нужен сайт, который говорит по делу.</h1>
+        <p class="hero-desc">Соберём понятный сайт для бизнеса, услуги или новой идеи. Покажем примеры, обсудим детали и заранее назовём цену.</p>
         <ul class="hero-facts">
-          <li>От 2 000 ₽</li>
-          <li>Сайты под заказ</li>
-          <li>Готовые примеры работ</li>
+          <li>Сайты от 2 000 ₽</li>
+          <li>Удобно на телефоне</li>
+          <li>Работы можно посмотреть</li>
         </ul>
         <div class="hero-actions">
-          <a href="#pricing" class="btn btn-primary">Выбрать тариф</a>
-          <a href="#works" class="btn btn-outline-accent">Посмотреть наши работы</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="window-frame">
-          <div class="window-bar">
-            <span></span><span></span><span></span>
-            <span class="url mono"></span>
-          </div>
-          <div class="window-body">
-            <div class="draw-line w1"></div>
-            <div class="draw-line w2"></div>
-            <div class="draw-line w3"></div>
-            <div class="block-row">
-              <div class="block-chip"></div>
-              <div class="block-chip"></div>
-              <div class="block-chip"></div>
-            </div>
-          </div>
+          <a href="#pricing" class="btn btn-primary">Посмотреть цены</a>
+          <a href="#works" class="btn btn-outline-accent">Наши работы</a>
         </div>
       </div>
     </div>
@@ -1579,8 +1592,8 @@ footer{
   <section id="pricing">
     <div class="container">
       <div class="section-head">
-        <h2>Выберите подходящий формат</h2>
-        <p>Четыре варианта разработки — от простого сайта до сложного веб-сервиса с системами и базой данных.</p>
+        <h2>Сколько стоит сайт</h2>
+        <p>Выберите отправную точку. Перед началом работы уточним состав проекта и итоговую стоимость.</p>
       </div>
 
       <div class="pricing-grid">
@@ -1588,14 +1601,14 @@ footer{
         <div class="plan reveal">
           <div class="plan-name mono">Start</div>
           <div class="plan-price">2 000 ₽</div>
-          <p class="plan-desc">Для небольших проектов, которым нужен аккуратный и понятный сайт без лишней сложности.</p>
+          <p class="plan-desc">Одна страница, на которой легко понять, чем вы занимаетесь и как с вами связаться.</p>
           <ul class="plan-features">
             <li>Одностраничный сайт</li>
-            <li>Современный дизайн</li>
+            <li>Дизайн под ваши материалы</li>
             <li>Адаптация под телефон и компьютер</li>
-            <li>Основные информационные блоки</li>
-            <li>Кнопки связи</li>
-            <li>Базовые анимации</li>
+            <li>О вас, услугах и контактах</li>
+            <li>Кнопки для связи</li>
+            <li>Лёгкие анимации</li>
             <li>Отправка файла(ов)</li>
             <li>Публикация сайта (по желанию)</li>
           </ul>
@@ -1607,7 +1620,7 @@ footer{
           <span class="plan-badge mono">ПОПУЛЯРНЫЙ</span>
           <div class="plan-name mono">Business</div>
           <div class="plan-price">5 000 ₽</div>
-          <p class="plan-desc">Расширенный сайт для бизнеса, услуг, магазина или проекта с большим количеством информации.</p>
+          <p class="plan-desc">Несколько страниц для услуг, команды, примеров работ и контактов.</p>
           <ul class="plan-features">
             <li>Несколько страниц</li>
             <li>Индивидуальный дизайн</li>
@@ -1615,7 +1628,7 @@ footer{
             <li>Интерактивные элементы</li>
             <li>Формы обратной связи</li>
             <li>Анимации</li>
-            <li>Дополнительные функциональные блоки</li>
+            <li>Разделы под ваши услуги</li>
             <li>Отправка файла(ов)</li>
             <li>Публикация сайта (по желанию)</li>
           </ul>
@@ -1626,14 +1639,14 @@ footer{
         <div class="plan reveal">
           <div class="plan-name mono">Pro</div>
           <div class="plan-price">13 000 ₽</div>
-          <p class="plan-desc">Полноценный веб-проект с индивидуальной структурой и расширенным функционалом.</p>
+          <p class="plan-desc">Когда нужен свой сценарий: формы, интеграции и разделы под вашу задачу.</p>
           <ul class="plan-features">
             <li>Сложная структура сайта</li>
-            <li>Полностью индивидуальный дизайн</li>
+            <li>Дизайн с нуля</li>
             <li>Большое количество страниц</li>
             <li>Интерактивные элементы</li>
-            <li>Расширенные формы и функциональность</li>
-            <li>Сложные анимации</li>
+            <li>Формы под ваши сценарии</li>
+            <li>Анимации под задачи сайта</li>
             <li>Интеграции при необходимости</li>
             <li>Адаптация под все устройства</li>
             <li>Отправка файла(ов)</li>
@@ -1648,17 +1661,17 @@ footer{
           <span class="plan-badge mono">МАКСИМУМ</span>
           <div class="plan-name mono">Ultra</div>
           <div class="plan-price">25 000 ₽</div>
-          <p class="plan-desc">Сайт с большим количеством систем и базой данных — для больших веб-проектов и веб-приложений.</p>
+          <p class="plan-desc">Для проекта с аккаунтами, базой данных и несколькими связанными разделами.</p>
           <ul class="plan-features">
-            <li>Сложные интерактивные системы</li>
+            <li>Интерактивные разделы</li>
             <li>Регистрация и авторизация пользователей</li>
             <li>База данных</li>
             <li>Личные кабинеты</li>
             <li>Хранение и обработка пользовательских данных</li>
-            <li>Различные роли и права доступа</li>
+            <li>Роли и права доступа</li>
             <li>Внутренние сервисы и взаимосвязанные разделы</li>
             <li>Индивидуальная логика проекта</li>
-            <li>Сложная структура сайта / веб-приложения</li>
+            <li>Многостраничная структура</li>
             <li>Публикация сайта (по желанию)</li>
           </ul>
           <p class="plan-example mono">Пример: <a href="https://iamskoup1.github.io/kapani/" target="_blank" rel="noopener">Капанёвский сайт ↗</a></p>
@@ -1674,8 +1687,8 @@ footer{
   <section id="works">
     <div class="container">
       <div class="section-head">
-        <h2>Примеры наших работ</h2>
-        <p>Посмотрите сайты, созданные нашей студией для разных сфер бизнеса.</p>
+        <h2>Что мы уже сделали</h2>
+        <p>Откройте готовые проекты и посмотрите, как устроены страницы, навигация и подача информации.</p>
       </div>
 
       <div class="works-grid">
@@ -1691,7 +1704,7 @@ footer{
           </div>
           <span class="work-tag mono">Кафе</span>
           <h3>Кафе «Мята»</h3>
-          <p>Уютный сайт-визитка для заведения общественного питания.</p>
+          <p>Меню, атмосфера заведения и быстрый путь к контакту.</p>
           <a href="https://iamskoup.github.io/cafemyata/" target="_blank" rel="noopener" class="work-btn">
             Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
           </a>
@@ -1708,7 +1721,7 @@ footer{
           </div>
           <span class="work-tag mono">Недвижимость</span>
           <h3>Nova Home</h3>
-          <p>Сайт агентства недвижимости с акцентом на доверие и подачу объектов.</p>
+          <p>Объекты и информация об агентстве в одном месте.</p>
           <a href="https://iamskoup.github.io/novahome/" target="_blank" rel="noopener" class="work-btn">
             Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
           </a>
@@ -1725,7 +1738,7 @@ footer{
           </div>
           <span class="work-tag mono">Техника</span>
           <h3>NEXUS</h3>
-          <p>Каталог-сайт магазина техники с современной структурой и подачей товара.</p>
+          <p>Каталог техники с понятными разделами и карточками товаров.</p>
           <a href="https://iamskoup.github.io/nexus/" target="_blank" rel="noopener" class="work-btn">
             Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
           </a>
@@ -1742,7 +1755,7 @@ footer{
           </div>
           <span class="work-tag mono">Веб-сервис</span>
           <h3>Капанёвский сайт</h3>
-          <p>Большой интерактивный веб-проект с множеством взаимосвязанных систем: аккаунты, база данных, экономика, бизнесы, маркет, банк, профили и чаты.</p>
+          <p>Веб-проект с аккаунтами, профилями, рынком, банком и чатами.</p>
           <a href="https://iamskoup1.github.io/kapani/" target="_blank" rel="noopener" class="work-btn">
             Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
           </a>
@@ -1755,38 +1768,38 @@ footer{
   <section id="why">
     <div class="container">
       <div class="section-head">
-        <h2>Почему SpecialBlack</h2>
+        <h2>Как мы работаем</h2>
       </div>
       <div class="why-grid">
         <div class="why-item reveal">
           <span class="why-num mono">01</span>
           <h3>Современный дизайн</h3>
-          <p>Индивидуальный стиль без шаблонных решений.</p>
+          <p>Продумываем структуру и внешний вид под ваш проект.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">02</span>
           <h3>Адаптация под смартфоны</h3>
-          <p>Сайт корректно выглядит на любом устройстве.</p>
+          <p>Текст, кнопки и страницы удобны и на телефоне.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">03</span>
           <h3>Сайт под задачи бизнеса</h3>
-          <p>Структура и функционал под конкретную цель.</p>
+          <p>Сначала выясняем, что нужно посетителю сайта.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">04</span>
           <h3>Быстрая разработка</h3>
-          <p>Готовый сайт — за несколько дней.</p>
+          <p>Срок называем после обсуждения объёма работ.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">05</span>
           <h3>Дальнейшее редактирование</h3>
-          <p>Сайт можно дорабатывать и после сдачи проекта.</p>
+          <p>Если проект растёт, сайт можно расширить.</p>
         </div>
         <div class="why-item reveal">
           <span class="why-num mono">06</span>
           <h3>Понятная стоимость</h3>
-          <p>Цена известна заранее, без скрытых доплат.</p>
+          <p>Состав работ и стоимость согласуем до старта.</p>
         </div>
       </div>
     </div>
@@ -1796,7 +1809,7 @@ footer{
     <div class="container">
       <div class="section-head">
         <h2>Отзывы клиентов</h2>
-        <p>Реальные отзывы клиентов после завершения проектов.</p>
+        <p>Отзывы появляются здесь после завершения заказов.</p>
       </div>
       <div class="reviews-stats reveal">
         <span class="reviews-stars" id="reviewsStarsTop">★★★★★</span>
@@ -1806,7 +1819,7 @@ footer{
       <div class="reviews-grid" id="reviewsGridTop">
         <div class="review-placeholder reveal" style="grid-column:1/-1;">
           <span class="review-mark mono" aria-hidden="true">"</span>
-          <p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p>
+          <p>Первый отзыв появится после завершённого заказа.</p>
         </div>
       </div>
       <div style="text-align:center; margin-top:32px;">
@@ -1823,15 +1836,15 @@ footer{
       <div class="faq-list">
         <div class="faq-item reveal">
           <div class="faq-q">Как происходит оплата?</div>
-          <div class="faq-a">После подтверждения заказа вносится предоплата 50% от его итоговой стоимости. Оставшиеся 50% оплачиваются после завершения работы.</div>
+          <div class="faq-a">После подтверждения заказа вы оплачиваете половину суммы. Вторую половину — после завершения работы.</div>
         </div>
         <div class="faq-item reveal">
           <div class="faq-q">Нужна ли регистрация для заказа?</div>
-          <div class="faq-a">Да, для оформления заказа нужно создать аккаунт и подтвердить email — так мы сможем показывать статус заказа в личном кабинете.</div>
+          <div class="faq-a">Да. Создайте аккаунт и подтвердите почту: тогда сможете следить за заказом в личном кабинете.</div>
         </div>
         <div class="faq-item reveal">
           <div class="faq-q">Можно ли отменить заказ?</div>
-          <div class="faq-a">Да, пока заказ ожидает подтверждения или подтверждён и ещё не взят в работу — отменить его можно в один клик в личном кабинете.</div>
+          <div class="faq-a">Да, пока мы не начали работу. Кнопка отмены будет в личном кабинете.</div>
         </div>
       </div>
     </div>
@@ -1846,22 +1859,22 @@ footer{
         <div class="process-item reveal">
           <div class="process-num mono">01</div>
           <h3>Обсуждаем задачу</h3>
-          <p>Вы рассказываете, какой сайт вам нужен.</p>
+          <p>Вы рассказываете о задаче, аудитории и примерах, которые нравятся.</p>
         </div>
         <div class="process-item reveal">
           <div class="process-num mono">02</div>
           <h3>Создаём дизайн</h3>
-          <p>Продумываем структуру и внешний вид сайта.</p>
+          <p>Согласуем страницы, содержание и внешний вид.</p>
         </div>
         <div class="process-item reveal">
           <div class="process-num mono">03</div>
           <h3>Разрабатываем</h3>
-          <p>Собираем сайт и добавляем необходимый функционал.</p>
+          <p>Собираем страницы, проверяем их на телефоне и компьютере.</p>
         </div>
         <div class="process-item reveal">
           <div class="process-num mono">04</div>
           <h3>Передаём готовый проект</h3>
-          <p>Публикуем сайт и передаём его клиенту.</p>
+          <p>Показываем результат, вносим согласованные правки и передаём сайт.</p>
         </div>
       </div>
     </div>
@@ -1869,8 +1882,8 @@ footer{
 
   <section class="cta-section">
     <div class="container">
-      <h2>Готовы запустить свой сайт?</h2>
-      <p>Расскажите о проекте — обсудим задачу и подберём подходящий вариант.</p>
+      <h2>Расскажите, какой сайт вам нужен</h2>
+      <p>Напишите пару слов о задаче. Ответим, какой формат подойдёт и с чего начать.</p>
       <a href="https://t.me/jet18tsi" target="_blank" rel="noopener" class="btn btn-primary">Обсудить проект</a>
     </div>
   </section>
@@ -1892,12 +1905,12 @@ footer{
 
 <footer>
   <div class="container footer-row">
-    <span>© 2026 SpecialBlack</span>
+    <span>© 2026 WashingtonSites</span>
     <span class="mono">t.me/jet18tsi</span>
   </div>
 </footer>
 
-<!-- ============ SpecialBlack: модальные окна ============ -->
+<!-- ============ WashingtonSites: модальные окна ============ -->
 
 <!-- Auth modal -->
 <div class="sb-overlay" id="authOverlay">
@@ -2291,7 +2304,7 @@ document.getElementById('allReviewsBtn').addEventListener('click', function(e){
 </script>
 
 <!-- ============================================================
-     SpecialBlack — аккаунты, заказы, отзывы (Firebase)
+     WashingtonSites — аккаунты, заказы, отзывы (Firebase)
      Перед использованием вставьте свою конфигурацию Firebase ниже
      (раздел "1. КОНФИГУРАЦИЯ"). Подробности — в FIREBASE_SETUP.md
      ============================================================ -->
@@ -3016,7 +3029,7 @@ $('orderForm').addEventListener('submit', async e => {
 function showOrderCreated(order){
   $('createdOrderId').textContent = order.displayId;
   const q = order.questionnaire;
-  let text = 'Здравствуйте! Я хочу заказать сайт в SpecialBlack.\n\n';
+  let text = 'Здравствуйте! Я хочу заказать сайт в WashingtonSites.\n\n';
   text += 'Номер заказа: #' + order.displayId + '\n\n';
   text += 'Тариф: ' + order.selectedTariff + '\n';
   text += 'Стоимость: ' + formatPrice(order.totalPrice) + '\n';
@@ -3035,7 +3048,7 @@ function showOrderCreated(order){
   if(q.wishes) text += 'Дополнительные пожелания: ' + q.wishes + '\n';
   if(q.extra) text += 'Дополнительная информация: ' + q.extra + '\n';
   text += '\nEmail: ' + order.userEmail + '\n';
-  text += 'Никнейм на SpecialBlack: ' + order.userNickname;
+  text += 'Никнейм на WashingtonSites: ' + order.userNickname;
   const url = 'https://t.me/' + TELEGRAM_USERNAME + '?text=' + encodeURIComponent(text);
   $('continueTelegramBtn').href = url;
   openOverlay('orderCreatedOverlay');
@@ -3141,7 +3154,7 @@ function orderCardHtml(o){
     timelineHtml(o) +
     '<div class="sb-payment-box">Стоимость: '+formatPrice(o.totalPrice)+' · Предоплата: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
       '<span class="sb-badge '+(isCancelled ? 'pay-cancelled' : 'pay-'+o.paymentStatus)+'" style="margin-top:6px;">'+paymentLabel+'</span></div>' +
-    (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий SpecialBlack: '+escapeHtml(o.clientComment)+'</p>' : '') +
+    (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий WashingtonSites: '+escapeHtml(o.clientComment)+'</p>' : '') +
     '<div class="sb-order-actions">' +
       '<button type="button" class="sb-mini-btn" data-toggle-detail>Подробнее</button>' +
       '<button type="button" class="sb-mini-btn accent" data-contact-telegram>Связаться в телеграм</button>' +
@@ -3353,7 +3366,7 @@ function renderTopReviews(){
   const top3 = published.sort((a,b) => b.createdAt - a.createdAt).slice(0,3);
   const grid = $('reviewsGridTop');
   if(!top3.length){
-    grid.innerHTML = '<div class="review-placeholder reveal" style="grid-column:1/-1;"><span class="review-mark mono" aria-hidden="true">"</span><p>Здесь появятся реальные отзывы клиентов SpecialBlack.</p></div>';
+    grid.innerHTML = '<div class="review-placeholder reveal" style="grid-column:1/-1;"><span class="review-mark mono" aria-hidden="true">"</span><p>Первый отзыв появится после завершённого заказа.</p></div>';
     return;
   }
   grid.innerHTML = top3.map(reviewCardHtml).join('');
