@@ -36,7 +36,7 @@ html{scroll-behavior:smooth; overflow-x:hidden; width:100%; background:#090a0c;}
 }
 
 body{
-  background:linear-gradient(180deg,#090a0c 0%,#17191d 30%,#202227 52%,#111316 76%,#090a0c 100%);
+  background:linear-gradient(180deg,#090a0c 0%,#22252b 30%,#111318 55%,#282b32 78%,#090a0c 100%);
   min-height:100vh;
   color:var(--text);
   font-family:Arial, 'Liberation Sans', sans-serif;
@@ -53,13 +53,9 @@ body{
 html.modal-open,
 body.modal-open{
   overscroll-behavior:none;
+  overflow:hidden;
 }
 body.modal-open{
-  position:fixed;
-  left:0;
-  right:0;
-  width:100%;
-  overflow:hidden;
   touch-action:none;
 }
 body.modal-open .sb-overlay{
@@ -410,17 +406,17 @@ section[id]{scroll-margin-top:80px;}
 .sb-summary-row.total{color:var(--text); font-weight:600; border-top:1px solid var(--line-soft); margin-top:6px; padding-top:10px;}
 .sb-summary-row.prepay{color:var(--accent);}
 
-.sb-profile-head{display:flex; align-items:center; gap:16px; margin-bottom:22px;}
+.sb-profile-head{display:flex; align-items:center; gap:16px; margin-bottom:18px; min-width:0;}
 .sb-profile-avatar{
-  width:64px; height:64px; border-radius:50%; overflow:hidden; flex-shrink:0;
+  width:56px; height:56px; border-radius:50%; overflow:hidden; flex-shrink:0;
   background:var(--accent-soft); display:flex; align-items:center; justify-content:center;
   font-family:Georgia, 'Liberation Serif', serif; font-size:22px; color:var(--accent);
   border:1px solid var(--line); position:relative; cursor:pointer;
 }
 .sb-profile-avatar img{width:100%; height:100%; object-fit:cover;}
 .sb-profile-avatar input{position:absolute; inset:0; opacity:0; cursor:pointer;}
-.sb-profile-name{font-family:Georgia, 'Liberation Serif', serif; font-size:17px;}
-.sb-profile-email{font-size:13px; color:var(--text-dim); margin-top:3px;}
+.sb-profile-name{font-family:Georgia, 'Liberation Serif', serif; font-size:21px; line-height:1.2;}
+.sb-profile-email{font-size:13px; color:var(--text-dim); margin-top:3px; overflow-wrap:anywhere;}
 .sb-verify-badge{
   display:inline-flex; align-items:center; gap:5px; font-size:11.5px;
   margin-top:6px; font-family:'Courier New', 'Liberation Mono', monospace;
@@ -428,23 +424,51 @@ section[id]{scroll-margin-top:80px;}
 .sb-verify-badge.ok{color:#7fbf8f;}
 .sb-verify-badge.no{color:#e0b25f;}
 
-.sb-stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:22px;}
-.sb-stat{
-  border:1px solid var(--line-soft); border-radius:var(--radius); padding:14px 10px; text-align:center;
+.sb-profile-meta{display:flex; flex-wrap:wrap; gap:6px 18px; color:var(--text-faint); font-size:12px; margin-bottom:20px;}
+.sb-profile-meta b{color:var(--text); font-weight:600;}
+#profileOverlay .sb-tabs{gap:6px; margin-bottom:20px; border:0;}
+#profileOverlay .sb-tab{
+  flex:1; margin:0; padding:10px 8px; border:1px solid var(--line-soft);
+  border-radius:var(--radius); background:transparent; color:var(--text-dim);
+  font:inherit; font-size:13px; text-align:center;
 }
-.sb-stat b{display:block; font-family:Georgia, 'Liberation Serif', serif; font-size:19px; margin-bottom:2px;}
-.sb-stat span{font-size:11px; color:var(--text-faint);}
+#profileOverlay .sb-tab.active{background:#25282d; border-color:#44484e; color:var(--text);}
+#settingsPanel .sb-setting{border-bottom:1px solid var(--line-soft); padding:14px 0;}
+#settingsPanel .sb-setting:first-child{padding-top:2px;}
+#settingsPanel .sb-setting > summary{cursor:pointer; list-style:none; font-size:14px; font-weight:600;}
+#settingsPanel .sb-setting > summary::-webkit-details-marker{display:none;}
+#settingsPanel .sb-setting > summary::after{content:'+'; float:right; color:var(--accent); font-weight:400;}
+#settingsPanel .sb-setting[open] > summary::after{content:'−';}
+#settingsPanel .sb-setting-body{padding-top:16px;}
+#settingsPanel .sb-field{margin-bottom:10px;}
 
 .sb-order-card{
-  border:1px solid var(--line-soft); border-radius:var(--radius); padding:16px 18px;
-  margin-bottom:12px; transition:border-color .2s ease;
+  background:#1c1e22; border:1px solid #383b41; border-radius:var(--radius-lg); padding:18px;
+  margin-bottom:10px; transition:border-color .2s ease;
 }
-.sb-order-card:hover{border-color:var(--line);}
-.sb-order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px;}
-.sb-order-id{font-family:'Courier New', 'Liberation Mono', monospace; font-size:13px; color:var(--accent);}
+.sb-order-card:hover{border-color:#53565c;}
+.sb-order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
+.sb-order-top > div:first-child{min-width:0;}
+.sb-order-id{font-size:12px; color:var(--text-faint);}
 .sb-order-tariff{font-size:14.5px; font-weight:600;}
-.sb-order-meta{font-size:12.5px; color:var(--text-faint); margin-top:2px;}
-.sb-order-price{font-family:Georgia, 'Liberation Serif', serif; font-size:15px; white-space:nowrap;}
+.sb-order-title{font-size:16px; line-height:1.3; font-weight:600; overflow-wrap:anywhere;}
+.sb-order-meta{font-size:12px; color:var(--text-faint); margin-top:4px;}
+.sb-order-price{font-family:Georgia, 'Liberation Serif', serif; font-size:17px; white-space:nowrap;}
+.sb-order-state{display:flex; align-items:center; flex-wrap:wrap; gap:8px 14px; margin-top:14px;}
+.sb-order-payment{font-size:12px; color:var(--text-dim);}
+.sb-order-disclosure{border-top:1px solid var(--line-soft); margin-top:15px; padding-top:11px;}
+.sb-order-disclosure > summary{cursor:pointer; color:var(--accent); font-size:13px; list-style:none; width:max-content; max-width:100%;}
+.sb-order-disclosure > summary::-webkit-details-marker{display:none;}
+.sb-order-disclosure > summary::after{content:' +';}
+.sb-order-disclosure[open] > summary::after{content:' −';}
+.sb-order-breakdown{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; padding-top:16px; color:var(--text-dim); font-size:12.5px;}
+.sb-order-breakdown b{display:block; color:var(--text); font-size:14px; font-weight:500;}
+.sb-order-comment{margin-top:14px; color:var(--text-dim); font-size:13px;}
+.sb-order-questionnaire{margin-top:18px; border-top:1px solid var(--line-soft); padding-top:12px;}
+.sb-order-questionnaire > summary{cursor:pointer; color:var(--text-dim); font-size:12.5px;}
+.sb-order-questionnaire dl{display:grid; grid-template-columns:120px minmax(0,1fr); gap:8px 12px; margin-top:14px; font-size:12.5px;}
+.sb-order-questionnaire dt{color:var(--text-faint);}
+.sb-order-questionnaire dd{overflow-wrap:anywhere;}
 
 .sb-badge{
   display:inline-flex; align-items:center; gap:6px; font-size:11.5px;
@@ -462,22 +486,6 @@ section[id]{scroll-margin-top:80px;}
 .sb-badge.pay-prepayment_received{color:#7fbf8f;}
 .sb-badge.pay-fully_paid{color:#7fbf8f;}
 .sb-badge.pay-cancelled{color:#e0836f;}
-
-.sb-timeline{display:flex; align-items:center; margin:14px 0 4px; gap:0;}
-.sb-tl-step{flex:1; text-align:center; position:relative;}
-.sb-tl-dot{
-  width:10px; height:10px; border-radius:50%; background:var(--line);
-  margin:0 auto 6px; position:relative; z-index:2; border:2px solid var(--bg-raised);
-}
-.sb-tl-step.done .sb-tl-dot{background:var(--accent);}
-.sb-tl-step::before{
-  content:''; position:absolute; top:4px; left:-50%; width:100%; height:2px; background:var(--line); z-index:1;
-}
-.sb-tl-step:first-child::before{display:none;}
-.sb-tl-step.done::before{background:var(--accent);}
-.sb-tl-label{font-size:10.5px; color:var(--text-faint);}
-.sb-tl-step.done .sb-tl-label{color:var(--text-dim);}
-.sb-timeline.cancelled .sb-tl-dot, .sb-timeline.cancelled .sb-tl-step::before{background:#e0836f !important;}
 
 .sb-order-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
 .sb-more-row{margin-top:10px; display:flex; justify-content:center;}
@@ -600,8 +608,10 @@ section[id]{scroll-margin-top:80px;}
 .faq-item[open] .faq-a{padding-top:10px;}
 
 @media (max-width:480px){
-  .sb-stat-grid{grid-template-columns:repeat(3,1fr); gap:6px;}
-  .sb-stat b{font-size:16px;}
+  .sb-order-card{padding:15px;}
+  .sb-order-questionnaire dl{grid-template-columns:1fr; gap:2px;}
+  .sb-order-questionnaire dd{margin-bottom:8px;}
+  #profileOverlay .sb-tab{font-size:12px; padding:10px 4px;}
   .sb-field-row{flex-direction:column; gap:0;}
 }
 
@@ -1518,8 +1528,8 @@ footer{
 
   <section class="hero">
     <picture class="hero-photo" aria-hidden="true">
-      <source type="image/webp" srcset="assets/capitol-640.webp 640w, assets/capitol-1100.webp 1100w, assets/capitol-1586.webp 1586w" sizes="100vw">
-      <img src="assets/capitol-1586.webp" width="1586" height="992" alt="" fetchpriority="high" decoding="async">
+      <source type="image/webp" srcset="assets/capitol-night-640.webp 640w, assets/capitol-night-1100.webp 1100w, assets/capitol-night-1586.webp 1586w" sizes="100vw">
+      <img src="assets/capitol-night-1586.webp" width="1586" height="992" alt="" fetchpriority="high" decoding="async">
     </picture>
     <div class="container hero-grid">
       <div>
@@ -1866,12 +1876,12 @@ footer{
   <div class="sb-modal sb-wide">
     <button class="sb-close" data-close-overlay="profileOverlay">✕</button>
     <div class="sb-profile-head">
-      <div class="sb-profile-avatar" id="profileAvatarBox">
+      <label class="sb-profile-avatar" id="profileAvatarBox" title="Изменить фото профиля">
         <span id="profileAvatarInitial">?</span>
         <img id="profileAvatarImg" style="display:none;" alt="">
         <input type="file" id="avatarUpload" accept="image/png,image/jpeg,image/webp">
-      </div>
-      <div>
+      </label>
+      <div style="min-width:0;">
         <div class="sb-profile-name" id="profileNickname">—</div>
         <div class="sb-profile-email" id="profileEmail">—</div>
         <div class="sb-verify-badge" id="profileVerifyBadge"></div>
@@ -1879,55 +1889,55 @@ footer{
       </div>
     </div>
 
-    <div class="sb-stat-grid">
-      <div class="sb-stat"><b id="statOrders">0</b><span>Заказов</span></div>
-      <div class="sb-stat"><b id="statCompleted">0</b><span>Выполнено</span></div>
-      <div class="sb-stat"><b id="statReviews">0</b><span>Отзывов</span></div>
+    <div class="sb-profile-meta">
+      <span>Заказы: <b id="statOrders">0</b></span>
+      <span>Выполнено: <b id="statCompleted">0</b></span>
+      <span>Отзывы: <b id="statReviews">0</b></span>
     </div>
 
-    <div class="sb-tabs">
-      <div class="sb-tab active" data-profiletab="orders">Мои заказы</div>
-      <div class="sb-tab" data-profiletab="reviews">Мои отзывы</div>
-      <div class="sb-tab" data-profiletab="settings">Настройки</div>
+    <div class="sb-tabs" role="tablist" aria-label="Разделы профиля">
+      <button type="button" class="sb-tab active" data-profiletab="orders" role="tab" aria-controls="ordersPanel" aria-selected="true">Заказы</button>
+      <button type="button" class="sb-tab" data-profiletab="reviews" role="tab" aria-controls="myReviewsPanel" aria-selected="false">Отзывы</button>
+      <button type="button" class="sb-tab" data-profiletab="settings" role="tab" aria-controls="settingsPanel" aria-selected="false">Настройки</button>
     </div>
 
-    <div class="sb-panel active" id="ordersPanel">
+    <div class="sb-panel active" id="ordersPanel" role="tabpanel">
       <div id="ordersList"><div class="sb-empty-state">Загрузка…</div></div>
       <div class="sb-more-row" id="myOrdersMoreWrap" style="display:none;">
         <button type="button" class="sb-mini-btn sb-more-btn" id="openMyOrdersAllBtn">Все мои заказы</button>
       </div>
     </div>
 
-    <div class="sb-panel" id="myReviewsPanel">
+    <div class="sb-panel" id="myReviewsPanel" role="tabpanel">
       <div id="myReviewsList"><div class="sb-empty-state">Загрузка…</div></div>
       <div class="sb-more-row" id="myReviewsMoreWrap" style="display:none;">
         <button type="button" class="sb-mini-btn sb-more-btn" id="openMyReviewsAllBtn">Все мои отзывы</button>
       </div>
     </div>
 
-    <div class="sb-panel" id="settingsPanel">
-      <div class="sb-form-block">
-        <span class="sb-block-title">Никнейм</span>
-        <div class="sb-field-row">
-          <div class="sb-field"><input type="text" id="editNickname" maxlength="24"></div>
+    <div class="sb-panel" id="settingsPanel" role="tabpanel">
+      <details class="sb-setting" open>
+        <summary>Никнейм</summary>
+        <div class="sb-setting-body">
+          <div class="sb-field"><input type="text" id="editNickname" maxlength="24" aria-label="Никнейм"></div>
+          <button class="sb-mini-btn accent" id="saveNicknameBtn">Сохранить</button>
         </div>
-        <button class="sb-mini-btn accent" id="saveNicknameBtn">Сохранить никнейм</button>
-      </div>
-      <div class="sb-form-block">
-        <span class="sb-block-title">Email</span>
-        <div class="sb-field-row">
-          <div class="sb-field"><input type="email" id="editEmail"></div>
+      </details>
+      <details class="sb-setting">
+        <summary>Email</summary>
+        <div class="sb-setting-body">
+          <div class="sb-field"><input type="email" id="editEmail" aria-label="Email"></div>
+          <p class="sb-hint" style="margin-bottom:12px;">На новый адрес придёт письмо для подтверждения.</p>
+          <button class="sb-mini-btn accent" id="saveEmailBtn">Изменить email</button>
         </div>
-        <p class="sb-hint">При изменении email на новый адрес придёт письмо подтверждения.</p>
-        <button class="sb-mini-btn accent" id="saveEmailBtn">Изменить email</button>
-      </div>
-      <div class="sb-form-block">
-        <span class="sb-block-title">Пароль</span>
-        <div class="sb-field-row">
-          <div class="sb-field"><input type="password" id="newPassword" placeholder="Новый пароль" minlength="6"></div>
+      </details>
+      <details class="sb-setting">
+        <summary>Пароль</summary>
+        <div class="sb-setting-body">
+          <div class="sb-field"><input type="password" id="newPassword" placeholder="Новый пароль" minlength="6" aria-label="Новый пароль"></div>
+          <button class="sb-mini-btn accent" id="savePasswordBtn">Изменить пароль</button>
         </div>
-        <button class="sb-mini-btn accent" id="savePasswordBtn">Изменить пароль</button>
-      </div>
+      </details>
       <div class="sb-error" id="settingsError"></div>
     </div>
   </div>
@@ -2316,13 +2326,11 @@ function syncModalScrollLock(){
       modalScrollY = window.scrollY || window.pageYOffset || 0;
       document.documentElement.classList.add('modal-open');
       document.body.classList.add('modal-open');
-      document.body.style.top = (-modalScrollY) + 'px';
     }
   }else if(document.body.classList.contains('modal-open')){
     document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
-    document.body.style.top = '';
-    window.scrollTo(0, modalScrollY);
+    if(window.scrollY !== modalScrollY) window.scrollTo(0, modalScrollY);
   }
 }
 
@@ -2365,12 +2373,11 @@ const STATUS_LABELS = {
   completed:'Выполнен', cancelled:'Отменён', rejected:'Отклонён'
 };
 const PAYMENT_LABELS = {
-  awaiting_prepayment:'🟡 Ожидается предоплата',
-  prepayment_received:'🟢 Предоплата получена',
-  fully_paid:'🟢 Оплачено полностью',
-  cancelled:'🔴 Заказ отменён'
+  awaiting_prepayment:'Ожидается предоплата',
+  prepayment_received:'Предоплата получена',
+  fully_paid:'Оплачено полностью',
+  cancelled:'Оплата остановлена'
 };
-const STATUS_STEPS = ['pending','confirmed','in_progress','completed'];
 
 /* ======================= 4. СОСТОЯНИЕ ======================= */
 
@@ -2619,8 +2626,11 @@ $('siteLogo').addEventListener('click', e => {
 });
 
 function switchProfileTab(tab){
-  document.querySelectorAll('[data-profiletab]').forEach(t => t.classList.toggle('active', t.dataset.profiletab === tab));
-  ['orders','myReviews','settings'].forEach(p => {});
+  document.querySelectorAll('[data-profiletab]').forEach(t => {
+    const active = t.dataset.profiletab === tab;
+    t.classList.toggle('active', active);
+    t.setAttribute('aria-selected', String(active));
+  });
   $('ordersPanel').classList.toggle('active', tab === 'orders');
   $('myReviewsPanel').classList.toggle('active', tab === 'reviews');
   $('settingsPanel').classList.toggle('active', tab === 'settings');
@@ -3010,9 +3020,6 @@ function bindOrderCards(list, fullPage){
     const card = document.querySelector((fullPage ? '#myOrdersAllList ' : '#ordersList ') + '[data-order-card="'+o.orderId+'"]');
     if(!card) return;
 
-    const toggle = card.querySelector('[data-toggle-detail]');
-    if(toggle) toggle.addEventListener('click', () => card.querySelector('.sb-order-detail').classList.toggle('open'));
-
     const cancelBtn = card.querySelector('[data-cancel-order]');
     if(cancelBtn) cancelBtn.addEventListener('click', () => cancelOrder(o.orderId, o.displayId));
 
@@ -3034,51 +3041,38 @@ function bindOrderCards(list, fullPage){
   });
 }
 
-function timelineHtml(order){
-  if(order.status === 'cancelled' || order.status === 'rejected'){
-    return '<div class="sb-timeline cancelled"><div class="sb-tl-step done"><div class="sb-tl-dot"></div><div class="sb-tl-label">'+STATUS_LABELS[order.status]+'</div></div></div>';
-  }
-  const idx = STATUS_STEPS.indexOf(order.status);
-  const labels = {pending:'Создан', confirmed:'Подтверждён', in_progress:'В работе', completed:'Выполнен'};
-  return '<div class="sb-timeline">' + STATUS_STEPS.map((s,i) =>
-    '<div class="sb-tl-step '+(i<=idx?'done':'')+'"><div class="sb-tl-dot"></div><div class="sb-tl-label">'+labels[s]+'</div></div>'
-  ).join('') + '</div>';
-}
-
 function orderCardHtml(o){
   const hasReview = !!myReviewsByOrder[o.orderId];
   const isCancelled = o.status === 'cancelled' || o.status === 'rejected';
-  const paymentLabel = isCancelled ? PAYMENT_LABELS.cancelled : PAYMENT_LABELS[o.paymentStatus];
+  const paymentLabel = isCancelled ? PAYMENT_LABELS.cancelled : (PAYMENT_LABELS[o.paymentStatus] || 'Статус оплаты уточняется');
+  const q = o.questionnaire || {};
   return '<div class="sb-order-card" data-order-card="'+o.orderId+'">' +
     '<div class="sb-order-top">' +
-      '<div><div class="sb-order-id">#'+escapeHtml(o.displayId)+'</div>' +
-      '<div class="sb-order-tariff">'+escapeHtml(o.selectedTariff)+'</div>' +
-      '<div class="sb-order-meta">'+formatDate(o.createdAt)+'</div></div>' +
-      '<div style="text-align:right;"><div class="sb-order-price">'+formatPrice(o.totalPrice)+'</div>' +
-      '<span class="sb-badge st-'+o.status+'">'+STATUS_LABELS[o.status]+'</span></div>' +
+      '<div><div class="sb-order-title">'+escapeHtml(q.projectName || ('Сайт ' + o.selectedTariff))+'</div>' +
+      '<div class="sb-order-meta">'+escapeHtml(o.selectedTariff)+' · #'+escapeHtml(o.displayId)+' · '+formatDate(o.createdAt)+'</div></div>' +
+      '<div class="sb-order-price">'+formatPrice(o.totalPrice)+'</div>' +
     '</div>' +
-    timelineHtml(o) +
-    '<div class="sb-payment-box">Стоимость: '+formatPrice(o.totalPrice)+' · Предоплата: '+formatPrice(o.prepaymentAmount)+' · Остаток: '+formatPrice(o.remainingAmount)+'<br>' +
-      '<span class="sb-badge '+(isCancelled ? 'pay-cancelled' : 'pay-'+o.paymentStatus)+'" style="margin-top:6px;">'+paymentLabel+'</span></div>' +
-    (o.clientComment ? '<p class="sb-hint" style="margin-top:10px;">Комментарий WashingtonSites: '+escapeHtml(o.clientComment)+'</p>' : '') +
-    '<div class="sb-order-actions">' +
-      '<button type="button" class="sb-mini-btn" data-toggle-detail>Подробнее</button>' +
-      '<button type="button" class="sb-mini-btn accent" data-contact-telegram>Связаться в телеграм</button>' +
-      (['pending','confirmed'].includes(o.status) ? '<button type="button" class="sb-mini-btn danger" data-cancel-order>Отменить заказ</button>' : '') +
-      (isCancelled ? '<button type="button" class="sb-mini-btn danger" data-delete-order>Удалить</button>' : '') +
-      (o.status === 'completed' && !hasReview ? '<button type="button" class="sb-mini-btn accent" data-review-order>Оставить отзыв</button>' : '') +
-      (o.status === 'completed' ? '<button type="button" class="sb-mini-btn" data-reorder>Заказать похожий сайт</button>' : '') +
-    '</div>' +
-    '<div class="sb-order-detail"><dl>' +
-      '<dt>Название проекта</dt><dd>'+escapeHtml(o.questionnaire.projectName)+'</dd>' +
-      '<dt>Описание</dt><dd>'+escapeHtml(o.questionnaire.description)+'</dd>' +
-      (o.questionnaire.pages ? '<dt>Страницы</dt><dd>'+escapeHtml(o.questionnaire.pages)+'</dd>' : '') +
-      (o.questionnaire.style ? '<dt>Стиль</dt><dd>'+escapeHtml(o.questionnaire.style)+'</dd>' : '') +
-      (o.questionnaire.colors ? '<dt>Цвета</dt><dd>'+escapeHtml(o.questionnaire.colors)+'</dd>' : '') +
-      '<dt>Telegram</dt><dd>'+escapeHtml(o.questionnaire.telegram)+'</dd>' +
+    '<div class="sb-order-state"><span class="sb-badge st-'+escapeHtml(o.status)+'">'+(STATUS_LABELS[o.status] || 'Статус уточняется')+'</span>' +
+      '<span class="sb-order-payment">'+paymentLabel+'</span></div>' +
+    '<details class="sb-order-disclosure"><summary>Детали и действия</summary>' +
+      '<div class="sb-order-breakdown"><div>Предоплата<b>'+formatPrice(o.prepaymentAmount)+'</b></div><div>Остаток<b>'+formatPrice(o.remainingAmount)+'</b></div></div>' +
+      (o.clientComment ? '<p class="sb-order-comment">От WashingtonSites: '+escapeHtml(o.clientComment)+'</p>' : '') +
+      '<div class="sb-order-actions">' +
+        '<button type="button" class="sb-mini-btn accent" data-contact-telegram>Написать в Telegram</button>' +
+        (['pending','confirmed'].includes(o.status) ? '<button type="button" class="sb-mini-btn danger" data-cancel-order>Отменить заказ</button>' : '') +
+        (isCancelled ? '<button type="button" class="sb-mini-btn danger" data-delete-order>Удалить</button>' : '') +
+        (o.status === 'completed' && !hasReview ? '<button type="button" class="sb-mini-btn accent" data-review-order>Оставить отзыв</button>' : '') +
+        (o.status === 'completed' ? '<button type="button" class="sb-mini-btn" data-reorder>Повторить заказ</button>' : '') +
+      '</div>' +
+      '<details class="sb-order-questionnaire"><summary>Анкета проекта</summary><dl>' +
+      '<dt>Описание</dt><dd>'+escapeHtml(q.description)+'</dd>' +
+      (q.pages ? '<dt>Страницы</dt><dd>'+escapeHtml(q.pages)+'</dd>' : '') +
+      (q.style ? '<dt>Стиль</dt><dd>'+escapeHtml(q.style)+'</dd>' : '') +
+      (q.colors ? '<dt>Цвета</dt><dd>'+escapeHtml(q.colors)+'</dd>' : '') +
+      '<dt>Telegram</dt><dd>'+escapeHtml(q.telegram)+'</dd>' +
       (o.publish ? '<dt>Публикация</dt><dd>Да (+'+formatPrice(o.publishPrice)+'), домен *.github.io/*</dd>' : '') +
       (o.hasDatabase ? '<dt>База данных</dt><dd>Включена в тариф — данные от почты придут отдельно</dd>' : '') +
-    '</dl></div>' +
+    '</dl></details></details>' +
   '</div>';
 }
 
