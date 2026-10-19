@@ -4,7 +4,7 @@
 <link rel="icon" type="image/png" href="assets/washingtonsites-icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050607">
+<meta name="theme-color" content="#000000">
 <meta name="description" content="WashingtonSites: сайты для бизнеса, услуг и новых проектов. Посмотрите работы, выберите формат и обсудите свой сайт напрямую с разработчиком.">
 <title>WashingtonSites — сайты для вашего дела</title>
 <style>
@@ -28,7 +28,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 [hidden]{display:none !important;}
 
-html{scroll-behavior:smooth; overflow-x:hidden; width:100%; background:#050607;}
+html{scroll-behavior:smooth; overflow-x:hidden; width:100%; background:#000;}
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
@@ -36,7 +36,7 @@ html{scroll-behavior:smooth; overflow-x:hidden; width:100%; background:#050607;}
 }
 
 body{
-  background:linear-gradient(180deg,#050607 0%,#0e1012 30%,#090a0c 55%,#101215 78%,#050607 100%);
+  background:linear-gradient(180deg,#000 0%,#080808 36%,#050505 59%,#101011 82%,#000 100%);
   min-height:100vh;
   color:var(--text);
   font-family:Arial, 'Liberation Sans', sans-serif;
@@ -1245,26 +1245,21 @@ section{
 
 @media (max-width:620px){
   .works-grid{
-    grid-template-columns:none;
-    grid-auto-flow:column;
-    grid-auto-columns:min(78vw,300px);
-    gap:12px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    overscroll-behavior-inline:contain;
-    padding-bottom:10px;
-    scrollbar-width:thin;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
   }
-  .work-card{scroll-snap-align:start;}
+  .work-card{min-width:0;padding:16px 14px;}
+  .work-preview{aspect-ratio:4/3;margin-bottom:12px;}
+  .work-tag{font-size:10px;padding:4px 6px;margin-bottom:10px;}
+  .work-card h3{font-size:16px;margin-bottom:7px;}
+  .work-card p{font-size:12.5px;line-height:1.45;margin-bottom:12px;}
+  .work-btn{font-size:12px;padding-top:10px;}
 }
 
-.swipe-hint{display:none;}
-@media (max-width:620px){
-  .swipe-hint{display:block;margin-top:9px;color:var(--text-faint);font-size:12px;}
-}
-
-@media (max-width:480px){
-  .work-card{padding:24px 20px;}
+@media (max-width:360px){
+  .work-card{padding:13px 10px;}
+  .work-card h3{font-size:15px;}
+  .work-btn{font-size:11.5px;}
 }
 
 /* ---------- What you get ---------- */
@@ -1728,7 +1723,6 @@ footer{
         </div>
 
       </div>
-      <p class="swipe-hint" aria-hidden="true">Листайте карточки, чтобы увидеть все работы →</p>
     </div>
   </section>
 
