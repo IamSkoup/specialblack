@@ -91,7 +91,6 @@ body.modal-open .sb-overlay{
 .pricing-grid .reveal:nth-child(4){transition-delay:.24s;}
 .works-grid .reveal:nth-child(2){transition-delay:.08s;}
 .works-grid .reveal:nth-child(3){transition-delay:.16s;}
-.works-grid .reveal:nth-child(4){transition-delay:.24s;}
 .why-grid .reveal:nth-child(2){transition-delay:.06s;}
 .why-grid .reveal:nth-child(3){transition-delay:.12s;}
 .why-grid .reveal:nth-child(4){transition-delay:.18s;}
@@ -1153,12 +1152,17 @@ section{
 
 .works-grid{
   display:grid;
-  grid-template-columns:repeat(4, 1fr);
+  grid-template-columns:repeat(3, minmax(0,1fr));
   gap:16px;
 }
 
-@media (max-width:1100px){
-  .works-grid{grid-template-columns:repeat(2, 1fr);}
+@media (max-width:900px){
+  .works-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .works-grid > .work-card:last-child:nth-child(odd){
+    grid-column:1 / -1;
+    width:calc((100% - 16px)/2);
+    justify-self:center;
+  }
 }
 
 .work-card{
@@ -1189,10 +1193,9 @@ section{
 }
 .work-card:hover .work-preview{filter:saturate(1.15) brightness(1.08);}
 
-.works-grid .work-card:nth-child(1) .work-preview{background-image:url('assets/cafe-mint.jpg');}
-.works-grid .work-card:nth-child(2) .work-preview{background-image:url('assets/nova-homes.jpg');}
-.works-grid .work-card:nth-child(3) .work-preview{background-image:url('assets/nexus-tech.jpg');}
-.works-grid .work-card:nth-child(4) .work-preview{background-image:url('assets/city-service.jpg');}
+.work-card--cafe .work-preview{background-image:url('assets/cafe-mint.jpg');}
+.work-card--nova .work-preview{background-image:url('assets/nova-homes.jpg');}
+.work-card--kapani .work-preview{background-image:url('assets/city-service.jpg');}
 
 .work-tag{
   align-self:flex-start;
@@ -1246,11 +1249,16 @@ section{
 
 @media (max-width:620px){
   .works-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
     touch-action:pan-y;
   }
-  .work-card{min-width:0;padding:16px 14px;}
+  .works-grid > .work-card:last-child:nth-child(odd){
+    grid-column:auto;
+    width:auto;
+    justify-self:stretch;
+  }
+  .work-card{min-width:0;padding:20px 18px;}
   .work-preview{aspect-ratio:4/3;margin-bottom:12px;}
   .work-tag{font-size:10px;padding:4px 6px;margin-bottom:10px;}
   .work-card h3{font-size:16px;margin-bottom:7px;}
@@ -1684,7 +1692,7 @@ footer{
 
       <div class="works-grid">
 
-        <div class="work-card reveal">
+        <div class="work-card work-card--cafe reveal">
           <div class="work-preview" aria-hidden="true"></div>
           <span class="work-tag mono">Кафе</span>
           <h3>Кафе «Мята»</h3>
@@ -1694,7 +1702,7 @@ footer{
           </a>
         </div>
 
-        <div class="work-card reveal">
+        <div class="work-card work-card--nova reveal">
           <div class="work-preview" aria-hidden="true"></div>
           <span class="work-tag mono">Недвижимость</span>
           <h3>Nova Home</h3>
@@ -1704,17 +1712,7 @@ footer{
           </a>
         </div>
 
-        <div class="work-card reveal">
-          <div class="work-preview" aria-hidden="true"></div>
-          <span class="work-tag mono">Техника</span>
-          <h3>NEXUS</h3>
-          <p>Каталог техники с понятными разделами и карточками товаров.</p>
-          <a href="https://iamskoup.github.io/nexus/" target="_blank" rel="noopener" class="work-btn">
-            Посмотреть сайт <span class="arrow" aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        <div class="work-card reveal">
+        <div class="work-card work-card--kapani reveal">
           <div class="work-preview" aria-hidden="true"></div>
           <span class="work-tag mono">Веб-сервис</span>
           <h3>Капанёвский сайт</h3>
