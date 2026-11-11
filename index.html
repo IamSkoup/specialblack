@@ -2308,7 +2308,7 @@ import {
   verifyBeforeUpdateEmail, EmailAuthProvider, reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import {
-  getDatabase, ref, set, get, update, push, onValue, off, query, orderByChild, equalTo, increment, remove
+  getDatabase, ref, set, get, update, push, onValue, off, query, orderByChild, equalTo, increment, remove, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
 /* ======================= 1. КОНФИГУРАЦИЯ ======================= */
@@ -2947,7 +2947,7 @@ $('orderForm').addEventListener('submit', async e => {
       userId: currentUser.uid,
       userNickname: (currentProfile && currentProfile.nickname) || currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : 'Пользователь'),
       userEmail: currentUser.email,
-      createdAt: now,
+      createdAt: serverTimestamp(),
       selectedTariff: selectedOrderTariff,
       hasDatabase: (selectedOrderTariff === 'Pro' || selectedOrderTariff === 'Ultra'),
       basePrice: t.base,
